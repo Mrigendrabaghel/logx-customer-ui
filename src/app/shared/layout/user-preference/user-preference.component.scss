@@ -1,0 +1,510 @@
+@import "src/crowley-themes.scss";
+@import "../../../../Styles/mixins.scss";
+.mainContainer {
+    justify-content: space-between;
+    //padding: 0% 30px 5% 20px;
+
+    mat-card {
+        box-shadow: 0px 0 10px 1px rgba(27, 25, 25, 0.24);
+        padding: 30px;
+
+    .horizontal-Line{
+        margin-top: 0.5rem;
+        border-top: 2px solid $accent;
+        border-bottom: none;
+
+    }
+    .headerText {
+        font-size: 46px;
+        color: black;
+        padding: 16px 0px;
+   
+    }
+
+    .section-header {
+        font-size: 20px;
+        color: $accent;
+        text-align: left;
+        padding-top: 30px;
+        margin-bottom: 0px;
+        margin-top: -10px;
+        font-weight: 400;
+    }
+
+
+    .section-subheader {
+        font-size: 12px;
+        color: $crowley_font;
+        opacity: 0.6;
+        text-align: left;
+        padding-top: 30px;
+        margin-bottom: 0px;
+        margin-top: -10px;
+    }
+    .section-subheader-black {
+        font-size: 12px;
+        color: $crowley_font;
+        opacity: 1.5;
+        text-align: left;
+        padding-top: 30px;
+        margin-bottom: 0px;
+        margin-top: -10px;
+        white-space: nowrap;
+        .placeholder{
+          opacity: 0.5!important;
+        }
+    }
+
+    mat-select {
+        border: none;
+        border-bottom: solid 1.5px gray !important;
+        width: 100%;
+        padding-top: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        ::ng-deep.mat-select-placeholder {
+            color: $crowley_font;
+            font-size: 14px;
+        }
+    }
+
+    .main-section {
+        // display: flex;
+       // margin: 10px;
+        form {
+         
+            width: 100%;
+        }
+      .sub-section{
+          font-size: 12px;
+          .sub-container{
+            display: flex;
+            overflow: hidden;
+         
+            .left{
+                width: 80%;
+            }
+            .right{
+                width: 60%;
+                margin-left: 70px;
+            }
+
+            .div-width-100 {
+                width: 100%;
+               margin-right: 21px;
+            }
+            .div-width-50 {
+                width: 50%;
+                margin-right: 21px;
+            }
+          }
+      }
+
+      .sub-section-adress{
+        display: flex;
+        .display-flex{
+         
+          .address{
+            width: 450px;
+            border: 3px solid grey !important;
+            margin-right: 60px;
+            box-shadow: none;
+          }
+        mat-card{
+        width: 50%;
+        margin-right: 30px;
+        height: 200px;
+          .locationText{
+            height: 100px;
+           
+            margin: 2px;
+            p{
+                overflow-wrap: break-word;
+                font-size: 16px;
+            }
+          }
+          .buttons{
+            .ButtonFont{
+                color: $accent;
+                
+            }
+            .save {
+              @include filled-buttons;
+              border-radius: 5px;
+              margin: 10px 5px;
+              font-size: 11px !important;
+              text-align: center;
+              right: -200px
+          }
+          
+          }
+        }
+      }
+    }
+  
+
+      .display-flex{
+          display: flex;
+        
+      }
+
+.left-w-25 {
+    width: 20%;
+}
+
+.right-w{
+    width: 40%;
+    margin-left: 60px;
+}
+.right-time{
+    width: 40%;
+    margin-left: 50px;
+    display: flex;
+    mat-form-field {
+        width: 120px;            
+        font-size: 12px; 
+        margin-top: -8px ;  
+    }
+    .first-elem{
+       padding-left: 30px;
+       ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix{
+           display: contents;
+           input{
+               padding-bottom: 6px;
+               font-size: 14px;
+
+            }
+       }
+    
+    }
+    .second-elem{
+        width: 20%;
+        margin-left: 20px;
+        padding-top: 34.5px;
+        padding-left: 10px;
+    }
+    mat-select {
+      width: 84px;
+        
+    }
+
+    ::ng-deep .mat-focused .mat-form-field-label { 
+        color: black !important;
+       }
+
+    ::ng-deep.mat-form-field-ripple {   
+        background-color: $black !important;;
+    }
+
+
+}
+.middle-w{
+    width: 20%;
+    margin: 0px 0px 0px 60px;
+
+}
+.section-one{
+    width: 25%;
+    margin: 50px 50px 0px 40px;
+    font-size: 12px;
+    display: flex;
+        ::ng-deep   .mat-checkbox-layout {
+           display: inline-block;
+           white-space: normal; 
+        
+    }
+    
+}
+
+.matHeading{
+    font-size: 20px;
+    color: $accent;
+}
+.endTime{
+    margin-left: 20px;
+}
+     .address{
+        width: 50%;
+        border: 3px solid grey !important;
+        margin-right: 20px;
+        box-shadow: none;
+      }
+    .addAddress{
+        width: 50%;
+        border: 3px dashed $accent !important;
+        margin-right: 20px;
+        box-shadow: none;
+     }
+ mat-card{
+
+
+    
+    width: 50%;
+    margin-right: 30px;
+    height: 200px;
+      .locationText{
+        height: 100px;
+        font-size: 16px;
+        margin: 2px;
+        p{
+            overflow-wrap: break-word;
+      
+        }
+      }
+      .buttons{
+        .ButtonFont{
+            color: $accent;
+           
+        }
+      }
+}
+
+ .img{
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
+    text-align: center;
+  
+ }
+            .buttons {
+                text-align: end;               
+                button {
+                    letter-spacing: 1px;
+                    height: 40px;                   
+                }
+       
+                .save {
+                    @include filled-buttons;
+                    border-radius: 5px;
+                    margin: 10px 5px;
+                    font-size: 11px !important;
+                    text-align: center;
+                }
+                .cancel {
+                    @include buttons;
+                    margin: 10px 5px;
+                     
+                }
+          
+
+    
+        
+    }
+}
+}
+
+}
+
+
+
+.mainContainer1 {
+	display: none;
+}
+
+@media only screen and (max-width:812px) {
+    .footer-container {bottom: 75px !important;}
+	.mainContainer {
+		display: none;
+	}
+
+	.mainContainer1 {
+        display: block;
+        width: 100%;
+        margin-top: 75px;
+        margin-bottom: 145px;
+
+        .user_prefernece_mb{
+            display: block;
+            padding: 0 15px;
+        }
+        .headerText1 {
+            font-size: 26px;
+            color: #00202C;
+            margin-bottom: 25px;
+        }
+
+        .mat-expansion-panel{
+            margin-bottom: 15px;				
+            .mat-expansion-panel-header{
+              padding: 0 15px !important;
+              font-size: 18px;
+              font-weight: 500;
+              background-color: #f3f3f3;
+              &.mat-expanded{
+                background-color: #f3f3f3;
+                border-radius: 5px 0px 0px;            
+              }
+            }
+            ::ng-deep .mat-expansion-panel-body {
+              padding: 0 15px !important;
+            }	
+            .mat-expansion-panel-header-title, .mat-expansion-panel-header-description{
+              display: block !important;
+              margin-right: 0px !important;          
+            }
+            .mat-expansion-panel-header-description{
+                padding: 25px 0;
+            }
+            
+          }
+        .mat-checkbox-changes {
+            margin-left: -12px;
+            ::ng-deep  .mat-checkbox {
+                ::ng-deep   .mat-checkbox-layout {
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    cursor: inherit;
+                    align-items: baseline;
+                    vertical-align: middle;
+                    display: inline-block;
+                    white-space: nowrap;
+                }
+                .mat-checkbox-inner-container {
+                    display: inline-block;
+                    height: 16px;
+                    line-height: 0;
+                    margin: auto;
+                    margin-right: 8px;
+                    order: 0;
+                    position: relative;
+                    vertical-align: middle;
+                    white-space: nowrap;
+                    width: 16px;
+                    flex-shrink: 0;
+                    margin-left: 18px;
+                }
+                .mat-checkbox-label {
+                    line-height: 24px;
+                    display: block;
+                    padding-left: 15px;
+                }
+            } 
+        }
+         
+
+        .left-w-251{
+            width: 100%;
+            border-bottom: solid 1.5px gray !important;
+            padding-bottom: 4px;
+            margin-bottom: 25px;
+        }
+
+        .mat-checkbox-label{
+            margin-left: -6px;
+        }
+
+        .right-time1{
+            width: 100%;
+            margin-top: 15px;
+            .mat-form-field{
+                display: block;
+            }
+        }
+        .user-address{
+            mat-card{
+                box-shadow: none;
+                border-radius: 0;
+                border-bottom: solid 0.5px $crowley_border_gray;
+                padding: 0;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+                &:last-child{
+                    border-bottom: 0;  
+                    padding-bottom: 0;
+                    margin-bottom: 0;                
+                }
+                div{
+                    text-align: center;
+                }
+                .locationText{
+                    text-align: left;
+                }
+                .buttons{
+                    display: flex;
+                    justify-content: flex-end;
+                    button{
+                        min-width: auto;
+                        padding: 5px;
+                        color: #0957a3;
+                        border: 1px solid #0957a3 !important;
+                        line-height: normal;
+                        margin-left: 15px;
+                    }
+                }
+            }
+            
+        }
+        .display-flex1{
+            display: flex;
+            margin:20px 0px 20px;
+        }
+
+        .w-20{
+            margin: 0px 0 12px;
+            padding-bottom: 8px;
+        }
+
+        .w-20_endTime{
+            margin: 0px 0 12px;
+        }
+
+        .footer-button{
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			background: #fff;
+			position: fixed;
+			bottom: 45px;
+			-webkit-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+			-moz-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+			box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+			padding: 12px 0;					
+				.cancel {
+					@include buttons;
+					font-size: 14px !important;
+					width: 11em;
+					margin-right: 20px;
+				}
+				.cancel:hover {
+					background: $accent;
+					color: $white;
+				}
+				.save {	
+					@include filled-buttons;					
+					border-radius: 5px;
+					width: 11em;
+					font-size: 14px !important;
+					margin-left: 10px;
+				}					
+		}
+        // .button {
+        //     display: flex;
+		// 	justify-content: center;
+		// 	width: 100%;
+		// 	background: #fff;
+		// 	position: fixed;
+		// 	bottom: 45px;
+		// 	-webkit-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+		// 	-moz-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+		// 	box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+		// 	padding: 12px 0;
+		// 	.info {
+		// 		@include buttons;
+		// 		width: 42%;
+		// 	}
+		// 	.info:hover {
+		// 		background: $accent;
+		// 		color: $white;
+		// 	}
+		// 	.button2 {
+		// 		@include filled-buttons;
+		// 		border-radius: 5px;
+		// 		width: 42%;
+		// 		font-size: 11px !important;
+		// 		margin-left: 10px;
+		// 	}
+		// }
+    }
+}

@@ -1,0 +1,454 @@
+<div class="mainContainer">
+  <mat-card>
+    <p class="headerText">{{'userPreference_title' | translate}}</p>
+    <div class="main-section">
+      <form name="UserPreference">
+        <p class="section-header">{{'userPreference_subTitle' | translate}}</p>
+        <div class="sub-section">
+          <hr class="horizontal-Line">
+          <div class="display-flex">
+            <div class="left-w-25">
+              <p class="section-subheader-black">{{'userPreference_PaginationTitle' | translate}}<span class="placeholder">&nbsp;&nbsp;({{UserPreferenceConst.paginationmsg}})</span></p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="paginationVal" name="paginationVal">
+                <mat-option *ngFor="let option of pagination" [value]="option.preferenceDisplayText">
+                  {{option.preferenceDisplayText}}
+                </mat-option>
+              </mat-select>
+              <!-- <p class="section-subheader">{{'userPreference_languageTitle' | translate}}</p>
+              <mat-select placeholder={{UserPreferenceConst.placeHolder.chooseOption}} (selectionChange)="translate.use($event.value)"  [(ngModel)]="languagesVal" #lan="ngModel"
+              name="languagesVal" >
+                <mat-option *ngFor="let option of languages" [value]="option.preferenceText">
+                  {{option.preferenceDisplayText}}
+                </mat-option>
+              </mat-select> -->
+            </div>
+            <!-- <div class="middle-w">
+              <p class="section-subheader-black">{{'userPreference_PaginationTitle' | translate}}<span class="placeholder">&nbsp;&nbsp;({{UserPreferenceConst.paginationmsg}})</span></p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="paginationVal" name="paginationVal">
+                <mat-option *ngFor="let option of pagination" [value]="option.preferenceDisplayText">
+                  {{option.preferenceDisplayText}}
+                </mat-option>
+              </mat-select>
+            </div> -->
+            <div class="right-w">
+              <p class="section-subheader-black">{{'userPreference_FavoriteMenuTitle' | translate}}</p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.selectfavoritemenu}} [(ngModel)]="favoritemenulistVal" name="favoritemenulistVal">
+                <mat-radio-group >
+                  <!-- <div>
+                  <span>&nbsp;&nbsp;&nbsp;
+                    <mat-radio-button value="null">&nbsp;None</mat-radio-button>
+                  </span>
+                </div> -->
+                    <mat-option value="null">
+                      <mat-radio-button>None</mat-radio-button></mat-option>
+                    <mat-option *ngFor="let option of userfavmenuvalue" [value]="option.MENUNAME">
+                      <mat-radio-button [value]="false">
+                      {{option.MENUNAME}}
+                    </mat-radio-button>
+                    </mat-option>
+              
+              </mat-radio-group>
+              </mat-select>
+            </div>
+          </div>
+          <div class="display-flex">
+            <div class="left-w-25">
+              <p class="section-subheader-black">{{'userPreference_NotificationTitle' | translate}}<span class="placeholder">&nbsp;&nbsp;({{this.user_userName}})</span></p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="notificationVal" name="notificationVal" >
+                <mat-option *ngFor="let day of days"  [value]="day.preferenceDisplayText"
+                (click)="onSelect($event, day.preferenceId, day.preferenceDisplayText)"
+                >
+                  {{day.preferenceDisplayText}}
+                </mat-option>
+              </mat-select>
+            </div>
+             <section class="section-one" >
+              <mat-checkbox *ngFor="let option of dayName"
+              [checked]="option.checked" 
+              (change)="changeSelectedDays(option, $event)"
+              [value]="option.preferenceDisplayText"
+              name="course.name">
+                {{option.preferenceDisplayText}}
+               </mat-checkbox>
+               </section>
+                  <div class="right-time">
+                   <div class="display-flex">
+                    <div class="first-elem">
+                      <p class="section-subheader-black">{{'userPreference_StartTimeTitle' | translate}}</p>
+                      <mat-form-field  floatLabel="never">
+                        <input matInput [ngxTimepicker]="toggleTimepickerStartTime"  [disableClick]="true" [format]="timeFormatValue"  [(ngModel)]="startTimeVal" name="startTimeVal" readonly>
+                        <ngx-material-timepicker-toggle [for]="toggleTimepickerStartTime"></ngx-material-timepicker-toggle>
+                        <ngx-material-timepicker #toggleTimepickerStartTime></ngx-material-timepicker>
+                      </mat-form-field>
+                      
+                      
+                    </div>
+                      
+                    <div class="first-elem">
+                      <p class="section-subheader-black">{{'userPreference_EndTimeTitle' | translate}}</p>
+                      <mat-form-field  floatLabel="never">
+                        <input matInput [ngxTimepicker]="toggleTimepickerEndTime" name="EndTimeVal" [format]="timeFormatValue" [(ngModel)]="EndTimeVal" [disableClick]="true" readonly>
+                        <ngx-material-timepicker-toggle [for]="toggleTimepickerEndTime"></ngx-material-timepicker-toggle>
+                        <ngx-material-timepicker #toggleTimepickerEndTime></ngx-material-timepicker>
+                      </mat-form-field>
+                    </div>
+                       
+                  </div>
+                </div>
+             </div>
+            </div>
+        <p class="section-header">{{'userPreference_timeZoneMainTitle' | translate}}</p>
+        <hr class="horizontal-Line">
+        <div class="sub-section">
+          <div class="sub-container">
+            <div class="left">
+              <div class="div-width-100">
+                <p class="section-subheader">{{'userPreference_timeZoneSelectTitle' | translate}}</p>
+                <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="timeZoneVal" name="timeZoneVal">
+                  <mat-option *ngFor="let option of timeZoneValues" [value]="option.displayName">
+                    {{option.displayName}}
+                  </mat-option>
+                </mat-select>
+              </div>
+              <div class="div-width-100">
+                <p class="section-subheader">{{'userPreference_timeFormatSelectTitle' | translate}}</p>
+                <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}}  [(ngModel)]="timeFormatVal" name="timeFormatVal">
+                  <mat-option *ngFor="let timeFormat of timeFormatArr" [value]="timeFormat">
+                    {{timeFormat}}
+                  </mat-option>
+                </mat-select>
+               </div>
+            </div>
+           <div class="right">
+            <div class="div-width-100">
+              <p class="section-subheader">{{'userPreference_dateFormatSelectTitle' | translate}}</p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}}  [(ngModel)]="dateFormatVal" name="dateFormatVal">
+                <mat-option *ngFor="let option of DateFormat" [value]="option.preferenceDisplayText">
+                  {{option.preferenceDisplayText}} </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="sub-section">
+          <p class="section-header">{{'userPreference_addressTitle' | translate}}</p>
+          <hr class="horizontal-Line">
+          <div class="display-flex">
+            <div class="sub-section-adress" *ngIf="showAddress">
+              <div class="display-flex" *ngFor="let loc of locationSave">
+                <mat-card class="address" >
+                    <div class="locationText"  >
+                    {{ loc.Address2 + ' ' +
+                     loc.LocationName+ ' ' + loc.Address1+ ' ' +
+                    loc.StateName+ ', ' +loc.City+ ' '+
+                     loc.ZipCode}}
+                     
+                  </div>  
+                  <div class="buttons">
+                    <button mat-button class="ButtonFont" (click)="editAddress(loc)">{{ CommonConst.btnEdit}}</button>
+                    <button mat-button class="ButtonFont" (click)="onDeleteAddress(loc)">{{ CommonConst.btnRemove }}</button>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+
+
+
+            
+            <mat-card class= "addAddress" *ngIf="locationSave.length < 2">
+              <div class="img"><img src="assets/location.png" (click)="openDialog()" width="100" height="100">
+                <p>{{UserPreferenceConst.addaddress}}</p>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <div class="sub-section">
+          <p class="section-header">{{'userPreference_measureTitle' | translate}}</p>
+          <hr class="horizontal-Line">
+          <div class="sub-container">
+          <div class="left">
+          <div class="display-flex">
+            <div class="div-width-100">
+              <p class="section-subheader">{{'userPreference_densitySelectTitle' | translate}}</p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="densityVal" name="densityVal">
+                <mat-option *ngFor="let option of density" [value]="option.preferenceDisplayText">
+                  {{option.preferenceDisplayText}} </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="display-flex">
+            <div class="div-width-50">
+              <p class="section-subheader">{{'userPreference_dimensionSelectTitle' | translate}}</p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}}  [(ngModel)]="dimensionVal" name="dimensionVal">
+                <mat-option *ngFor="let option of dimension" [value]="option.preferenceDisplayText" >
+                  {{option.preferenceDisplayText}} </mat-option>
+              </mat-select>
+            </div>
+            <div class="div-width-50">
+              <p class="section-subheader">{{'userPreference_distanceSelectTitle' | translate}}</p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="distanceVal" name="distanceVal">
+                <mat-option *ngFor="let option of distance" [value]="option.preferenceDisplayText" >
+                  {{option.preferenceDisplayText}} </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="display-flex">
+            <div class="div-width-50">
+              <p class="section-subheader">{{'userPreference_volumeSelectTitle' | translate}}</p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="VolumeVal" name="VolumeVal">
+                <mat-option *ngFor="let option of volume" [value]="option.preferenceDisplayText" >
+                  {{option.preferenceDisplayText}} </mat-option>
+              </mat-select>
+            </div>
+
+            <div class="div-width-50">
+              <p class="section-subheader">{{'userPreference_weightSelectTitle' | translate}}</p>
+              <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="weightVal" name="weightVal">
+                <mat-option *ngFor="let option of weight" [value]="option.preferenceDisplayText" >
+                  {{option.preferenceDisplayText}} </mat-option>
+              </mat-select>
+            </div>
+          </div>
+         
+          </div>
+          <div class="right">
+          <div class="div-width-100">
+            <p class="section-subheader">{{'userPreference_areaSelectTitle' | translate}}</p>
+            <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="areaval" name="areaval">
+              <mat-option *ngFor="let option of area" [value]="option.preferenceDisplayText" >
+                {{option.preferenceDisplayText}} </mat-option>
+            </mat-select>
+          </div>
+          <div class="div-width-100">
+            <p class="section-subheader">{{'userPreference_temperatureSelectTitle' | translate}}</p>
+            <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="temperatureVal" name="temperatureVal">
+              <mat-option *ngFor="let option of temperature" [value]="option.preferenceDisplayText"  >
+                {{option.preferenceDisplayText}} </mat-option>
+            </mat-select>
+          </div>
+          </div>
+          </div>
+        </div>
+         <div class="buttons">
+          <button mat-button class="cancel"  (click)="onCancel()">{{'userPreference_cancelButtonTitle' | translate}}</button>
+          <button mat-button class="save" (click)="onSubmit()">{{'userPreference_applyButtonTitle' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>
+
+
+<div class="mainContainer1">
+  <div class="user_prefernece_mb">
+  <p class="headerText1">{{'userPreference_title' | translate}}</p>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{'userPreference_subTitle' | translate}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-panel-description>
+        <div class="left-w-251">
+          <p>{{'userPreference_PaginationTitle' | translate}}<span class="placeholder">&nbsp;&nbsp;({{UserPreferenceConst.paginationmsg}})</span></p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="paginationVal" name="paginationVal">
+            <mat-option *ngFor="let option of pagination" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}}
+            </mat-option>
+          </mat-select>
+          <!-- <p>{{'userPreference_languageTitle' | translate}}</p>
+          <mat-select placeholder="English" (selectionChange)="translate.use($event.value)"  [(ngModel)]="languagesVal" #lan="ngModel" name="languagesVal" >
+            <mat-option *ngFor="let option of languages" [value]="option.preferenceText">
+              {{option.preferenceDisplayText}}
+            </mat-option>
+          </mat-select> -->
+        </div>
+        <!-- <div class="left-w-251">
+          <p>{{'userPreference_PaginationTitle' | translate}}<span class="placeholder">&nbsp;&nbsp;({{UserPreferenceConst.paginationmsg}})</span></p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="paginationVal" name="paginationVal">
+            <mat-option *ngFor="let option of pagination" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}}
+            </mat-option>
+          </mat-select>
+        </div> -->
+        <div class="left-w-251">
+          <p>{{'userPreference_NotificationTitle' | translate}}<span class="placeholder">&nbsp;&nbsp;({{this.user_userName}})</span></p>
+          <mat-select placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="notificationVal" name="notificationVal">
+            <mat-option class="mat-checkbox-label" *ngFor="let day of days" [value]="day.preferenceDisplayText"   (click)="onSelect($event, day.preferenceId, day.preferenceDisplayText)">
+              {{day.preferenceDisplayText}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="mat-checkbox-changes">
+          <mat-checkbox *ngFor="let option of dayName"    [checked]="option.checked" 
+          (change)="changeSelectedDays(option, $event)"
+          name="course.name"[value]="option.preferenceDisplayText">
+            {{option.preferenceDisplayText}}
+          </mat-checkbox>
+        </div>
+        <div class="right-w">
+          <p class="section-subheader-black">{{'userPreference_FavoriteMenuTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.selectfavoritemenu}} [(ngModel)]="favoritemenulistVal" name="favoritemenulistVal">
+            <mat-radio-group >
+              <mat-option value="null">
+                <mat-radio-button>None</mat-radio-button></mat-option>
+                <mat-option *ngFor="let option of userfavmenuvalue" [value]="option.MENUNAME">
+                  <mat-radio-button [value]="false">
+                  {{option.MENUNAME}}
+                </mat-radio-button>
+                </mat-option>
+          
+          </mat-radio-group>
+          </mat-select>
+        </div>
+        <div class="right-time1">
+          <div class="display-flex">
+            <div class="first-elem">
+              <p class="section-subheader-black">{{'userPreference_StartTimeTitle' | translate}}</p>
+                <mat-form-field>
+                  <input matInput type="time" value="00:00" name="startTimeVal" [(ngModel)]="startTimeVal">
+                </mat-form-field>
+            </div>
+              
+            <div class="first-elem">
+              <p class="section-subheader-black">{{'userPreference_EndTimeTitle' | translate}}</p>
+                <mat-form-field>
+                  <input matInput type="time"  value="00:00"  name="EndTimeVal" [(ngModel)]="EndTimeVal">
+                </mat-form-field>
+            </div>
+               
+          </div>
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{'userPreference_timeZoneMainTitle' | translate}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-panel-description>
+        <div class="left-w-251">
+          <p>{{'userPreference_timeZoneSelectTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="timeZoneVal" name="timeZoneVal">
+            <mat-option  *ngFor="let option of timeZoneValues" [value]="option.displayName">
+              {{option.displayName}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_timeFormatSelectTitle' | translate}}</p>
+          <mat-select   placeholder={{UserPreferenceConst.placeHolder.chooseOption}}  [(ngModel)]="timeFormatVal" name="timeFormatVal">
+            <mat-option *ngFor="let timeFormat of timeFormatArr" [value]="timeFormat">
+              {{timeFormat}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_dateFormatSelectTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}}  [(ngModel)]="dateFormatVal" name="dateFormatVal">
+            <mat-option *ngFor="let option of DateFormat" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+
+      </mat-panel-description>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{'userPreference_addressTitle' | translate}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-panel-description>
+        <div class="user-address">
+          <div class="sub-section" *ngIf="showAddress">            
+              <mat-card class="address" *ngFor="let loc of locationSave" >
+                  <div class="locationText"  >
+                    {{ loc.Address2 + ' ' +
+                    loc.LocationName+ ' ' + loc.Address1+ ' ' +
+                   loc.StateName+ ', ' +loc.City+ ' '+
+                    loc.ZipCode}}
+                </div>  
+                <div class="buttons">
+                  <button mat-button class="ButtonFont" (click)="editAddress(loc)">{{ CommonConst.btnEdit}}</button>
+                  <button mat-button class="ButtonFont" (click)="onDeleteAddress(loc)">{{ CommonConst.btnRemove }}</button>
+                </div>
+              </mat-card>            
+          </div>
+          <mat-card class= "addAddress" *ngIf="locationSave.length < 2">
+            <div class="img"><img src="assets/location.png" (click)="openDialog()" width="100" height="100">
+              <p>{{UserPreferenceConst.addaddress}}</p>
+            </div>
+          </mat-card>
+
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{'userPreference_measureTitle' | translate}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-panel-description>
+        <div class="left-w-251">
+          <p>{{'userPreference_densitySelectTitle' | translate}}</p>
+          <mat-select placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="densityVal" name="densityVal">
+            <mat-option *ngFor="let option of density" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_areaSelectTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="areaval" name="areaval">
+            <mat-option *ngFor="let option of area" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_dimensionSelectTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}}  [(ngModel)]="dimensionVal" name="dimensionVal">
+            <mat-option *ngFor="let option of dimension" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_distanceSelectTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="distanceVal" name="distanceVal">
+            <mat-option *ngFor="let option of distance" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_temperatureSelectTitle' | translate}}</p>
+          <mat-select placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="temperatureVal" name="temperatureVal">
+            <mat-option *ngFor="let option of temperature" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_volumeSelectTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="VolumeVal" name="VolumeVal">
+            <mat-option *ngFor="let option of volume" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+        <div class="left-w-251">
+          <p>{{'userPreference_weightSelectTitle' | translate}}</p>
+          <mat-select  placeholder={{UserPreferenceConst.placeHolder.chooseOption}} [(ngModel)]="weightVal" name="weightVal">
+            <mat-option *ngFor="let option of weight" [value]="option.preferenceDisplayText">
+              {{option.preferenceDisplayText}} </mat-option>
+          </mat-select>
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel>
+  </mat-accordion>
+ 
+</div>
+ <div class="button footer-button">
+  <button mat-button class="cancel"  (click)="onCancel()">{{'userPreference_cancelButtonTitle' | translate}}</button>
+  <button mat-button class="save" (click)="onSubmit()">{{'userPreference_applyButtonTitle' | translate}}</button>
+ </div>
+</div>

@@ -1,0 +1,12 @@
+
+
+<div mat-dialog-content>
+  <p>{{CommonConst.addSearch}}</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.animal">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{CommonConst.cancel}}</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>{{CommonConst.add}}</button>
+</div>

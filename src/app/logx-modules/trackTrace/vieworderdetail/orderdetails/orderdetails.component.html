@@ -1,0 +1,1028 @@
+<div class="main-container section-two">
+  <div class="section-heading">
+    <div *ngIf="orderHeaderModel">
+      <div>{{OrderDetailConst.orderNumb}} {{orderHeaderModel.orderNum}}
+        <i *ngIf="orderHeaderModel.priority" class="priorityIcon"></i>
+        <i *ngIf="orderHeaderModel.isHazmat" class="hazmatIcon"></i>
+      </div>
+    </div>
+    <div>
+      <button class="export" (click)="ExportData();">{{CommonConst.btnExport}}</button>
+    </div>
+  </div>
+  <div class="progress-bar" *ngIf="!!orderHeaderModel">
+    <div class="list-right">
+      <ul class="arrow-steps clearfix">
+        <li *ngFor="let item of ordermilestoneModel;let i = index" class="step"
+          [ngClass]="(item.sorder == countOfCompletedStages)?'currentselected':'beforeselected'"
+          [class.afterselected]="!item.statusUpdateDate"
+          title="{{item.statusUpdateDate? item.statusUpdateDate : ''}} {{item.city? item.city : ''}} {{item.city? ',' : ''}} {{item.state? item.state : ''}} {{item.zipCode? item.zipCode : ''}}">
+          {{item.shipmentStatus | uppercase}}</li>
+      </ul>
+    </div>
+    <div *ngIf="!!orderHeaderModel" class="details-section">
+      <mat-card class="card">
+        <div class="spacer">
+          <div>
+            <p>{{OrderDetailConst.origin}}</p>
+          </div>
+          <div>
+            <p>{{OrderDetailConst.destination}}</p>
+          </div>
+        </div>
+        <div class="center" *ngIf="!!orderHeaderModel">
+          <ul>
+            <li>
+              <div>{{OrderDetailConst.originLocation}} </div>
+              <div> {{orderHeaderModel.originLocation}} {{orderHeaderModel.originAddressLine}}
+                {{orderHeaderModel.originCityName}}, {{orderHeaderModel.originState}} {{orderHeaderModel.originZip}}
+              </div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.contactName}}</div>
+              <div>{{orderHeaderModel.originContactName}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.contactNumber}} </div>
+              <div> {{orderHeaderModel.originContactNum}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.pickUpDate}}</div>
+              <div> {{orderHeaderModel.pickupDateTimeUtc}}</div>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <div>{{OrderDetailConst.deliverLocation}} </div>
+              <div>{{orderHeaderModel.destinationLocation}} {{orderHeaderModel.destinationAddressLine}}
+                {{orderHeaderModel.destinationCityName}}, {{orderHeaderModel.destinationState}}
+                {{orderHeaderModel.destinationZip}}
+              </div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.contactName}} </div>
+              <div>{{orderHeaderModel.destinationContactName}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.contactNumber}} </div>
+              <div>{{orderHeaderModel.destinationContactNum}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.deliveryDate}} </div>
+              <div>{{orderHeaderModel.deliveryDateTimeUtc}}</div>
+            </li>
+          </ul>
+        </div>
+      </mat-card>
+    </div>
+    <div class="details-section additionalInfo">
+      <mat-card class="card">
+        <div class="spacer">
+          <div>
+            <p>{{OrderDetailConst.additionalInfo}}</p>
+          </div>
+          <div class="expandCollapse" *ngIf="!isExpandedAdditionalInfo">
+            <mat-icon (click)="showAdditionalInfoTable(true)">keyboard_arrow_down</mat-icon>
+          </div>
+          <div class="expandCollapse" *ngIf="isExpandedAdditionalInfo">
+            <mat-icon (click)="showAdditionalInfoTable(false)">keyboard_arrow_up</mat-icon>
+          </div>
+        </div>
+        <div class="center" *ngIf="!!orderModel && isExpandedAdditionalInfo">
+          <ul>
+            <li>
+              <div>{{OrderDetailConst.serviceOptions}} </div>
+              <div> {{orderHeaderModel.serviceOptionCode}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.equipmentType}} </div>
+              <div> {{orderHeaderModel.equipmentType}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.carrier}} </div>
+              <div> {{orderHeaderModel.carrier}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.distance}}</div>
+              <div>{{orderHeaderModel.distance}} {{orderHeaderModel.distanceUOM}}</div>
+            </li>
+            <li *ngIf="showAccessorialCodeSection">
+              <div>Accessorial Code</div>
+              <div *ngIf="results && results.length>0">{{results.accessorialCode}}<mat-icon class="addBox" (click)="openAccessorialCode()"
+                  *ngIf="!accessorialCode">
+                  {{CommonConst.MatIcons.add_box}}
+                </mat-icon>
+                <mat-icon class="addBox" (click)="openAccessorialCode()" *ngIf="accessorialCode">
+                  {{CommonConst.MatIcons.indeterminate_check_box}}
+                </mat-icon>
+                <span class="number">{{accessorialCodeDetailResultsLength}}</span>
+              </div>
+            </li>
+            <mat-card *ngIf="accessorialCode && accessorialbuttonClicked" class="accessorialCode">
+              <div class="first-section">
+                <div class="status">
+                  <div>Status</div>
+                  <div>{{results.accessorialStatus}}</div>
+                </div>
+                <div class="requested">
+                  <div>Requested By</div>
+                  <div>{{results.userName}}</div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+
+              <div class="section-two">
+                <div class="code-section" *ngFor="let item of accessorialCodeDetailResults; let i = index">
+                  <div>
+                    <div>Accessorial Code<span>{{item.accessorialCode}}</span></div>
+                    <div>
+                      <mat-icon (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+                    </div>
+                  </div>
+                  <div class="first-section two" *ngIf="selected == i">
+                    <div class="status">
+                      <div>Status</div>
+                      <div>{{item.accessorialStatus}}</div>
+                    </div>
+                    <div class="requested">
+                      <div>Requested By</div>
+                      <div>{{item.userName}}</div>
+                    </div>
+                  </div>
+                  <!-- <div class="line"></div> -->
+                   <mat-divider></mat-divider>
+                </div>
+              </div>
+            </mat-card>
+          </ul>
+          <ul>
+            <li>
+              <div>{{OrderDetailConst.priority}} </div>
+              <div> {{orderHeaderModel.priority==false?OrderDetailConst.low:OrderDetailConst.high}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.hazmat}} </div>
+              <div> {{orderHeaderModel.isHazmat==false?OrderDetailConst.no:OrderDetailConst.yes}}</div>
+            </li>
+            <li>
+              <div>{{OrderDetailConst.referNumb}} </div>
+              <div> {{(headerReferenceLength > commonNumbers.three)?referenceDisplay:orderHeaderModel.referenceNumbers}}</div>
+              <div *ngIf="headerReferenceLength > commonNumbers.three" class="referenceNumbers">
+                <mat-icon [matMenuTriggerFor]="referenceOptions"  (click)="openReference()">{{CommonConst.MatIcons.add_box}}
+                </mat-icon><span class="value">{{referenceNumFilter.length}}</span>
+                <mat-menu #referenceOptions="matMenu" class="menuBar">
+                  <ng-container *ngFor="let refName of referenceNumFilter;">
+                    <p mat-menu-item class="reference"> {{refName}}</p>
+
+                  </ng-container>
+
+                </mat-menu>
+              </div>
+            </li>
+            <li *ngIf="showIncidentSelection">
+              <div>{{OrderDetailConst.incidentReport}} </div>
+              <div *ngIf="incidentord && incidentord.length>0">{{incidentord[0].incidentnumber}}<mat-icon class="addBox" (click)="openIncidentCode()"
+                  *ngIf="headerIncidentLength > commonNumbers.zero && !incidentCode ">
+                  {{CommonConst.MatIcons.add_box}}</mat-icon>
+                  <mat-icon class="addBox" (click)="openIncidentCode()" *ngIf="incidentCode  && headerIncidentLength > commonNumbers.zero ">
+                    {{CommonConst.MatIcons.indeterminate_check_box}}
+                  </mat-icon>
+                <mat-icon class="addBox" (click)="openIncidentCode()" *ngIf="headerIncidentLength == commonNumbers.zero ">
+                  {{CommonConst.MatIcons.more_vert}}</mat-icon>
+                <span class="number" *ngIf="headerIncidentLength > commonNumbers.zero ">{{headerIncidentLength}}</span>
+              </div>
+            </li>
+            <mat-card *ngIf="incidentCode && incidentreportbuttonClicked" class="incidentcode">
+              <div class="reportType" *ngIf="incidentord && incidentord.length>0">
+                <div>{{OrderDetailConst.incidentReportType}} </div>
+                <div>{{incidentord[0].incidenttypename}}</div>
+              </div>
+              <div class="first-section">
+                <div class="reportDate">
+                  <div>{{OrderDetailConst.incidentReportDate}} </div>
+                  <div>{{incidentord[0].createddate}}</div>
+                </div>
+                <div class="status">
+                  <div>{{OrderDetailConst.incidentReportStatus}} </div>
+                  <div>{{incidentord[0].incidentstatus}}</div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="section-two">
+                <div class="code-section" *ngFor="let option of incidentDisplay; let i = index" >
+                  <div >
+                    <div>{{OrderDetailConst.incidentReport}} <span>{{option.incidentnumber}}</span></div>
+                    <div >
+                      <!-- <mat-icon (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon> -->
+                      <mat-icon *ngIf="isSelected && selected == i" (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+                      <mat-icon *ngIf="!isSelected || selected != i" (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+                    </div>
+               
+                  </div>
+                  <div *ngIf="selected == i && isSelected">
+                    <div class="type">
+                      <div>{{OrderDetailConst.incidentReportType}}<span>{{option.incidenttypename}}</span></div>
+                    </div>
+
+                    <div class="first-section two">
+                      <div class="reportDate">
+                        <div>{{OrderDetailConst.incidentReportDate}} </div>
+                        <div>{{option.createddate}}</div>
+                      </div>
+                      <div class="status">
+                        <div> {{OrderDetailConst.incidentReportStatus}} </div>
+                        <div>{{option.incidentstatus}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="line"></div> -->
+                  <mat-divider></mat-divider>
+
+                </div>
+              </div>
+            </mat-card>       
+            <li *ngIf="showserviceExepSelection">
+              <div>{{OrderDetailConst.serviceException}} </div>
+              <div>{{servicerecord[0].serviceexceptionnum}}<mat-icon class="addBox" (click)="openServiceException()"
+                  *ngIf="serviceExepLen > commonNumbers.zero && !serviceCode ">
+                  {{CommonConst.MatIcons.add_box}}</mat-icon>
+                  <mat-icon class="addBox" (click)="openServiceException()" *ngIf="serviceCode  && serviceExepLen > commonNumbers.zero ">
+                    {{CommonConst.MatIcons.indeterminate_check_box}}
+                  </mat-icon>
+                <mat-icon class="addBox" (click)="openServiceException()"*ngIf="serviceExepLen == commonNumbers.zero ">
+                  {{CommonConst.MatIcons.more_vert}}</mat-icon>
+                <span class="number" *ngIf="serviceExepLen > commonNumbers.zero ">{{serviceExepLen}}</span>
+              </div>
+            </li>
+            <mat-card *ngIf="serviceCode && serviceExceptionClicked" class="serviceCode">
+                <div class="first-section">
+
+                <div class="exceptionType">
+                  <div>{{OrderDetailConst.ExceptionType}} </div>
+                  <div>{{servicerecord[0].exceptiontype}}</div>
+                </div>
+                <div class="date">
+                  <div>{{OrderDetailConst.Date}} </div>
+                  <div>{{servicerecord[0].datecreated}}</div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="section-two">
+                <div class="code-section" *ngFor="let option of serviceExeptDisplay; let i = index">
+                  <div>
+                    <div>{{OrderDetailConst.serviceException}} <span>{{option.serviceexceptionnum}}</span></div>
+                    <div>
+                      <mat-icon (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+                    </div>
+               
+                  </div>
+                  <div *ngIf="selected == i">                
+
+                    <div class="first-section two">
+                      <div class="exceptionType">
+                        <div>{{OrderDetailConst.ExceptionType}} </div>
+                        <div>{{option.exceptiontype}}</div>
+                      </div>
+                      <div class="date">
+                        <div> {{OrderDetailConst.Date}} </div>
+                        <div>{{option.datecreated}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="line"></div> -->
+                  <mat-divider></mat-divider>
+
+                </div>
+              </div>
+            </mat-card> 
+          </ul>
+        </div>
+      </mat-card>
+    </div>
+    <div class="details-section product-details">
+      <mat-card class="card">
+        <div class="spacer">
+          <div>
+            <p>{{OrderDetailConst.orderLineItems+orderLineItemCount+OrderDetailConst.closeBrace}}</p>
+          </div>
+          <div class="expandCollapse" *ngIf="!isExpandedProducts">
+            <mat-icon (click)="showProductsTable(true)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+          </div>
+          <div class="expandCollapse" *ngIf="isExpandedProducts">
+            <mat-icon (click)="showProductsTable(false)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+          </div>
+        </div>
+        <div class="table" *ngIf="isExpandedProducts">
+          <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="itemTableDrop($event)" [dataSource]="orderLinedataSource">
+            <ng-container *ngFor="let column of orderLineItemsColumns; let i = index" [matColumnDef]="column.field">
+              <mat-header-cell *matHeaderCellDef="let col" cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                {{ column.header }}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element; let x = index">
+                <ng-container *ngIf="column.header == '#'">
+                  {{ (x+1) + (currentPage* pageSize) }} 
+                </ng-container>
+                <ng-container *ngIf="column.header != '#' && column.header != 'Hazmat'">
+                  {{ element[column.field] }}
+                </ng-container>
+                <ng-container  *ngIf="column.header == OrderDetailConst.grossWeight"> 
+                  {{ weightVal != ""  ? weightVal[0] :  element[column.UOM]}}             
+                </ng-container>
+                <ng-container *ngIf="column.header == OrderDetailConst.grossVolume">       
+                  {{ volumeVal != ""  ? volumeVal[0] :  element[column.UOM]}}         
+               </ng-container>
+                <ng-container  *ngIf="column.header == OrderDetailConst.length || column.header == OrderDetailConst.width || column.header == OrderDetailConst.height ">
+                  {{ dimensionVal != ""  ? dimensionVal[0] :  element[column.UOM]}}           
+                </ng-container>
+                <ng-container *ngIf="column.header == 'Hazmat'">
+                  {{ element[column.field]==false?OrderDetailConst.n:OrderDetailConst.y }}
+                  <i class="hazmatIcon" (click)="getHazmat(x)" *ngIf="!element[column.field]==false"
+                    [matMenuTriggerFor]="hazMatValue"></i>
+                  <mat-menu #hazMatValue="matMenu">
+                    <button mat-menu-item>{{OrderDetailConst.unClass}} {{unClass}}</button>
+                    <button mat-menu-item>{{OrderDetailConst.hazmatContactno}} {{hazmatConNum}}</button>
+                    <button mat-menu-item>{{OrderDetailConst.packingGroup}} {{packingGroup}}</button>
+                    <button mat-menu-item>{{OrderDetailConst.hazClass}} {{hazClass}}</button>
+                  </mat-menu>
+
+                </ng-container>
+              </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" #tableHeaderRow></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+
+            </mat-row>
+
+          </mat-table>
+          <mat-paginator #paginator *ngIf="pageSize && pageSize>commonNumbers.zero && 
+            orderLinedataSource.data.length>commonNumbers.five"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [pageIndex]="currentPage" 
+            (page)="handlePage($event)"></mat-paginator>
+        </div>
+      </mat-card>
+    </div>
+    <div class="details-section product-details">
+      <mat-card class="card">
+        <div class="spacer">
+          <div>
+            <p>{{OrderDetailConst.lineOfRouting+statusUpdateCount+OrderDetailConst.closeBrace}}</p>
+          </div>
+          <div class="expandCollapse" *ngIf="!isExpandedRouting">
+            <mat-icon (click)="showTableRouting(true)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+          </div>
+          <div class="expandCollapse" *ngIf="isExpandedRouting">
+            <mat-icon (click)="showTableRouting(false)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+          </div>
+        </div>
+        <div class="table" *ngIf="isExpandedRouting">
+          <app-status-update-routing-lines [statusUpdateLinesData]="statusUpdateLinesData">
+          </app-status-update-routing-lines>
+        </div>
+      </mat-card>
+    </div>
+  
+    <div class="details-section product-details" *ngIf="!isOpenUploadFiles">
+      <mat-card class="card">
+        <div class="spacer">
+          <div>
+            <p>{{OrderDetailConst.attachment+orderAttachmentCount+OrderDetailConst.closeBrace}}</p>
+          </div>
+          <div class="expandCollapse" *ngIf="!isExpandedAttachments">
+            <mat-icon (click)="showAttachmentsTable(true)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+          </div>
+          <div class="expandCollapse" *ngIf="isExpandedAttachments">
+            <mat-icon (click)="showAttachmentsTable(false)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+          </div>
+        </div>
+        <div class="table" *ngIf="isExpandedAttachments">
+          <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="attachmentTableDrop($event)" [dataSource]="orderAttachmentdataSource">
+
+            <ng-container *ngFor="let column of orderAttachmentColumns; let i = index" [matColumnDef]="column.field">
+
+              <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                {{ column.header }} </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{ element[column.field]}}</mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="attachmentDisplayedColumns" #tableHeaderRow></mat-header-row>
+            <mat-row class="attachments" *matRowDef="let row; columns: attachmentDisplayedColumns;"
+              (click)="OpenDocument(row)"></mat-row>
+
+          </mat-table>
+          <mat-paginator #paginator #paginatorElement *ngIf="pageSize && pageSize>commonNumbers.zero && 
+            orderAttachmentdataSource.data.length>commonNumbers.five"
+             [length]="orderAttachmentdataSource.data.length"   [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions" 
+            ></mat-paginator>
+
+           
+          <div class="uploadButton">
+            <button mat-button (click)="fileInput.click()">
+              {{CommonConst.uploadFiles}}
+              <input #fileInput accept="{{UploadConst.fileExtensionsSupport}}" type='file' class="hide"
+                (change)="AddFile($event)" multiple>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="details-section product-details" *ngIf="isOpenUploadFiles">
+      <mat-card class="card">
+        <div class="spacer">
+          <div>
+            <p>{{CommonConst.uploadFiles}}</p>
+          </div>
+          <div class="expandCollapse" *ngIf="!isExpandedUploads">
+            <mat-icon (click)="showUploadsTable(true)">keyboard_arrow_down</mat-icon>
+          </div>
+          <div class="expandCollapse" *ngIf="isExpandedUploads">
+            <mat-icon (click)="showUploadsTable(false)">keyboard_arrow_up</mat-icon>
+          </div>
+        </div>
+        <div class="table" *ngIf="isExpandedUploads">
+          <app-uploadfiles [filesSelected]="filesSelected" (uploadFile)="UploadFiles($event);"
+            (closeUploadFile)="closeUploadSection($event)"></app-uploadfiles>
+        </div>
+      </mat-card>
+    </div>
+    <div class="details-section product-details">
+      <mat-card class="card">
+        <div class="spacer">
+          <div>
+            <p>{{OrderDetailConst.comments+orderCommentCount+OrderDetailConst.closeBrace}}</p>
+          </div>
+          <div class="expandCollapse" *ngIf="!isExpandedComments">
+            <mat-icon (click)="showCommentsTable(true)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+          </div>
+          <div class="expandCollapse" *ngIf="isExpandedComments">
+            <mat-icon (click)="showCommentsTable(false)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+          </div>
+        </div>
+        <div class="table" *ngIf="isExpandedComments">
+          <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="commentTableDrop($event)" [dataSource]="orderCommentsdataSource">
+
+            <ng-container *ngFor="let column of orderCommentsColumns; let i = index" [matColumnDef]="column.field">
+
+              <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                {{ column.header }} </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element[column.field] }} </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="commentDisplayedColumns" #tableHeaderRow></mat-header-row>
+            <mat-row *matRowDef="let row; columns: commentDisplayedColumns;"></mat-row>
+
+          </mat-table>
+          <mat-paginator *ngIf=" pageSize && pageSize>commonNumbers.zero && orderCommentsdataSource.data.length>commonNumbers.five" 
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="details-section product-details">
+      <mat-card class="card">
+        <div class="spacerMap">
+          <div>
+            <p>{{OrderDetailConst.inTransitMap}} </p>
+          </div>
+        </div>
+      </mat-card>
+      <div class="map" *ngIf="orderHeaderModel">
+        <app-transit-map [start]="orderMapModel.startLocation" [end]="orderMapModel.endLocation" [orderNum]="orderNum">
+        </app-transit-map>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-container1"> 
+  <div class="progress-bar1"> 
+    <div class="section-heading" *ngIf="orderHeaderModel">              
+      <div class="orderdetails__item"><label>{{OrderDetailConst.orderNumb}}</label><p>{{orderHeaderModel.orderNum}}</p></div>
+      <div class="orderdetails__flex-row">
+        <div class="orderdetails__item"><label>{{OrderDetailConst.incidentReportStatus}}</label><p> {{orderHeaderModel.status}}</p></div>
+         <div><i class="priorityIcon"></i><i class="hazmatIcon"></i></div>
+      </div>            
+      <button class="export" (click)="ExportData();"> <i class="exportIcon"></i> {{CommonConst.btnExport}}</button>   
+      <div class="orderdetails__flex-row">
+        <div><p class="m-0">{{orderHeaderModel.pickupDateTimeUtc | date: "shortDate"}}</p><p class="m-0">{{originStateName[0]  | titlecase }}</p></div>
+        <div><p class="m-0">{{orderHeaderModel.deliveryDateTimeUtc | date: "shortDate"}}</p><p class="m-0">{{destinationStateName[0]  | titlecase }}</p></div>
+      </div>                            
+  </div>
+   <div class="progressBarcontainer1">    
+  <ul class="progressbar">
+    <li
+   [ngClass]="(firstStep == true )?'active': (secondStep == true)?'Prev-selected':(thirdStep == true)?'Prev-selected' : ''" >
+   <span class="truck-icon"><img src="assets/truck.png" width="30" height="30"/></span></li>
+   <li
+   [ngClass]="(firstStep == true )?'': (secondStep == true)?'active':(thirdStep == true)?'Prev-selected' : ''" >
+   <span class="truck-icon"><img src="assets/truck.png" width="30" height="30"/></span></li>
+   <li
+   [ngClass]="(firstStep == true )?'': (secondStep == true)?'':(thirdStep == true)?'active' : ''" >
+   <span class="truck-icon"><img src="assets/truck.png" width="30" height="30"/></span></li>
+   </ul>
+   </div>                          
+   <div class="progress-bar" *ngIf="isShown" >         
+    <ul class="vertical-steps-bar clearfix" *ngIf="!!orderHeaderModel">
+       <li *ngFor="let item of ordermilestoneModel;let i = index" class="vertical-steps-bar__step"
+       [ngClass]="(item.sorder == countOfCompletedStages)?'currentselected': (item.sorder < countOfCompletedStages)? 'beforeselected':''"
+       [class.afterselected]="!item.statusUpdateDate"
+       title="{{item.statusUpdateDate? item.statusUpdateDate : ''}} {{item.city? item.city : ''}} {{item.city? ',' : ''}} {{item.state? item.state : ''}} {{item.zipCode? item.zipCode : ''}}">
+       {{item.shipmentStatus | uppercase}}</li>
+       </ul>     
+  </div>
+  <mat-icon (click)="toggleShow()" class="arrow-down">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+</div>  
+  <div class="product-details" *ngIf="!!orderHeaderModel">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{OrderDetailConst.locationInformation}}
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="orderdetails__item"><label>{{OrderDetailConst.originLocation}}</label><p>{{orderHeaderModel.originLocation}} {{orderHeaderModel.originAddressLine}}
+            {{orderHeaderModel.originCityName}}, {{orderHeaderModel.originState}} {{orderHeaderModel.originZip}}</p></div> 
+            <div class="orderdetails__item">
+              <label>{{OrderDetailConst.contactName}}</label>
+              <p>{{orderHeaderModel.originContactName}}</p>
+            </div>
+            <div class="orderdetails__item">
+              <label>{{OrderDetailConst.contactNumber}}</label>
+              <p>{{orderHeaderModel.originContactNum}}</p>
+            </div>
+            <div class="orderdetails__item">
+              <label>{{OrderDetailConst.pickUpDate}}</label>
+              <p>{{orderHeaderModel.pickupDateTimeUtc}}</p>
+            </div>
+            <div class="orderdetails__item">          
+              <label>{{OrderDetailConst.deliverLocation}}</label>
+              <p>{{orderHeaderModel.destinationLocation}} {{orderHeaderModel.destinationAddressLine}}
+                {{orderHeaderModel.destinationCityName}}, {{orderHeaderModel.destinationState}}
+                {{orderHeaderModel.destinationZip}}</p>
+            </div> 
+            <div class="orderdetails__item">              
+              <label>{{OrderDetailConst.contactName}}</label>
+              <p>{{orderHeaderModel.destinationContactName}}</p>
+            </div> 
+            <div class="orderdetails__item">            
+              <label>{{OrderDetailConst.contactNumber}}</label>
+              <p>{{orderHeaderModel.destinationContactNum}}</p>
+            </div> 
+            <div class="orderdetails__item">         
+              <label>{{OrderDetailConst.deliveryDate}}</label>
+              <p>{{orderHeaderModel.deliveryDateTimeUtc}}</p>
+            </div> 
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{OrderDetailConst.additionalInfo}}
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.serviceOptions}}</label>
+            <p>{{orderHeaderModel.serviceOptionCode}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.equipmentType}} </label>
+            <p>{{orderHeaderModel.equipmentType}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.carrier}} </label>
+            <p> {{orderHeaderModel.carrier}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.distance}}</label>
+            <p>{{orderHeaderModel.distance}} {{orderHeaderModel.distanceUOM}}</p>
+          </div>
+          <div class="orderdetails__item" *ngIf="showAccessorialCodeSection">
+            <label>Accessorial Code</label>
+              <p *ngIf="results && results.length>0">{{results.accessorialCode}}<mat-icon class="addBox" (click)="openAccessorialCode()"
+                  *ngIf="!accessorialCode">
+                  {{CommonConst.MatIcons.add_box}}
+                </mat-icon>
+                <mat-icon class="addBox" (click)="openAccessorialCode()" *ngIf="accessorialCode">
+                  {{CommonConst.MatIcons.indeterminate_check_box}}
+                </mat-icon>
+                <span class="number">{{accessorialCodeDetailResultsLength}}</span>
+              </p>
+              <mat-card *ngIf="accessorialCode && accessorialbuttonClicked" class="accessorialCode">
+                <div class="first-section">
+                  <div class="status">
+                    <div>Status</div>
+                    <div>{{results.accessorialStatus}}</div>
+                  </div>
+                  <div class="requested">
+                    <div>Requested By</div>
+                    <div>{{results.userName}}</div>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+    
+                <div class="section-two">
+                  <div class="code-section" *ngFor="let item of accessorialCodeDetailResults; let i = index">
+                    <div>
+                      <div>Accessorial Code<span>{{item.accessorialCode}}</span></div>
+                      <div>
+                        <mat-icon (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+                      </div>
+                    </div>
+                    <div class="first-section two" *ngIf="selected == i">
+                      <div class="status">
+                        <div>Status</div>
+                        <div>{{item.accessorialStatus}}</div>
+                      </div>
+                      <div class="requested">
+                        <div>Requested By</div>
+                        <div>{{item.userName}}</div>
+                      </div>
+                    </div>
+                    <!-- <div class="line"></div> -->
+                     <mat-divider></mat-divider>
+                  </div>
+                </div>
+              </mat-card>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.priority}} </label>
+            <p> {{orderHeaderModel.priority==false?OrderDetailConst.low:OrderDetailConst.high}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.hazmat}} </label>
+             <p> {{orderHeaderModel.isHazmat==false?OrderDetailConst.no:OrderDetailConst.yes}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.referNumb}} </label>
+            <p> {{(headerReferenceLength > commonNumbers.three)?referenceDisplay:orderHeaderModel.referenceNumbers}}</p>
+            <div *ngIf="headerReferenceLength > commonNumbers.three" class="referenceNumbers">
+              <mat-icon [matMenuTriggerFor]="referenceOptions" class="addBox" (click)="openReference()">{{CommonConst.MatIcons.add_box}}
+              </mat-icon><span class="number">{{referenceNumFilter.length}}</span>
+              <mat-menu #referenceOptions="matMenu" class="menuBar">
+                <ng-container *ngFor="let refName of referenceNumFilter;">
+                  <p mat-menu-item class="reference"> {{refName}}</p>
+                </ng-container>
+              </mat-menu>
+            </div>
+          </div>
+          <div class="orderdetails__item" *ngIf="showIncidentSelection">
+            <label>{{OrderDetailConst.incidentReport}} </label>
+              <p *ngIf="incidentord && incidentord.length>0">{{incidentord[0].incidentnumber}}</p>
+              <div class="referenceNumbers">
+              <mat-icon class="addBox" (click)="openIncidentCode()"
+                  *ngIf="headerIncidentLength > commonNumbers.zero  && !incidentCode ">
+                  {{CommonConst.MatIcons.add_box}}</mat-icon>
+                  <mat-icon class="addBox" (click)="openIncidentCode()" *ngIf="incidentCode  && headerIncidentLength > commonNumbers.zero ">
+                    {{CommonConst.MatIcons.indeterminate_check_box}}
+                  </mat-icon>
+                <mat-icon class="addBox" (click)="openIncidentCode()" *ngIf="headerIncidentLength == commonNumbers.zero ">
+                  {{CommonConst.MatIcons.more_vert}}</mat-icon>
+                <span class="number" *ngIf="headerIncidentLength > commonNumbers.zero ">{{headerIncidentLength}}</span>
+                </div>
+                <mat-card *ngIf="incidentCode && incidentreportbuttonClicked" class="incidentcode">
+                  <div class="reportType">
+                    <div>{{OrderDetailConst.incidentReportType}} </div>
+                    <div>{{incidentord[0].incidenttypename}}</div>
+                  </div>
+                  <div class="first-section">
+    
+                    <div class="reportDate">
+                      <div>{{OrderDetailConst.incidentReportDate}} </div>
+                      <div>{{incidentord[0].createddate}}</div>
+                    </div>
+                    <div class="status">
+                      <div>{{OrderDetailConst.incidentReportStatus}} </div>
+                      <div>{{incidentord[0].incidentstatus}}</div>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="section-two">
+                    <div class="code-section" *ngFor="let option of incidentDisplay; let i = index">
+                      <div>
+                        <div><span class="reportDate">{{OrderDetailConst.incidentReport}}</span><span class="incidentnum">{{option.incidentnumber}}</span></div>
+                        <div>
+                          <mat-icon *ngIf="isSelected && selected == i" (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+                          <mat-icon *ngIf="!isSelected || selected != i" (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+                          </div>
+                   
+                      </div>
+                      <div *ngIf="selected == i && isSelected">
+                        <div class="type">
+                          <div><span class="reportDate">{{OrderDetailConst.incidentReportType}}</span><span>{{option.incidenttypename}}</span></div>
+                       
+                        </div>
+    
+                        <div class="first-section two">
+                          <div class="reportDate">
+                            <div>{{OrderDetailConst.incidentReportDate}} </div>
+                            <div>{{option.createddate}}</div>
+                          </div>
+                          <div class="status">
+                            <div> {{OrderDetailConst.incidentReportStatus}} </div>
+                            <div>{{option.incidentstatus}}</div>
+                          </div>
+                        </div>
+                      </div>                     
+                      <mat-divider></mat-divider>
+                    </div>
+                  </div>
+                </mat-card>   
+          </div>
+          <div class="orderdetails__item" *ngIf="showserviceExepSelection">
+            <label>{{OrderDetailConst.serviceException}} </label>
+              <p>{{servicerecord[0].serviceexceptionnum}}</p>
+              <div class="referenceNumbers">
+              <mat-icon class="addBox" (click)="openServiceException()"
+                  *ngIf="serviceExepLen > commonNumbers.zero  && !serviceCode ">
+                  {{CommonConst.MatIcons.add_box}}</mat-icon>
+                  <mat-icon class="addBox" (click)="openServiceException()" *ngIf="serviceCode  && serviceExepLen > commonNumbers.zero ">
+                    {{CommonConst.MatIcons.indeterminate_check_box}}
+                  </mat-icon>
+                <mat-icon class="addBox" (click)="openServiceException()" *ngIf="serviceExepLen == commonNumbers.zero ">
+                  {{CommonConst.MatIcons.more_vert}}</mat-icon>
+                <span class="number" *ngIf="serviceExepLen > commonNumbers.zero ">{{serviceExepLen}}</span>
+                </div>
+                <mat-card *ngIf="serviceCode && serviceExceptionClicked" class="serviceCode">
+               
+                  <div class="first-section">
+    
+                    <div class="reportDate">
+                      <div>{{OrderDetailConst.ExceptionType}} </div>
+                      <div>{{servicerecord[0].exceptiontype}}</div>
+                    </div>
+                    <div class="status">
+                      <div>{{OrderDetailConst.Date}} </div>
+                      <div>{{servicerecord[0].datecreated}}</div>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="section-two">
+                    <div class="code-section" *ngFor="let option of serviceExeptDisplay; let i = index">
+                      <div>
+                        <div><span class="reportDate">{{OrderDetailConst.serviceException}}</span><span class="incidentnum">{{option.serviceexceptionnum}}</span></div>
+                        <div>
+                          <mat-icon (click)="showStatusInfo(i)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+                        </div>
+                   
+                      </div>
+                      <div *ngIf="selected == i">                     
+                        <div class="first-section two">
+                          <div class="reportDate">
+                            <div>{{OrderDetailConst.ExceptionType}} </div>
+                            <div>{{option.exceptiontype}}</div>
+                          </div>
+                          <div class="status">
+                            <div> {{OrderDetailConst.Date}} </div>
+                            <div>{{option.datecreated}}</div>
+                          </div>
+                        </div>
+                      </div>                     
+                      <mat-divider></mat-divider>
+
+                    </div>
+                  </div>
+                </mat-card>   
+          </div>
+
+         </mat-panel-description>                  
+
+
+
+
+
+
+
+         '
+         '
+
+
+
+
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{OrderDetailConst.orderLineItems+orderLineItemCount+OrderDetailConst.closeBrace}}
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="crowley-listview">
+          <mat-list>
+            <mat-list-item *ngFor="let element of activePageData, let x= index"> 
+              <h3 class="heading-row">{{OrderDetailConst.LineItem}} {{x + 1}}</h3>  
+              <div class="two-col-item">
+                <div class="item">
+                  <label>{{OrderDetailConst.grossWeight}}</label>
+                  <p>{{element.grossWeight}} <span>{{ weightVal != ""  ? weightVal[0] :  element.grossWeightUom}}  </span></p>
+                </div>        
+                <div class="item">
+                  <label>{{OrderDetailConst.grossVolume}}</label>
+                  <p>{{element.grossVolume}} <span>{{ volumeVal != ""  ? volumeVal[0] :  element.grossVolumeUom}}  </span> </p>
+                </div> 
+             </div> 
+             <div class="two-col-item">
+              <div class="item">
+                <label>{{OrderDetailConst.huCount}}</label>
+                <p>{{element.huCount}}</p>
+              </div>        
+              <div class="item">
+                <label>{{OrderDetailConst.huType}}</label>
+                <p>{{element.huType}}</p>
+              </div> 
+           </div> 
+           <div class="two-col-item">
+            <div class="item">
+              <label>{{OrderDetailConst.freightClass}}</label>
+              <p>{{element.freightClass}}</p>
+            </div>        
+            <div class="item">
+              <label>{{OrderDetailConst.pieceCount}}</label>
+              <p>{{element.pieceCount}}</p>
+            </div> 
+         </div>    
+               <div class="item">
+                <label>{{OrderDetailConst.pieceType}}</label>
+                <p>{{element.pieceType}}</p>
+               </div> 
+               <div class="item">
+                <label>{{OrderDetailConst.tcn}}</label>
+                <p>{{element.tcnNumber}}</p>
+             </div> 
+               <div class="two-col-item">
+                <div class="item">
+                  <label>{{OrderDetailConst.length}}</label>
+                  <p>{{element.length}} <span>{{ dimensionVal != ""  ? dimensionVal[0] :  element.huLengthUOM}}  </span> </p>
+                </div>        
+                <div class="item">
+                  <label>{{OrderDetailConst.width}}</label>
+                  <p>{{element.width}} <span>{{ dimensionVal != ""  ? dimensionVal[0] :  element.huWidthUOM}}  </span> </p>
+                </div> 
+             </div> 
+             <div class="two-col-item">
+              <div class="item">
+                <label>{{OrderDetailConst.height}}</label>
+                <p>{{element.height}} <span>{{ dimensionVal != ""  ? dimensionVal[0] :  element.huHeightUOM}}  </span> </p>
+              </div>        
+              <div class="item">
+                <label>{{OrderDetailConst.hazmat}}</label>
+                <p *ngIf="element.isHazmat == false">{{OrderDetailConst.n}}</p>  
+                <p *ngIf="element.isHazmat == true">{{OrderDetailConst.y}}</p>              
+              </div> 
+           </div> 
+           <div class="item">
+            <label>{{OrderDetailConst.description}}</label>
+            <p>{{element.description}}</p>
+         </div> 
+                             
+            </mat-list-item>
+          </mat-list>  
+          <mat-paginator #paginator *ngIf="pageSize && pageSize>commonNumbers.zero && orderLineItemCount>commonNumbers.five" 
+            [length]="orderLineItemCount" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
+          </mat-paginator>            
+        </div>         
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{OrderDetailConst.lineOfRouting+statusUpdateCount+OrderDetailConst.closeBrace}}
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <app-status-update-routing-lines [statusUpdateLinesData]="statusUpdateLinesData">
+          </app-status-update-routing-lines >    
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"  [(expanded)]="xpandStatus"
+        (closed)="panelOpenState = false" *ngIf="!isOpenUploadFiles">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{OrderDetailConst.attachment+orderAttachmentCount+OrderDetailConst.closeBrace}}
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="attachment-section">           
+            <mat-list *ngIf="orderAttachmentdataSource.data.length > 0">
+              <mat-list-item
+                *ngFor="
+                  let element of attachmenteData;
+                  let i = index
+                "
+              >
+              <div class="item d-flex align-items-center">
+                <mat-icon matListIcon  (click)="OpenDocument(element)">article</mat-icon>
+                <div>
+                  <label>{{ CommonConst.fileName }}</label>
+                  <p>{{ element.documentType }}</p>
+                </div>
+             </div>                            
+                <div class="two-col-item">
+              <div class="item">
+                 <label>{{OrderDetailConst.date}}</label>
+                 <p>{{element.documentDate}}</p> 
+              </div>        
+              <div class="item">
+                 <label>{{OrderDetailConst.fileType}}</label>
+                 <p>{{element.fileType}}</p>
+              </div> 
+           </div> 
+                <div class="item">
+                  <label>{{ OrderDetailConst.description }}</label>
+                  <p>{{ element.docDescription }}</p>
+                </div>               
+              </mat-list-item>
+            </mat-list>
+            <mat-paginator #paginator  *ngIf="pageSize && pageSize>commonNumbers.zero && 
+              orderAttachmentCount >commonNumbers.five"
+               [length]="orderAttachmentCount"   [pageSize]="pageSize" 
+              [pageSizeOptions]="pageSizeOptions"  (page)="onorderAttachmentChanged($event)"
+              ></mat-paginator>
+
+            <div class="uploadButton">
+              <button mat-button (click)="fileInput.click()" xpandStatus="true">
+                {{CommonConst.uploadFiles}}
+                <input #fileInput accept="{{UploadConst.fileExtensionsSupport}}" type='file' class="hide"
+                  (change)="AddFile($event)" multiple>
+              </button>
+            </div>
+          </div>         
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="true"
+      (closed)="panelOpenState = false" *ngIf="isOpenUploadFiles">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{CommonConst.uploadFiles}}
+        </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="table">
+            <app-uploadfiles [filesSelected]="filesSelected" (uploadFile)="UploadFiles($event);"
+              (closeUploadFile)="closeUploadSection($event)"></app-uploadfiles>
+          </div>         
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{OrderDetailConst.comments+orderCommentCount+OrderDetailConst.closeBrace}}
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="comment-section">
+            <mat-list>
+              <mat-list-item *ngFor="let element of commentData; let x= index;">                
+                <div class="two-col-item">
+                  <div class="item">
+                    <label>{{OrderDetailConst.commentType}}</label>
+                    <p>{{element.commentType}}</p>
+                  </div>        
+                  <div class="item">
+                    <label>{{OrderDetailConst.stopNumber}}</label>
+                    <p>{{element.stopNum}}</p>
+                  </div> 
+               </div>                
+                 <div class="item">
+                  <label>{{OrderDetailConst.comment}}</label>
+                  <p>{{element.comment}}</p>
+                 </div>                                
+              </mat-list-item>
+            </mat-list>  
+            <mat-paginator *ngIf="pageSize && pageSize>commonNumbers.zero && orderCommentCount>commonNumbers.five"
+               [length]="orderCommentCount" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                (page)="oncommentChanged($event)"></mat-paginator>
+          </div>       
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{OrderDetailConst.inTransitMap}}
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="map" *ngIf="orderHeaderModel">
+            <app-transit-map [start]="orderMapModel.startLocation" [end]="orderMapModel.endLocation" [orderNum]="orderNum">
+            </app-transit-map>
+          </div>     
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+    </mat-accordion> 
+
+  </div>
+</div>

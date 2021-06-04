@@ -1,0 +1,59 @@
+<div class="main-container" *ngIf="!isShowDocumentAdvanceSearch">
+  <div class="right-section">
+    <form (ngSubmit)="getAccessDocuments(f.searchAccessDocument.value)" [formGroup]="accessDocumentForm">
+      <mat-card>
+        <p>{{DocumentsConst.AccessDocuments.accessDocuments}}</p>
+        <p>{{DocumentsConst.AccessDocuments.accessDocNote}}</p>
+        <div class="input-section">
+          <div>
+            <fieldset>
+              <legend>{{DocumentsConst.AccessDocuments.searchDocuments}}</legend>
+              <input matInput type="text" class="track-control mat-input-element"  placeholder={{DashboardConst.placeHolder.findDocuments}}
+                formControlName="searchAccessDocument" (paste)="PasteSearchCreteria($event)"
+                (change)="ChangeSearchCreteria($event)" (focusout)="focusOutFunction()">
+            </fieldset>
+          </div>
+          <button mat-raised-button type="submit" color="accent">{{DocumentsConst.AccessDocuments.searchDoc}}</button>
+ 
+        </div>
+        <div class="errorMessage"
+          *ngIf="(f.searchAccessDocument.invalid && (f.searchAccessDocument.dirty || f.searchAccessDocument.touched ||submitted))">
+          <div *ngIf="f.searchAccessDocument.errors.required">{{DocumentsConst.ErrorMessage.searchError}}</div>
+          <div *ngIf="f.searchAccessDocument.errors.minLength">
+            {{DocumentsConst.ErrorMessage.docSearchMinLengthError}}</div>
+          <div *ngIf="isTrackNumberValid">
+            {{DocumentsConst.ErrorMessage.searchValueValidError}}
+          </div>
+          <div *ngIf="isTrackNumberLengthValid">
+           {{DocumentsConst.ErrorMessage.searchMinLengthError}}
+          </div>
+        </div>
+        <div class="mobile-view">
+          <p class="advanced"><a (click)="openAdvanceSearch()" >{{DocumentsConst.ErrorMessage.advanceSearch}}</a></p>
+          <button mat-raised-button type="submit" color="accent">{{DocumentsConst.AccessDocuments.searchDoc}}</button>       
+        </div>
+        <p class="advanced"><a (click)="openAdvanceSearch()" >{{DocumentsConst.ErrorMessage.advanceSearch}}</a></p>
+        <div class="table-desktop" >
+
+          <app-access-document-table *ngIf="isDisplayTable && dataSource.data.length>0" [dataSource]="dataSource" [isDisplayTable]="isDisplayTable">
+          </app-access-document-table>
+
+          <ng-container *ngIf="searchRecord === commonNumbers.two" >
+            <div class="nodata">{{CommonConst.nodata}}</div>
+          </ng-container>
+
+        </div>
+      </mat-card>
+    </form>
+    <div class="table-mobile" *ngIf="isDisplayTable && dataSource.data.length>0">
+    <mat-card>
+      <app-access-document-table [dataSource]="dataSource" [isDisplayTable]="isDisplayTable">
+      </app-access-document-table>
+
+      <ng-container *ngIf="searchRecord === commonNumbers.two" >
+        <div class="nodata">{{CommonConst.nodata}}</div>
+      </ng-container>
+    </mat-card>
+    </div>
+  </div>
+</div>

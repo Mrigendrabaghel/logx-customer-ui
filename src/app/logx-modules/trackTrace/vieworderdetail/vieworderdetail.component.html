@@ -1,0 +1,192 @@
+<div class="main-container">
+  <div class="progress-bar">
+     <p>{{name}}</p>
+     <div class="list-right">
+        <ul class="arrow-steps clearfix">
+           <li *ngFor="let item of ordermilestoneModel;let i = index" class="step"
+           [ngClass]="(item.sorder == countOfCompletedStages)?'currentselected':'beforeselected'"
+           [class.afterselected]="!item.statusUpdateDate"
+           title="{{item.statusUpdateDate? item.statusUpdateDate : ''}} {{item.city? item.city : ''}} {{item.city? ',' : ''}} {{item.state? item.state : ''}} {{item.zipCode? item.zipCode : ''}}">
+           {{item.shipmentStatus | uppercase}}</li>
+        </ul>
+     </div>
+  </div>
+  <div class="details-section">
+     <mat-card class="card">
+        <div class="spacer">
+           <div>
+              <p>{{TrackOderConst.tableValues.Status}}: </p>
+              <p>{{orderModel.status}}</p>
+           </div>
+           <div>
+              <p>{{TrackOderConst.tableValues.lastUpdated}}:</p>
+              <p>
+                 {{orderModel.lastUpdatedDateTimeUtc}}
+              </p>
+           </div>
+        </div>
+        <div class="center" *ngIf="!!orderModel">
+           <ul>
+              <li>
+                 <div>{{AdvanceSearchAccessDoc.inputLabels.orderNumber}} </div>
+                 <div> {{orderModel.orderNum}}</div>
+              </li>
+              <li>
+                 <div>{{OrderDetailConst.originLocation}} </div>
+                 <div> {{orderModel.originAddress}}
+                    {{orderModel.originAddress1}} {{orderModel.originCityName}},
+                    {{orderModel.originStateName}} {{orderModel.originPostalCode}}
+                 </div>
+              </li>
+              <li>
+                 <div>{{OrderDetailConst.deliverLocation}} </div>
+                 <div> {{orderModel.deliveryAddress}}
+                    {{orderModel.deliveryAddress1}} {{orderModel.deliveryCityName}},
+                    {{orderModel.deliveryStateName}} {{orderModel.deliveryPostalCode}}
+                 </div>
+              </li>
+              <li>
+                 <div>{{OrderDetailConst.gbolNumber}} </div>
+                 <div> {{orderModel.gbolNumber}}</div>
+              </li>
+              <li>
+                 <div>{{TrackOderConst.tableValues.tcn}} </div>
+                 <div> {{orderModel.tcnNumber}}</div>
+              </li>
+           </ul>
+           <ul>
+              <li>
+                 <div>{{OrderDetailConst.loadNumber}} </div>
+                 <div> {{orderModel.loadNumber}}</div>
+              </li>
+              <li>
+                 <div>{{TrackOderConst.tableValues.pickUpDate}} </div>
+                 <div>{{orderModel.pickupDateTimeUtc}} </div>
+              </li>
+              <li>
+                 <div>{{OrderDetailConst.deliveryDate}} </div>
+                 <div>{{orderModel.deliveryDateTimeUtc }} </div>
+              </li>
+              <li>
+                 <div>Last Known Location </div>
+                 <div> {{orderModel.lastKnownLocation}}</div>
+              </li>
+              <li>
+                 <div>Last Milestone </div>
+                 <div> {{orderModel.lastMilestone}}</div>
+              </li>
+           </ul>
+        </div>
+        <div class="button">
+           <button mat-button class="btn info"
+              (click)="OpenDocumentsDialogue()">{{DashboardConst.inputLabels.viewDoc}}</button>
+           <button mat-button class="button2"
+              (click)="showMoreDetails()">{{DashboardConst.inputLabels.viewDetails}}</button>
+        </div>
+     </mat-card>
+  </div>
+  <div class="map" *ngIf="orderModel">
+     <app-transit-map [start]="orderMapModel.startLocation" [end]="orderMapModel.endLocation" [orderNum]="orderNum">
+     </app-transit-map>
+  </div>
+</div>
+<div class="main-container1">  
+  <div class="progress-bar1"> 
+   <div class="section-heading">              
+      <div class="orderdetails__item"><label>{{OrderDetailConst.orderNumb}}</label><p>{{orderModel.orderNum}}</p></div>
+      <div class="orderdetails__item"><label>{{TrackOderConst.tableValues.Status}}</label><p>{{orderModel.status}}</p></div>
+      <div class="orderdetails__item"><label>{{TrackOderConst.tableValues.lastUpdated}}</label><p>{{orderModel.lastUpdatedDateTimeUtc}}</p></div>          
+         
+      <div class="orderdetails__flex-row">
+        <div><p class="m-0">{{orderModel.pickupDateTimeUtc | date: "shortDate"}}</p><p class="m-0">{{orderModel.originStateName}} </p></div>
+        <div><p class="m-0">{{orderModel.deliveryDateTimeUtc | date: "shortDate"}}<p class="m-0"> {{orderModel.deliveryStateName}}</p></div>
+      </div>                            
+  </div>
+   <div class="progressBarcontainer1">    
+      <ul class="progressbar">
+         <li
+        [ngClass]="(firstStep == true )?'active': (secondStep == true)?'Prev-selected':(thirdStep == true)?'Prev-selected' : ''" >
+        <span class="truck-icon"><img src="assets/truck.png" width="30" height="30"/></span></li>
+        <li
+        [ngClass]="(firstStep == true )?'': (secondStep == true)?'active':(thirdStep == true)?'Prev-selected' : ''" >
+        <span class="truck-icon"><img src="assets/truck.png" width="30" height="30"/></span></li>
+        <li
+        [ngClass]="(firstStep == true )?'': (secondStep == true)?'':(thirdStep == true)?'active' : ''" >
+        <span class="truck-icon"><img src="assets/truck.png" width="30" height="30"/></span></li>
+        </ul>
+       
+   </div>
+   <div class="progress-bar" *ngIf="isShown">         
+      <ul class="vertical-steps-bar clearfix">              
+        <li *ngFor="let item of ordermilestoneModel;let i = index" class="vertical-steps-bar__step"
+        [ngClass]="(item.sorder == countOfCompletedStages)?'currentselected':  (verticalstep == true)?'': 'beforeselected'"
+        [class.afterselected]="!item.statusUpdateDate"
+        title="{{item.statusUpdateDate? item.statusUpdateDate : ''}} {{item.city? item.city : ''}} {{item.city? ',' : ''}} {{item.state? item.state : ''}} {{item.zipCode? item.zipCode : ''}}">
+        {{item.shipmentStatus | uppercase}}</li>
+    </ul>       
+   </div>  
+   <mat-icon (click)="toggleShow()" class="arrow-down">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+</div> 
+<div class="product-details">   
+   <mat-card class="product-card"> 
+      <mat-card-header> 
+          <mat-card-title>{{ExportDataConst.orderDetails}}</mat-card-title>           
+      </mat-card-header>     
+      <mat-card-content *ngIf="!!orderModel" class="product-card__content"> 
+         <div class="orderdetails__item">
+            <label>{{OrderDetailConst.originLocation}}</label>
+            <p>{{orderModel.originAddress}}
+               {{orderModel.originAddress1}} {{orderModel.originCityName}},
+               {{orderModel.originStateName}} {{orderModel.originPostalCode}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.deliverLocation}}</label>
+            <p>{{orderModel.deliveryAddress}}
+               {{orderModel.deliveryAddress1}} {{orderModel.deliveryCityName}},
+               {{orderModel.deliveryStateName}} {{orderModel.deliveryPostalCode}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.gbolNumber}}</label>
+            <p>{{orderModel.gbolNumber}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{TrackOderConst.tableValues.tcn}}</label>
+            <p>{{orderModel.tcnNumber}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{TrackOderConst.tableValues.pickUpDate}}</label>
+            <p>{{orderModel.pickupDateTimeUtc}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.deliveryDate}}</label>
+            <p>{{orderModel.deliveryDateTimeUtc}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>Last Known Location</label>
+            <p>{{orderModel.lastKnownLocation}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>Last Milestone</label>
+            <p>{{orderModel.lastMilestone}}</p>
+          </div>
+      </mat-card-content> 
+  </mat-card> 
+  <mat-card class="product-card"> 
+   <mat-card-header> 
+       <mat-card-title>{{OrderDetailConst.inTransitMap}}</mat-card-title>           
+   </mat-card-header>     
+   <mat-card-content> 
+      <div class="map" *ngIf="orderModel">
+         <app-transit-map [start]="orderMapModel.startLocation" [end]="orderMapModel.endLocation" [orderNum]="orderNum">
+         </app-transit-map>
+       </div>
+   </mat-card-content> 
+</mat-card>  
+</div>
+  <div class="button footer-button">
+     <button mat-button class="btn info"
+        (click)="OpenDocumentsDialogue()">{{DashboardConst.inputLabels.viewDoc}}</button>
+     <button mat-button class="button2"
+        (click)="showMoreDetails()">{{DashboardConst.inputLabels.viewDetails}}</button>
+  </div>
+</div>

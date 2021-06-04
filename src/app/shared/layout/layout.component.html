@@ -1,0 +1,82 @@
+<app-layout-header></app-layout-header>
+<app-breadcrumb *ngIf="isShowBreadCrumb && !(isHandset | async)!.matches"></app-breadcrumb>
+
+ <div class="layout-main-container" >
+  <div class="left-section" *ngIf="!isDashboard && !(isHandset | async)!.matches"
+  [ngClass]="{ 'top-nav-collapsed': navBarOpened,'dashboard-mt':(isShowBreadCrumb===false) }">
+  <div class="top-nav-bar">
+    <div class="sideBar">
+      <ul>
+           
+            <li class="expand-icon" (click)="expandCollapse()"><mat-icon>double_arrow</mat-icon></li>
+            <ng-container *ngFor="let item of navValues"   >
+           <ul *ngIf="item.name =='Reports'; else allItems" >
+              <li *hasPermission="['TO','TA'];Widgets:[item.name]" >
+                <a *ngIf="this.navBarOpened" class="btn-remove" (click)="selectReport(item.name, item.routerLink)">
+                  <mat-icon *ngIf="item.icon != 'format_indent_increase' && item.icon != 'reports'">{{item.icon}}</mat-icon>
+                  <i *ngIf="item.icon == 'reports' && this.navBarOpened" class="report_img"></i>
+                  
+                </a>
+                
+                <mat-accordion *ngIf="!this.navBarOpened">
+                  <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                                       (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <a>
+                          <mat-icon *ngIf="item.icon != 'format_indent_increase' && item.icon != 'reports'" class="report_img">{{item.icon}}</mat-icon>
+                          <i *ngIf="item.icon == 'reports'" class="report_img"></i>
+                          <div>{{item.name}}
+                            
+                          </div>
+                        </a>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-selection-list [multiple]="false">
+                      <ul *ngFor="let val of reportNavValues">
+                      <mat-list-option 
+                      *hasPermission="['TO','TA'];Widgets:[val.name]"
+                      (click)="selectedReport(val.name, val.routerLink)">
+                     
+                     
+                          <span class="repLoc"><mat-icon class="circle">circle</mat-icon>
+                          <span>{{val.name}}
+                            <!-- <p>{{val.isfavVisible}}</p> -->
+                            <span class="btchild" *ngIf="val.isfavVisible==='true'">
+                            <img src="../assets/Icons/favorite.svg">
+                          </span></span> </span>
+                      </mat-list-option>
+                    </ul>
+                    </mat-selection-list>
+                    
+                  </mat-expansion-panel>
+                </mat-accordion>
+            
+              </li>
+            </ul>
+         
+              <ng-template #allItems>
+                <li class="btn-remove" (click)="selected(item.name, item.routerLink)" title="{{DisplayToolTip(item.name)}}"
+                [ngClass]="{ 'btn-add': (selectedOption == item.name), 'btn-remove': (selectedOption != item.name) }"
+                *hasPermission="['TO','TA'];Widgets:[item.name]">
+                <a>
+                  <mat-icon *ngIf="item.icon != 'format_indent_increase'">{{item.icon}}</mat-icon>
+                  <i *ngIf="item.icon == 'format_indent_increase'" class="img"></i>
+                  <div>{{item.name}}
+                    <!-- <p>{{item.isfavVisible}}</p> -->
+                    <span class="btparent" *ngIf="item.isfavVisible==='true'">
+                      <img src="../assets/Icons/favorite.svg">
+                    </span>
+                  </div>
+                </a>
+              </li>
+              </ng-template>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+  <router-outlet></router-outlet>
+</div>
+<app-layout-footer></app-layout-footer>

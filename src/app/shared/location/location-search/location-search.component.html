@@ -1,0 +1,53 @@
+<div class="five">
+  <form #locationForm="ngForm">
+    <div>
+       <div class="location-search">
+         <div class="location-search__left">
+          <div class="location-col-1">
+            <input matInput placeholder={{IncidentConst.placeHolder.zipCode}} [(ngModel)]="locPostalDetails.PostalCode"
+              name="zipCodeRepLocField" (keyup)="focusOutZipCodeLoc($event.target.value)" #zipCodeIncLoc="ngModel" required
+              (keypress)="omit_special_char($event)">
+            <div>
+              <span *ngIf="!boolIncLocZipCode" class="errorMessage">{{incidentIncLocInvalidZipCode}}</span>
+            </div>
+          </div>
+          <div class="location-col-2">
+            <mat-select placeholder={{IncidentConst.placeHolder.state}} name="selectedRepLocStateCode" required #stateIncLoc="ngModel"
+              (selectionChange)="onStateSelection($event.value)" [(ngModel)]="locPostalDetails.StateCode">
+              <mat-option *ngFor="let incState of incidentStateIncLoc" [value]="incState.stateCode">
+                {{incState.stateName}}</mat-option>
+            </mat-select>
+          </div>
+         </div>
+          <div class="location-search__right">
+            <mat-select placeholder={{IncidentConst.placeHolder.city}} name="selectedRepLocCityCode"
+              [(ngModel)]="locPostalDetails.CityName" required #cityIncLoc="ngModel"
+              (selectionChange)="onCitySelection($event.value)" >
+              <mat-option *ngFor="let incCity of incidentCityIncLoc" [value]="incCity.cityName">
+                {{incCity.cityName}}</mat-option>
+            </mat-select>
+          </div>
+       </div>
+      <div class="location">
+         <div>
+            <input matInput type="text" placeholder={{IncidentConst.placeHolder.location}} name="repLoc"
+               #txtRepLocVal (input)="applyLocationFilter(txtRepLocVal.value)" [matAutocomplete]="autoRep"
+               [(ngModel)]="incLocValue.LocationName" required #reqValidatorIncLoc="ngModel">
+            <mat-autocomplete #autoRep="matAutocomplete">
+               <mat-option *ngFor="let option of incidentRepLocationDetails" [value]="[option.locationNumber+' '+option.locationName+' '+option.locationAddr1
+                +' '+option.stateName+', '+option.cityName+' '+option.postalCode]"
+                  (click)="funcLoc(option)">
+                  {{option.locationNumber}} {{option.locationName}} {{option.locationAddr1}}
+                  {{option.stateName}}, {{option.cityName}} {{option.postalCode}}
+               </mat-option>
+            </mat-autocomplete>
+         <mat-icon matSuffix>{{CommonConst.MatIcons.search}}</mat-icon>
+         <div>
+          <span *ngIf="reqValidatorIncLoc.invalid && reqValidatorIncLoc.touched"
+            class="errorMessage">{{incidentIncLocErrMessage}}</span>
+        </div>
+       </div>
+      </div>
+    </div>
+  </form>
+ </div>

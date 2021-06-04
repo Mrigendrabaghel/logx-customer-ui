@@ -1,0 +1,89 @@
+<div class="desktop-grid">
+  <table mat-table [dataSource]="activePageData" matSort *ngIf="isDisplayTable && pageSize && pageSize>0"  class="details-table" >
+
+      <ng-container matColumnDef="checked">
+        <th mat-header-cell *matHeaderCellDef>{{DocumentsConst.AccessDocuments.open}} </th>
+        <td mat-cell class="select-download"   *matCellDef="let element">       
+          <mat-icon inline="true"  >{{DocumentsConst.AccessDocuments.article}}</mat-icon></td>
+      </ng-container>
+
+      <ng-container matColumnDef="orderNum">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{DocumentsConst.AccessDocuments.orderNumber}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.orderNum}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="loadNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{DocumentsConst.AccessDocuments.loadnumber}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.loadNumber}} </td>
+      </ng-container>
+
+       <ng-container matColumnDef="gbolNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{DocumentsConst.AccessDocuments.gbl}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.gbolNumber}} </td>
+      </ng-container>
+
+     <ng-container matColumnDef="tcnNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{DocumentsConst.AccessDocuments.tcn}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.tcnNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="documentType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{DocumentsConst.AccessDocuments.docType}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.documentType}} </td>
+      </ng-container>
+   
+      
+      <ng-container matColumnDef="documentDescription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{DocumentsConst.AccessDocuments.docDescr}} </th>
+        <td mat-cell *matCellDef="let element"> {{element.documentDescription}} </td>
+      </ng-container>
+    
+      
+      <ng-container matColumnDef="documentDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{DocumentsConst.AccessDocuments.docDate}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.documentDate  | date :'MM/dd/yyyy'}} </td>
+      </ng-container>
+      
+      <ng-container  matColumnDef="documentId">
+        <th [class.Hide]="true"  *matHeaderCellDef >{{DocumentsConst.AccessDocuments.documentId}}</th>
+        <td [class.Hide]="true"  mat-cell *matCellDef="let element"> {{element.documentId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="documentName">
+        <th [class.Hide]="true" mat-header-cell *matHeaderCellDef > {{DocumentsConst.AccessDocuments.documentName}}  </th>
+        <td [class.Hide]="true" mat-cell *matCellDef="let element"> {{element.documentName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="documentFormat">
+        <th [class.Hide]="true" mat-header-cell *matHeaderCellDef > {{DocumentsConst.AccessDocuments.documentFormat}} </th>
+        <td [class.Hide]="true" mat-cell *matCellDef="let element" > {{element.documentFormat}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="OpenDocument(row)"></tr>                       
+   </table>
+  <mat-paginator  [length]= "resData.length"  (page)="onPageChanged($event)" *ngIf="isDisplayTable && pageSize && pageSize>0 && resData.length>10" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+</div>
+<div class="mobile-list">
+  <mat-list>
+    <mat-list-item *ngFor="let element of activePageData" (click)="OpenDocument(element)">
+      <div class="item d-flex align-items-center">
+        <mat-icon matListIcon>article</mat-icon>
+        <div>
+          <label>{{DocumentsConst.AccessDocuments.orderNumber}}</label>
+          <p>{{element.orderNum}}</p>
+        </div>
+     </div>
+     <div class="two-col-item">
+      <div class="item">
+        <label>{{DocumentsConst.AccessDocuments.loadnumber}}</label>
+        <p>{{element.loadNumber}}</p>
+      </div>        
+      <div class="item">
+        <label>{{DocumentsConst.AccessDocuments.docType}}</label>
+        <p>{{element.documentType}}</p>
+      </div> 
+   </div>               
+    </mat-list-item>
+  </mat-list>
+  <mat-paginator [length]= "resData.length" (page)="onPageChanged($event)" *ngIf="isDisplayTable && pageSize && pageSize>0 && resData.length>10" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

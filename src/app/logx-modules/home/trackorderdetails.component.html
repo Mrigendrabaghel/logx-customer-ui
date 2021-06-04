@@ -1,0 +1,170 @@
+<mat-sidenav-container class="head-container">
+   <mat-sidenav-content>
+      <mat-toolbar>
+         <mat-icon (click)="goToHome()" *ngIf="(isHandset | async)!.matches">chevron_left</mat-icon>
+         <div>
+            <img src="assets/crowley_white.png" width="125" height="20" class="logo" (click)="goToHome()"
+               *ngIf="(isHandset | async)!.matches">
+            <img src="assets/crowley_white.png" width="152" height="24" class="logo" (click)="goToHome()"
+               *ngIf="!(isHandset | async)!.matches">
+               <a mat-list-item class="loginText" *ngIf="!(isHandset | async)!.matches" (click)="openLoginForm()">{{homeComponentConst.loginText}}</a>
+               <a (click)="openLoginForm()" *ngIf="(isHandset | async)!.matches">{{homeComponentConst.loginTextMobile}}</a>
+         </div>
+      </mat-toolbar>
+   </mat-sidenav-content>
+</mat-sidenav-container>
+<div class="orderTrack-main-container" *ngIf="orderDetails">
+   <div class="progress-bar"  *ngIf="!(isHandset | async)!.matches" [hidden]="isShowDiv">
+      <div class="list-right">
+         <ul class="arrow-steps clearfix"  style="display: flex;">
+            <li *ngFor="let item of ordermilestoneModel;let i = index" class="step"
+               [ngClass]="(item.sorder == countOfCompletedStages)?'currentselected':'beforeselected'"
+               [class.afterselected]="!item.statusUpdateDate"
+               title="{{item.statusUpdateDate? item.statusUpdateDate : ''}} {{item.city? item.city : ''}} {{item.city? ',' : ''}} {{item.state? item.state : ''}} {{item.zipCode? item.zipCode : ''}}">
+               {{item.shipmentStatus | uppercase}}</li>
+         </ul>
+      </div>
+   </div>
+   <p>Tracking Details</p>
+   <div class="progress-bar1">
+      <div>
+         <p class="ordernumber">Order Number</p>
+         <p>{{orderDetails.orderNum}}</p>
+      </div>
+      <div>
+         <p>{{orderDetails.pickupDateTimeUtc | date: "shortDate"}}</p>
+         <p>{{orderDetails.deliveryDateTimeUtc | date: "shortDate"}}</p>
+      </div>
+      <div>
+         <p>{{originStateName[0] | titlecase }}</p>
+         <p>{{destinationStateName[0] | titlecase }}</p>
+      </div>
+      <div class="progressBarcontainer1">
+         <ul class="progressBar1" *ngIf="firstStep">
+            <li class="img"><img src="assets/truck.png" width="30" height="30" (click)=toggleDisplayDiv()></li>
+            <li class="firstPoint"></li>
+            <li class="secondPoint"></li>
+         </ul>
+         <ul class="progressBar2" *ngIf="secondStep">
+            <li class="firstPoint"></li>
+            <li class="img"><img src="assets/truck.png" width="30" height="30" (click)=toggleDisplayDiv()></li>
+            <li class="secondPoint"></li>
+         </ul>
+         <ul class="progressBar3" *ngIf="thirdStep">
+            <li class="firstPoint"></li>
+            <li class="secondPoint"></li>
+            <li class="img"><img src="assets/truck.png" width="30" height="30" (click)=toggleDisplayDiv()></li>
+         </ul>
+      </div>
+   </div>
+   <div class="details-section" [hidden]="isShowDiv">
+      <mat-card class="card">
+         <div class="spacer">
+            <div>
+               <p>Status: </p>
+               <p>{{orderDetails.status}}</p>
+            </div>
+            <div>
+               <p>Last Updated:</p>
+               <p>{{orderDetails.lastUpdatedDateTimeUtc}} </p>
+            </div>
+         </div>
+         <div class="center">
+            <ul>
+               <li>
+                  <div>Order Number </div>
+                  <div> {{orderDetails.orderNum}}</div>
+               </li>
+               <li>
+                  <div>First TCN </div>
+                  <div> {{orderDetails.tcnNumber}}</div>
+               </li>
+               <li>
+                  <div>Origin Location </div>
+                  <div> {{orderDetails.originLocation}}</div>
+               </li>
+               <li>
+                  <div>Delivery Location </div>
+                  <div>{{orderDetails.deliveryLocation}}</div>
+               </li>
+            </ul>
+            <ul>
+               <li>
+                  <div>Pick up Date </div>
+                  <div> {{orderDetails.pickupDateTimeUtc}} </div>
+               </li>
+               <li>
+                  <div>Delivery Date </div>
+                  <div> {{orderDetails.deliveryDateTimeUtc}} </div>
+               </li>
+               <li>
+                  <div>Last Milestone </div>
+                  <div> {{orderDetails.lastMilestone}}</div>
+               </li>
+
+            </ul>
+         </div>
+         <div class="button">
+            <button mat-raised-button class="btn info" (click)="viewDocument(orderDetails.orderNum)">
+               {{CommonConst.logintoviewdocuments}}</button>
+            <button mat-raised-button class="button2" (click)="viewOrderDetails(orderDetails.orderNum)">
+               {{CommonConst.logintoviewdetails}}</button>
+         </div>
+      </mat-card>
+   </div>
+   <div class="details-section2" [hidden]="!isShowDiv">
+      <mat-card class="card2">
+
+         <div class="container">
+            <div class="wrapper">
+               <ul class="arrow-steps clearfix">
+
+                  <li *ngFor="let item of ordermilestoneModel;let i = index" class="step"
+                     [ngClass]="(item.sorder == countOfCompletedStages)?'currentselected':'beforeselected'"
+                     [class.afterselected]="!item.statusUpdateDate"
+                     title="{{item.statusUpdateDate? item.statusUpdateDate : ''}} {{item.city? item.city : ''}} {{item.city? ',' : ''}} {{item.state? item.state : ''}} {{item.zipCode? item.zipCode : ''}}">
+                  </li>
+                  <li *ngFor="let item of ordermilestoneModel;let i = index" class="step1"
+                     [ngClass]="(item.sorder == countOfCompletedStages)?'currentselected':'beforeselected'"
+                     [class.afterselected]="!item.statusUpdateDate"
+                     title="{{item.statusUpdateDate? item.statusUpdateDate : ''}} {{item.city? item.city : ''}} {{item.city? ',' : ''}} {{item.state? item.state : ''}} {{item.zipCode? item.zipCode : ''}}">
+                     {{item.shipmentStatus | uppercase}}</li>
+               </ul>
+
+            </div>
+         </div>
+      </mat-card>
+   </div>
+
+</div>
+<div *ngIf="multipleRecord" class="multiRecord-container">
+   <p class="header">{{homeComponentConst.confirmationMessage.headerString}}</p>
+   <div class="orderNum-section">
+      <p>{{homeComponentConst.confirmationMessage.multipleRecordHeader}}</p>
+      <p> {{searchedValue}}.</p>
+   </div>
+   <div class="number-section">
+      <div *ngFor="let item of multipleResult" class="orderNumber-block"
+         (click)="getMultipleOrderDetails(item.orderNum)">
+         <div>
+            <p>{{DocumentsConst.AccessDocuments.orderNumber}}</p>
+            <p>{{item.orderNum}}</p>
+         </div>
+         <div>
+            <mat-icon>{{CommonConst.MatIcons.keyboard_arrow_right}}</mat-icon>
+         </div>
+      </div>
+   </div>
+</div>
+
+<footer class="footer-container">
+   <div class="footer-section">
+      <ul class="copyright">
+         <li>
+            <mat-icon>{{CommonConst.MatIcons.copyright}}</mat-icon>
+            <a>{{CommonConst.fullYear}} {{CommonConst.footerText}}</a>
+         </li>
+         <li><a>{{version}}</a></li>
+      </ul>
+   </div>
+</footer>

@@ -1,0 +1,108 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../Styles/mixins.scss";
+
+::nd-deep.mat-dialog-container {
+  padding: 20px 16px 0px 20px !important;
+}
+.orderfilter-main-container {
+  .orderfilter-sub-container {
+    height: 68vh;
+    padding-right: 5%;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    p:first-of-type {
+      font-size: 16px;
+      font-weight: normal;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    p:nth-child(2) {
+      font-size: 14px;
+      font-weight: normal;
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .check-box {
+      display: flex;
+      ::ng-deep.mat-checkbox-checked.mat-primary .mat-checkbox-background {
+        background-color: $accent !important;
+      }
+      ::ng-deep.mat-radio-button.mat-primary .mat-radio-inner-circle {
+        background-color: $accent !important;
+      }
+      ::ng-deep.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+        border-color: $accent !important;
+      }
+  
+      .checkbox-section {
+        section {
+          display: grid;
+          font-size: 12px;
+        }
+
+        .orderInfo {
+          padding-bottom: 5px;
+          font-size: 18px;
+        }
+
+        .view {
+          padding: 0px 0px 10px 0px;
+          font-size: 12px;
+          color: $accent;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+        .section-two {
+          padding-top: 16px;
+        }
+      }
+    }
+
+    .two {
+      width: 35%;
+
+      .orderInfo {
+        font-size: 18px;
+      }
+
+      .section-two {
+        padding-top: 16px;
+      }
+    }
+
+    .one {
+      width: 28%;
+    }
+
+    .sectiontwo-view {
+      padding-left: 0px;
+      font-size: 12px;
+      color: $accent;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .button {
+    text-align: end;
+
+    button {
+      width: 30%;
+      letter-spacing: 1px;
+      font-size: 12px;
+      margin-right: 10px;
+      margin: 16px 10px 16px 0px;
+    }
+
+    button:first-of-type {
+      @include buttons;
+    }
+
+    button {
+      @include filled-buttons;
+    }
+  }
+}

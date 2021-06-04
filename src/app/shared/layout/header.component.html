@@ -1,0 +1,107 @@
+<div class="main">
+  <mat-sidenav-container class="head-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [ngClass]="{hidden: !(isHandset | async)!.matches}"
+      [attr.role]="isHandset ? 'dialog' : 'navigation'" [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+      [opened]="!(isHandset | async)!.matches">
+      <mat-toolbar class="sideBarMenu" [ngClass]="{hidden: (isHandset | async)!.matches}">
+        {{homeComponentConst.menuText}}</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="'/dashboard'" (click)="drawer.toggle()">
+          <mat-icon [ngClass]="{hidden: !(isHandset | async)!.matches}">{{CommonConst.MatIcons.home_icon}}</mat-icon>
+          {{LayoutConst.layoutHome}}
+        </a>
+        <a mat-list-item (click)="clearData()" [routerLink]="'/dashboard/securetrackorder'"   (click)="drawer.toggle()">
+          <mat-icon [ngClass]="{hidden: !(isHandset | async)!.matches}">{{CommonConst.MatIcons.location}}</mat-icon>
+          {{TrackOderConst.trackTraceText}}
+        </a>
+        <a mat-list-item (click)="clearData()" [routerLink]="'/dashboard/searchandreport'" (click)="drawer.toggle()">
+          <mat-icon [ngClass]="{hidden: !(isHandset | async)!.matches}">{{CommonConst.MatIcons.search}}</mat-icon>
+          {{OrderSearchReport.orderLookUp}}
+        </a>
+        <a mat-list-item (click)="clearData()" [routerLink]="'/dashboard/accessdocument'" (click)="drawer.toggle()">
+          <mat-icon [ngClass]="{hidden: !(isHandset | async)!.matches}">{{CommonConst.MatIcons.library_books}}
+          </mat-icon>{{DocumentsConst.AccessDocuments.accessDocuments}}
+        </a>
+        <a mat-list-item (click)="getAccessorials()" (click)="drawer.toggle()">
+          <mat-icon [ngClass]="{hidden: !(isHandset | async)!.matches}">{{CommonConst.MatIcons.assignment_turned_in}}
+          </mat-icon>{{LayoutConst.layoutApproveAccessorialText}}
+        </a>
+        <a mat-list-item  (click)="launchReportIncident()" (click)="drawer.toggle()">
+          <mat-icon [ngClass]="{hidden: !(isHandset | async)!.matches}">{{CommonConst.MatIcons.edit}}</mat-icon>
+          {{LayoutConst.layoutReportIncidentText}}
+        </a>
+        <a mat-list-item [routerLink]="'/dashboard/submitordergrid'" (click)="drawer.toggle()"> 
+          <img src="../assets/Icons/submit_order_white.svg">
+          {{SubmitOderConst.submitOrder}}</a>
+          <a [ngClass]="{hidden: !(isHandset | async)!.matches}">            
+             <mat-accordion  mat-list-item *ngFor="let item of navValues" [ngClass]="{hidden: !(isHandset | async)!.matches}">
+                <li *hasPermission="['TO','TA'];Widgets:[item.name]" >
+                <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header class="report_img">
+                    <mat-panel-title>
+                      <a>
+                        <mat-icon *ngIf="item.icon != 'format_indent_increase' && item.icon != 'reports'" class="report_img">{{item.icon}}</mat-icon>
+                        <i *ngIf="item.icon == 'reports'" class="report_img"></i>
+                        <div>{{item.name}}</div>
+                      </a>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-selection-list [multiple]="false">
+                    <ul *ngFor="let val of reportNavValues">
+                    <mat-list-option 
+                    *hasPermission="['TO','TA'];Widgets:[val.name]"
+                    (click)="selectedReport(val.name, val.routerLink)"
+                    (click)="drawer.toggle()"
+                    > <span class="repLoc">
+                      <mat-icon class="circle">circle</mat-icon> 
+                      <span> {{val.name}}</span> 
+                    </span>         
+                    </mat-list-option>
+                  </ul>
+                  </mat-selection-list>
+                </mat-expansion-panel>
+              </li>
+              </mat-accordion>
+          </a> 
+   
+      
+        <a mat-list-item [ngClass]="{hidden: !(isHandset | async)!.matches}" (click)="userPreference()" (click)="drawer.toggle()">
+          <mat-icon>{{CommonConst.MatIcons.settings}}</mat-icon>{{CommonConst.preferences}}
+        </a>
+        <a mat-list-item [ngClass]="{hidden: !(isHandset | async)!.matches}" (click)="logout()">
+          <mat-icon>{{CommonConst.MatIcons.power_settings_new}}</mat-icon>{{CommonConst.Logout}}
+    </a>
+      
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar class="toolbar">
+        <button id="navButton_1" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+          *ngIf="(isHandset | async)!.matches">
+          <mat-icon>{{CommonConst.MatIcons.menu}}</mat-icon>
+        </button>
+        <img src="assets/crowley_logo.png" width="152" height="24" class="logo" (click)="goToHome()">
+        <span class="spacer"></span>
+        <mat-icon [matTooltip]='homeComponentConst.notifications' [matBadge]="(notificationCountBehSub | async)"
+          [matBadgeHidden]="(notificationCountBehSub | async) == 0" matBadgeSize="medium" class="notifications"
+          (click)="showUnreadNotifications()" [ngClass]="{hidden: (isHandset | async)!.matches}">
+          {{CommonConst.MatIcons.notification_impt}}</mat-icon>
+        <mat-icon [matTooltip]='homeComponentConst.trackShipment' class="location" (click)="trackTrace()" [ngClass]="{hidden: (isHandset | async)!.matches}">
+          {{CommonConst.MatIcons.location}}</mat-icon>
+        <mat-icon  [matTooltip]='username' class="headerImage" [matMenuTriggerFor]="options" [ngClass]="{hidden: (isHandset | async)!.matches}">
+          {{CommonConst.MatIcons.account_circle}}</mat-icon>
+        <mat-menu #options="matMenu">
+          <button mat-menu-item (click)="userPreference()">
+            <mat-icon>{{CommonConst.MatIcons.settings}}</mat-icon>{{CommonConst.preference}}
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>{{CommonConst.MatIcons.power_settings_new}}</mat-icon>{{CommonConst.Logout}}
+          </button>
+        </mat-menu>
+      </mat-toolbar>
+    </mat-sidenav-content>
+
+
+  </mat-sidenav-container>
+</div>

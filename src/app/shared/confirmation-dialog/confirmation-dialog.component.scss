@@ -1,0 +1,75 @@
+@import "src/crowley-themes.scss";
+
+mat-dialog-content {
+
+  padding: 5px 16px 4px 31px;
+
+  p {
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: 0.29px;
+    margin: 0 88px 11px 0;
+
+    width: 257px;
+  }
+  .rejectclass{
+    border-bottom: 1px solid #00202c;
+    padding: 16px 0 10px;
+    margin: 10px 0;
+    height: 48px;
+    // border: 1px solid black;
+    // width: 322px;
+  }
+
+}
+
+mat-dialog-actions {
+  margin-left: 147px;
+  margin-bottom: -11px;
+
+  button:nth-child(1) {
+    border-radius: 5px;
+    background-color: $accent;
+    width: 47%;
+    color: $white;
+  }
+
+  button:nth-child(2) {
+    border: 1px solid $accent !important;
+    color: $accent;
+    border-radius: 5px;
+    background-color: $white;
+    width: 47%;
+  }
+}
+@media only screen and (max-width:812px) {
+  mat-dialog-content {
+
+    padding: 0 24px;
+  
+    p {      
+      width: 100%;
+    }
+  }
+  mat-dialog-actions {
+    margin-left: 0;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+  
+    button:nth-child(1) {
+      border-radius: 5px;
+      background-color: $accent;
+      width: 48%;
+      color: $white;
+    }
+  
+    button:nth-child(2) {
+      border: 1px solid $accent !important;
+      color: $accent;
+      border-radius: 5px;
+      background-color: $white;
+      width: 48%;
+    }
+  }
+}

@@ -1,0 +1,324 @@
+<div class="main-container">
+
+  <div class="details-section">
+    <mat-card class="card">
+      <form [formGroup]="orderDetailsForm">
+
+
+        <p>Order Details</p>
+        <div class="top-section">
+          <div class="left-section">
+            <div class="section-one">
+              <div>
+                <p class="first-sub-heading">Service</p>
+              </div>
+              <div>
+                <mat-form-field floatLabel="never">
+                  <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}} formControlName="selectedService">
+                    <mat-option *ngFor="let option of service" [value]="option.displayName">
+                      {{option.displayName}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="orderDetailsForm.controls.selectedService.errors">
+                  <div
+                    *ngIf="orderDetailsForm.controls.selectedService.errors.required && orderDetailsForm.controls.selectedService.touched|| isSubmit==true "
+                    class="errorMessage">Service is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="section-two">
+              <div>
+                <p class="sub-heading">Requested Equipment</p>
+              </div>
+              <div>
+                <mat-form-field floatLabel="never">
+                  <mat-select formControlName="requestedEquipment">
+                    <mat-option *ngFor="let option of equipment" [value]="option.displayName">
+                      {{option.displayName}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="right-section">
+            <div class="section-three">
+              <div>
+                <p class="first-sub-heading">Source System</p>
+              </div>
+              <div>
+                <mat-form-field floatLabel="never">
+                  <input matInput type="sourcesystem" formControlName="sourcesystem" name="sourcesystem">
+                </mat-form-field>
+                <div *ngIf="orderDetailsForm.controls.sourcesystem.errors">
+                  <div
+                    *ngIf="orderDetailsForm.controls.sourcesystem.errors.required && orderDetailsForm.controls.sourcesystem.touched|| isSubmit==true"
+                    class="errorMessage">Source system is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="section-four">
+              <div>
+                <p>{{IncidentConst.carrier}}</p>
+                <mat-form-field floatLabel="never">
+                  <input type="carrier" formControlName="carrier" name="carrier" (keypress)="applyFilter($event)"
+                    [matAutocomplete]="auto" matInput placeholder={{IncidentConst.placeHolder.carrier}}>
+                  <mat-autocomplete matInput #auto="matAutocomplete">
+                    <div *ngIf="showlist">
+                      <mat-option *ngFor="let option of CarrierdataList" [value]="option.carrierName">
+                        {{option.carrierName}}
+                      </mat-option>
+                    </div>
+                  </mat-autocomplete>
+                  <mat-icon (click)="ClearInput()" matSuffix *ngIf="showicon && ordercontactDetails.Carrier">
+                    remove_circle_outline</mat-icon>
+                  <mat-icon *ngIf="!showicon || !ordercontactDetails.Carrier" matSuffix
+                    matTooltip={{SubmitorderdetailsConst.matCarrierTooltip}}
+                    matTooltipHideDelay={{SubmitorderdetailsConst.matTooltipHideDelay}}>
+                    info</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table" *ngIf="IsDisplayGrid">
+        <mat-table table class="details-table" [dataSource]="refNumDataSource">
+          <ng-container *ngFor="let column of refNumColumns; let i = index" [matColumnDef]="column.field">
+            <mat-header-cell *matHeaderCellDef="let col">
+              {{ column.header }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element; let x = index">
+              <ng-container>
+                {{ element[column.field] }}
+              </ng-container>
+              <ng-container *ngIf="column.field == 'action'">
+                <mat-icon (click)="deleteRefNum(element)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns" #tableHeaderRow></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </mat-table>
+        <mat-paginator #paginator
+          *ngIf="pageSize && pageSize>commonNumbers.zero && refNumDataSource.data.length>commonNumbers.five"
+          [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+      </div>
+      <div class="reference" *ngIf="isDisplayAddnew && refenceNumberList.length>0">
+        <div>
+          <p class="sub-heading">Reference Number</p>
+        </div>
+        <div class="reference-section">
+          <div class="add">
+            <div class="add-row">
+              <div>
+                <table class="reference-num-section">
+                  <tbody>
+                    <tr *ngFor="let row of refenceNumberList; let i = index">
+                      <td>
+                        <mat-form-field floatLabel="never" class="type-section">
+                          <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectType}} [(ngModel)]="row.referencetype"
+                          (focusout)="referenceSelected()">
+                            <mat-option *ngFor="let option of referencenumbertype"
+                              [value]="option.preferenceDisplayText">
+                              {{option.preferenceDisplayText}} </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <span><input matInput placeholder={{SubmitorderdetailsConst.placeHolder.ref}} [(ngModel)]="row.referencenumber"
+                            [disabled]="!isTypeSelected" (focusout)="referenceEntered()">
+                          <mat-icon (click)="removeReferenceNumber(i)">{{CommonConst.MatIcons.cancel}}
+                          </mat-icon>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <div *ngIf="isDuplicate" class="errorMessage-section">
+                    Reference number should be unique.
+                  </div>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="add-ref">
+        <button mat-button class="add-reference-num" (click)="addNew()"
+          [ngClass]="(noValue || isTypeSelected)?'disabled':'add-reference-num'">
+          {{ refenceNumberList && refenceNumberList.length > 0 ? SubmitorderdetailsConst.addAnotherReferenceNumber :
+          SubmitorderdetailsConst.addReferenceNumber}}
+        </button>
+      </div>
+      <div class="bottom-section">
+        <button mat-button class="cancel" (click)="onCancel()">{{CommonConst.btnCancel}}</button>
+        <div class="right-align-section">
+          <button mat-button [disabled]="isDuplicate" (click)="save('saveForLater') ">{{CommonConst.btnSaveForLater}}</button>
+          <button mat-button (click)="saveOrderDetails()" [disabled]="orderDetailsForm.invalid"
+            [ngClass]="(orderDetailsForm.invalid)?'disabled':'saveButton'">{{CommonConst.btnSaveContinue}}</button>
+        </div>
+      </div>
+    </mat-card>
+
+  </div>
+</div>
+<div class="main-container1">
+
+  <div class="details-section">
+    <mat-card class="card">
+      <form [formGroup]="orderDetailsForm"  >
+        <div class="top-section">
+          <div class="left-section">
+            <div class="section-one">
+              <div>
+                <p class="first-sub-heading">Service</p>
+              </div>
+              <div>
+                <mat-form-field floatLabel="never">
+                  <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}} formControlName="selectedService">
+                    <mat-option *ngFor="let option of service" [value]="option.displayName">
+                      {{option.displayName}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="orderDetailsForm.controls.selectedService.errors">
+                  <div
+                    *ngIf="orderDetailsForm.controls.selectedService.errors.required && orderDetailsForm.controls.selectedService.touched|| isSubmit==true "
+                    class="errorMessage">Service is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="section-two">
+              <div>
+                <p class="sub-heading">Requested Equipment</p>
+              </div>
+              <div>
+                <mat-form-field floatLabel="never">
+                  <mat-select formControlName="requestedEquipment">
+                    <mat-option *ngFor="let option of equipment" [value]="option.displayName">
+                      {{option.displayName}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="right-section">
+            <div class="section-three">
+              <div>
+                <p class="first-sub-heading">Source System</p>
+              </div>
+              <div>
+                <mat-form-field floatLabel="never">
+                  <input matInput type="sourcesystem" formControlName="sourcesystem" name="sourcesystem">
+                </mat-form-field>
+                <div *ngIf="orderDetailsForm.controls.sourcesystem.errors">
+                  <div
+                    *ngIf="orderDetailsForm.controls.sourcesystem.errors.required && orderDetailsForm.controls.sourcesystem.touched|| isSubmit==true"
+                    class="errorMessage">Source system is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="section-four">
+              <div>
+                <p>{{IncidentConst.carrier}}</p>
+                <mat-form-field floatLabel="never">
+                  <input type="carrier" formControlName="carrier" name="carrier" (keypress)="applyFilter($event)"
+                    [matAutocomplete]="auto" matInput placeholder={{IncidentConst.placeHolder.carrier}}>
+                  <mat-autocomplete matInput #auto="matAutocomplete">
+                    <div *ngIf="showlist">
+                      <mat-option *ngFor="let option of CarrierdataList" [value]="option.carrierName">
+                        {{option.carrierName}}
+                      </mat-option>
+                    </div>
+                  </mat-autocomplete>
+                  <mat-icon (click)="ClearInput()" matSuffix *ngIf="showicon && ordercontactDetails.Carrier">
+                    remove_circle_outline</mat-icon>
+                  <mat-icon *ngIf="!showicon || !ordercontactDetails.Carrier" matSuffix
+                    matTooltip={{SubmitorderdetailsConst.matCarrierTooltip}}
+                    matTooltipHideDelay={{SubmitorderdetailsConst.matTooltipHideDelay}}>
+                    info</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table table-ref-number" *ngIf="IsDisplayGrid">
+        <mat-table table class="details-table" [dataSource]="refNumDataSource">
+          <ng-container *ngFor="let column of refNumColumns; let i = index" [matColumnDef]="column.field">
+            <mat-header-cell *matHeaderCellDef="let col">
+              {{ column.header }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element; let x = index">
+              <ng-container>
+                {{ element[column.field] }}
+              </ng-container>
+              <ng-container *ngIf="column.field == 'action'">
+                <mat-icon (click)="deleteRefNum(element)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns" #tableHeaderRow></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </mat-table>
+        <mat-paginator #paginator
+          *ngIf="pageSize && pageSize>commonNumbers.zero && refNumDataSource.data.length>commonNumbers.five"
+          [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+      </div>
+      <div class="reference" *ngIf="isDisplayAddnew && refenceNumberList.length>0">
+        <div>
+          <p class="sub-heading">Reference Number</p>
+        </div>
+        <div class="reference-section">
+          <div class="add">
+            <div class="add-row">
+              <div>
+                <table class="reference-num-section">
+                  <tbody>
+                    <tr *ngFor="let row of refenceNumberList; let i = index">
+                      <td>
+                        <div class="reference-num-section__row-1">
+                          <mat-form-field floatLabel="never" class="type-section">
+                            <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectType}} [(ngModel)]="row.referencetype"
+                            (focusout)="referenceSelected()">
+                              <mat-option *ngFor="let option of referencenumbertype"
+                                [value]="option.preferenceDisplayText">
+                                {{option.preferenceDisplayText}} </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                       </div>
+                       <div class="reference-num-section__row-2">
+                        <input matInput placeholder={{SubmitorderdetailsConst.placeHolder.ref}} [(ngModel)]="row.referencenumber"
+                          [disabled]="!isTypeSelected" (focusout)="referenceEntered()">                                             
+                       </div>
+                       <mat-icon (click)="removeReferenceNumber(i)">{{CommonConst.MatIcons.cancel}}
+                      </mat-icon> 
+                      </td>                    
+                    </tr>
+                  </tbody>
+                  <div *ngIf="isDuplicate" class="errorMessage-section">
+                    Reference number should be unique.
+                  </div>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="add-ref">
+        <button mat-button class="add-reference-num" (click)="addNew()"
+          [ngClass]="(noValue || isTypeSelected)?'disabled':'add-reference-num'">
+          {{ refenceNumberList && refenceNumberList.length > 0 ? SubmitorderdetailsConst.addAnotherReferenceNumber :
+          SubmitorderdetailsConst.addReferenceNumber}}
+        </button>
+      </div>
+     
+    </mat-card>
+    <div class="bottom-section footer-button">
+      <button mat-button class="cancel" (click)="onCancel()">{{CommonConst.btnCancel}}</button>
+      <button mat-button class="savelateer" [disabled]="isDuplicate" (click)="save('saveForLater') ">{{CommonConst.btnSaveForLater}}</button>
+      <button mat-button (click)="saveOrderDetails()" class="saveButton"  [disabled]="orderDetailsForm.invalid"
+        [ngClass]="(orderDetailsForm.invalid)?'disabled':'saveButton'">{{CommonConst.btnSaveContinue}}</button>
+    </div>
+  </div>
+</div>

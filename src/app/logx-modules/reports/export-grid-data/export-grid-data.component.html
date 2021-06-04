@@ -1,0 +1,16 @@
+<form [formGroup]="exportGridDataForm">
+    <div class="export-main-container">
+        <p>{{exportGridDataConst.exportTitle}}</p>
+       
+        <div class="radio-button">
+         <mat-radio-group formControlName="documentType" #radioGroup="matRadioGroup"  class="radio">
+               <mat-radio-button [checked]="selectedValue" [value]="exportGridDataConst.visibleColumns" color="primary">{{exportGridDataConst.visibleColumns}}</mat-radio-button>
+               <mat-radio-button  [value]="exportGridDataConst.allColumns" color="primary">{{exportGridDataConst.allColumns}}</mat-radio-button>
+           </mat-radio-group>      
+        </div>
+        <div class="button">
+          <button mat-button (click)="closePopup()">{{CommonConst.btnCancel}}</button>
+          <button mat-button (click)="onExport(radioGroup.value)">{{CommonConst.btnExport}}</button>
+        </div>
+      </div>
+    </form>

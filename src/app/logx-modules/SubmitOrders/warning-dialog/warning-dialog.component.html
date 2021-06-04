@@ -1,0 +1,8 @@
+<mat-dialog-content>
+    <p>
+        Order number {{updatedOrderNumber}} already exists in the system. Please use a unique number.
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button (click)="onOkClick()" *ngIf="okButtonText != ''">{{okButtonText}}</button>
+</mat-dialog-actions>

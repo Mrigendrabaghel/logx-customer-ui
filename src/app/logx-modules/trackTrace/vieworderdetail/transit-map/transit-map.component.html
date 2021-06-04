@@ -1,0 +1,20 @@
+<div class="map-container">
+  <agm-map [latitude]="start[0]" [longitude]="start[1]" [fullscreenControl]='true' [mapTypeControl]='true'
+    [fitBounds]="true" [zoomControl]="true" [restriction]="worldRestriction" [disableDefaultUI]="false">
+    <!-- <agm-info-window #infowindow> -->
+    <agm-marker *ngFor="let coordinate of stopMarker; let i=index" [latitude]="coordinate.latitude"
+      [longitude]="coordinate.longitude" [agmFitBounds]="true" (markerClick)="clickedMarker(infowindow)" [label]="coordinate.label">
+      <agm-info-window #infowindow>
+        <strong>{{showData}}</strong>
+      </agm-info-window>
+    </agm-marker>
+    <!-- <agm-polyline [visible]="true" [strokeWeight]="3" [strokeColor]="'#07b57a'">
+      <agm-polyline-point *ngFor="let coordinate of stopMarker; let i=index" [latitude]="coordinate.latitude"
+        [longitude]="coordinate.longitude">
+      </agm-polyline-point>
+    </agm-polyline> -->
+    <agm-direction [origin]="origin" [destination]="destination" [renderOptions]="renderOptions">
+    </agm-direction>
+  <!-- </agm-info-window> -->
+  </agm-map>
+</div>

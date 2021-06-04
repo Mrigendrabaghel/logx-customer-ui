@@ -1,0 +1,81 @@
+@import "src/crowley-themes.scss";
+@import "../../../../Styles/mixins.scss";
+
+.mainContainer {
+    h2 {
+        font-weight: bold;
+    }
+    .mat-typography {
+        h3 {
+            text-align: center;
+            font-style: italic;
+            font-weight: bold;
+        }
+        .returnHome {
+            text-align: center;
+            a {
+                text-decoration: underline;
+                font-size: 12px;
+                cursor: pointer;
+                color:$accent;
+            }
+        }
+    }
+    .cancelButton {
+        width: 38%;
+        outline: none;
+        @include filled-buttons;
+    }
+}
+
+.mobileView {
+    p:first-of-type {
+        font-size: 20px;
+        font-style: italic;
+        font-weight: 500;
+        text-align: center;
+    }
+    p:nth-child(2) {
+        font-style: italic;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 500;
+    }
+    p:nth-child(3) {
+        a {
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        padding-top: 20px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+    }
+}
+
+.mobileView {
+    p:first-of-type {
+        font-size: 20px;
+        font-style: italic;
+        font-weight: 500;
+        text-align: center;
+    }
+    p:nth-child(2) {
+        font-style: italic;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 500;
+    }
+    p:nth-child(3) {
+        a {
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        padding-top: 20px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+    }
+}

@@ -1,0 +1,256 @@
+<div class="main-container">
+  <p class="section-heading">{{ApproveAccessorial.header}}</p>
+  <div class="details-section">
+    <mat-card class="card">
+      <div class="spacer">
+        <div>
+          <p>Status:</p>
+          <p>{{statusMessage}}</p>
+        </div>
+      </div>
+      <div class="center">
+        <ul>
+          <li>
+            <div>{{ApproveAccessorial.dateOfFilling}} </div>
+            <div>{{accessorialDisplaydetails.dateOfFiling}}</div>
+          </li>
+          <!-- <li> Future use
+            <div>{{ApproveAccessorial.trackingNo}}</div>
+            <div>{{accessorialDisplaydetails.trackingNumber}}</div>
+          </li> -->
+          <li>
+            <div>{{ApproveAccessorial.billLading}} </div>
+            <div>{{accessorialDisplaydetails.bOL}}</div>
+          </li>
+          
+        </ul>
+        <ul>
+          <li>
+            <div>{{OrderDetailConst.carrier}} </div>
+            <div>{{accessorialDisplaydetails.carrierName}}</div>
+          </li>
+          <!-- <li> Future use
+            <div>{{ApproveAccessorial.driverPOCName}} </div>
+            <div>{{accessorialDisplaydetails.driverPOCName}}</div>
+          </li>
+          <li> 
+            <div>{{ApproveAccessorial.driverPOCEmail}} </div>
+            <div>{{accessorialDisplaydetails.driverPOCPhone}}</div>
+          </li> -->
+          <li>
+            <div>{{ApproveAccessorial.VLOSCN}}</div>
+            <div>{{accessorialDisplaydetails.vLOSCN}}</div>
+          </li>
+          <!-- <li> Future use
+            <div>{{ApproveAccessorial.occurenceDate}} </div>
+            <div>{{accessorialDisplaydetails.occurrenceDate}}</div>
+          </li> -->
+        </ul>
+      </div>
+
+    </mat-card>
+  </div>
+  <div class="details-section commentSection">
+    <mat-card class="card">
+      <div class="spacer">
+        <div>
+          <p>{{ApproveAccessorial.Comments}}<span *ngIf="commentsCount>0 && isShowComments"> ({{commentsCount}})</span></p>
+        </div>
+        <div class="expandCollapse" *ngIf="!isExpandedComments">
+          <mat-icon (click)="showComments(true)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+        </div>
+        <div class="expandCollapse" *ngIf="isExpandedComments">
+          <mat-icon (click)="showComments(false)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+        </div>
+      </div>
+      <div class="center" *ngIf="isExpandedComments">
+        <div class="comment-section" *ngIf="!isShowComments">
+          <table>
+            <tbody>
+              <tr *ngFor="let row of enterComments; let i = index">
+                <td>
+                  <textarea matInput placeholder="Add comments" [(ngModel)]="row.comment"
+                    (change)="getComments(row.comment, i)"></textarea>
+                  <mat-icon *ngIf="row.comment" (click)="removeComment(i)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table  no-header" *ngIf="isShowComments">
+          <mat-table table class="mat-elevation-z8" cdkDropList cdkDropListOrientation="horizontal"
+        [dataSource]="seComments">
+
+          <ng-container matColumnDef="item">
+
+            <mat-header-cell *matHeaderCellDef >
+          </mat-header-cell>
+            <mat-cell *matCellDef="let seComments"> {{seComments}}</mat-cell>
+
+          </ng-container>
+     
+          <mat-header-row  *matHeaderRowDef="displayedColumns" #tableHeaderRow></mat-header-row>
+    
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+
+
+        </div>
+        <div class="buttons" *ngIf="!isShowComments">
+          <div>
+            <button (click)="addNew()"><span>{{CommonConst.addComments}}</span></button>
+          </div>
+          <div>
+            <button mat-button (click)="cancelComment()">{{CommonConst.btnCancel}}</button>
+            <button mat-button class = "savebtn" (click)="saveComment()">{{CommonConst.save}}</button>
+          </div>
+        </div>
+        <div class="addComment" *ngIf="isShowComments">
+          <button (click)="addNew()"><span>{{CommonConst.addComments}}</span></button>   
+          <mat-paginator *ngIf="pageSize && pageSize>0 && seComments.data.length>5" [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions">
+          </mat-paginator>        
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="details-section detailSection">
+    <mat-card class="card">
+      <div class="spacer">
+        <div>
+          <p>{{ApproveAccessorial.Attachments}}<span *ngIf="orderAttachmentCount>0"> ({{orderAttachmentCount}})</span></p>
+        </div>
+        <div class="expandCollapse" *ngIf="!isExpandedAttachments">
+          <mat-icon (click)="showAttachments(true)">{{CommonConst.MatIcons.keyboard_arrow_down}}</mat-icon>
+        </div>
+        <div class="expandCollapse" *ngIf="isExpandedAttachments">
+          <mat-icon (click)="showAttachments(false)">{{CommonConst.MatIcons.keyboard_arrow_up}}</mat-icon>
+        </div>
+      </div>
+      <div class="center two" *ngIf="isExpandedAttachments">
+         <app-attachments-detail *ngIf="orderAttachmentCount>0" [orderAttachmentdataSource]="orderAttachmentdataSource"></app-attachments-detail> 
+      </div>
+    </mat-card>
+  </div>
+  <div class="mainButtons">
+    <div>
+      <button mat-button (click)="goToAccessorialGrid()">{{CommonConst.btnCancel}}</button>
+    </div>
+    <div *hasPermission="['TO','TA'];Widgets:['Approve Accessorials'];Actions:['approve']">
+      <button mat-button (click)="goToadditionalInfoDialog()">{{CommonConst.additionalInfo}}</button>
+      <button mat-button (click)="goToaccessorialInfoDialog()">{{CommonConst.Reject}}</button>
+      <button mat-button (click)="approveAccessorial()">{{CommonConst.Approve}}</button>
+    </div>
+  </div>
+</div>
+<div class="main-container1">
+  <div class="main-container1__section">
+  <p class="section-heading">{{ApproveAccessorial.header}}</p>
+  <div class="details-section">
+    <mat-card class="product-card"> 
+      <mat-card-header> 
+          <mat-card-title>
+            <p>Status:</p>
+            <p>{{statusMessage}}</p>
+          </mat-card-title>           
+      </mat-card-header>     
+      <mat-card-content class="product-card__content">         
+          <div class="orderdetails__item">
+            <label>{{ApproveAccessorial.dateOfFilling}}</label>
+            <p>{{accessorialDisplaydetails.dateOfFiling}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{ApproveAccessorial.billLading}}</label>
+            <p>{{accessorialDisplaydetails.bOL}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{OrderDetailConst.carrier}}</label>
+            <p>{{accessorialDisplaydetails.carrierName}}</p>
+          </div>
+          <div class="orderdetails__item">
+            <label>{{ApproveAccessorial.VLOSCN}}</label>
+            <p>{{accessorialDisplaydetails.vLOSCN}}</p>
+          </div>         
+      </mat-card-content> 
+    </mat-card>
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{ApproveAccessorial.Comments}}<span *ngIf="commentsCount>0 && isShowComments"> ({{commentsCount}})</span>
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <div class="commentSection">
+              <div class="center">
+                <div class="comment-section" *ngIf="!isShowComments">
+                  <table>
+                    <tbody>
+                      <tr *ngFor="let row of enterComments; let i = index">
+                        <td>
+                          <textarea matInput placeholder="Add comments" [(ngModel)]="row.comment"
+                            (change)="getComments(row.comment, i)"></textarea>
+                          <mat-icon *ngIf="row.comment" (click)="removeComment(i)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="table" *ngIf="isShowComments">
+                  <table mat-table [dataSource]="seComments" class="mat-elevation-z8">             
+                    <ng-container matColumnDef="item">
+                      <th mat-header-cell *matHeaderCellDef> </th>
+                      <td mat-cell *matCellDef="let seComments"> {{seComments}} </td>               
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                </div>
+                <div class="buttons" *ngIf="!isShowComments">
+                  <div>
+                    <button (click)="addNew()"><span>{{CommonConst.addComments}}</span></button>
+                  </div>
+                  <div>
+                    <button mat-button (click)="cancelComment()">{{CommonConst.btnCancel}}</button>
+                    <button mat-button (click)="saveComment()">{{CommonConst.save}}</button>
+                  </div>
+                </div>
+                <div class="addComment" *ngIf="isShowComments">
+                  <button (click)="addNew()"><span>{{CommonConst.addComments}}</span></button>   
+                  <mat-paginator *ngIf="pageSize && pageSize>0 && seComments.data.length>5" [pageSize]="pageSize"
+                    [pageSizeOptions]="pageSizeOptions">
+                  </mat-paginator>        
+                </div>
+              </div>            
+          </div>      
+         </mat-panel-description>                  
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+         <mat-expansion-panel-header>
+         <mat-panel-title>
+          {{ApproveAccessorial.Attachments}}<span *ngIf="orderAttachmentCount>0"> ({{orderAttachmentCount}})</span>
+         </mat-panel-title>
+         </mat-expansion-panel-header>
+         <mat-panel-description>
+          <app-attachments-detail *ngIf="orderAttachmentCount>0" [orderAttachmentdataSource]="orderAttachmentdataSource"></app-attachments-detail> 
+         </mat-panel-description>                  
+      </mat-expansion-panel>      
+    </mat-accordion> 
+  </div>
+</div>  
+  <div class="footer-button">
+    <div>
+      <button class="cancel" mat-button (click)="goToAccessorialGrid()">{{CommonConst.btnCancel}}</button>
+    </div>
+    <div *hasPermission="['TO','TA'];Widgets:['Approve Accessorials'];Actions:['approve']">
+      <button class="info" mat-button (click)="goToadditionalInfoDialog()">{{CommonConst.moreInfo}}</button>
+      <button class="reject" mat-button (click)="goToaccessorialInfoDialog()">{{CommonConst.Reject}}</button>
+      <button class="approve" mat-button (click)="approveAccessorial()">{{CommonConst.Approve}}</button>
+    </div>
+  </div>
+
+</div>

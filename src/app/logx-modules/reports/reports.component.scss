@@ -1,0 +1,22 @@
+.cdk-overlay-pane.my-dialog {
+    position: relative!important;
+  }
+  .main {
+  display: block;
+  .first-section {
+    width: 100%;
+    display: flex;
+  }
+
+  .hide{
+    display: none;
+  }
+  @media only screen and (max-width:812px) {
+  
+      ::ng-deep iframe {
+        width: 100% !important;
+      }
+  
+    
+}
+  }

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{UserPreferenceConst.addaddress}}</h1>
+<div mat-dialog-content>
+<app-location-search [formName]="UserPreferenceForm" [clickSubject]="clickSubject" [location]="locationDetails" (getLocationUserPref)="acceptUserPrefLoc($event)" ></app-location-search>
+
+</div>
+<div mat-dialog-actions>
+  <div class="buttons">
+    <button mat-button class="cancel" (click)="onConfirmClick()">{{ CommonConst.cancel }}</button>
+    <button mat-button class="search" (click)="notifyClick()" [mat-dialog-close]="data">{{ CommonConst.add }}</button>
+</div>
+
+</div>

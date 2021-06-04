@@ -1,0 +1,89 @@
+<div class="main-container" >
+    <div class="right-section">
+      <form >
+        <mat-card>
+            <p>{{AccessorialApprovalGrid.header}}</p>
+            <div class="accessorial-count">
+              <div>
+                {{AccessorialApprovalGrid.TotalRecords}} <strong>{{totalLength}}</strong>
+              </div>
+              <div *ngIf="countOfPendingApprovals>0" class="pending-approvals">
+                <span  class="material-icons">
+                  report_problem
+                </span>
+                <span>{{countOfPendingApprovals}} pending approval(s) for more than 3 weeks</span>
+              </div>
+            </div>
+            <div class="table" > 
+             <mat-table table matSort *ngIf="isDisplayTable"  class="details-table" [dataSource]="accessorialDataSource">
+               
+              <ng-container *ngFor="let column of accessorialGrid; let i = index" [matColumnDef]="column.headingDBColumn">
+                      <mat-header-cell mat-sort-header *matHeaderCellDef >
+                      {{column.headingDisplayText}}  </mat-header-cell>
+                    <mat-cell [ngClass]="{'pending-approvals' : element.isPending === true}" *matCellDef="let element" (click)="goToAccessorialDetails(element)">{{element[column.headingDBColumn]}} </mat-cell>        
+                  </ng-container>
+        
+                  <mat-header-row *matHeaderRowDef="accessorialColumns" #tableHeaderRow></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: accessorialColumns;"></mat-row>
+        
+                </mat-table>
+                <mat-paginator [length]="totalLength" (page)="onPaginateChange($event)"
+                   #paginator #paginatorElement *ngIf="isDisplayTable && pageSize && pageSize>0 && accessorialDataSource.data.length>commonNumbers.nine"
+                   [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                <ng-container *ngIf="noRecordsFound" >
+                    <div class="nodata">{{CommonConst.nodata}}</div>
+                 </ng-container>
+            </div>
+         
+        </mat-card>
+    </form>
+  </div>
+</div>
+<div class="main-container1" >
+  <div class="right-section">
+    <form>
+      <p>{{AccessorialApprovalGrid.header}}</p>
+          <div class="accessorial-count">
+            <div class="total-records">
+              {{AccessorialApprovalGrid.TotalRecords}} <strong>{{totalLength}}</strong>
+            </div>
+            <div *ngIf="countOfPendingApprovals>0" class="pending-approvals">
+              <span  class="material-icons">
+                report_problem
+              </span>
+              <span>{{countOfPendingApprovals}} pending approval(s) for more than 3 weeks</span>
+            </div>
+          </div>     
+      <mat-card class="crowley-adv-listview">
+        <mat-list *ngIf="isDisplayTable">
+           <mat-list-item [ngClass]="{'pending-approvals' : element.isPending === true}" *ngFor="let element of accessorialDataSource.data" (click)="goToAccessorialDetails(element)">      
+             <div class="two-col-item">
+                 <div class="item">
+                    <h4>{{ApproveAccessorial.dateOfFilling}}</h4>
+                    <p>{{element.dateOfFiling}}</p> 
+                 </div>        
+                 <div class="item">
+                    <h4>{{ApproveAccessorial.accessorialCode}}</h4>
+                    <p>{{element.accessorialCode}}</p>
+                 </div> 
+              </div>
+              <div class="item">
+                <h4>{{ApproveAccessorial.orderNumber}}</h4>
+                <p> {{element.orderNumber}}</p>
+             </div> 
+              <div class="icon">
+                 <mat-icon>keyboard_arrow_right</mat-icon>
+              </div>           
+           </mat-list-item>
+         </mat-list> 
+         <mat-paginator [length]="totalLength" (page)="onPaginateChange($event)"
+         #paginator #paginatorElement *ngIf="isDisplayTable && pageSize && pageSize>0 && accessorialDataSource.data.length>commonNumbers.nine"
+         [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+         <ng-container *ngIf="noRecordsFound" >
+          <div class="nodata">{{CommonConst.nodata}}</div>
+        </ng-container>    
+        </mat-card>  
+        
+  </form>
+</div>
+</div>

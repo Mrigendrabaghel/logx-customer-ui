@@ -1,0 +1,812 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../Styles/mixins.scss";
+.errorMessage {
+	padding: 0px;
+}
+
+.incidentcss {
+	.table {
+		box-shadow: none;
+		width: 100%;
+		padding: 5px;
+		margin-top: 10px;
+		margin-left: -8px; //m
+		.desc {
+			border: 0;
+			border-bottom: 1px solid #000000;
+			width: 50em; 
+			border-radius: 0px;
+			padding-bottom: 8px;
+			font-size: 16px;
+			text-align: initial;
+			margin-top: 8px; 
+		}
+		th {
+			color: $black;
+			width: 27%;
+			font-size: 12px;
+			font-weight: normal;
+			padding: 0 30px 0 12px;
+			// padding: 0 30px 0 12px !important;
+			cursor: pointer;
+			border: hidden;
+		}
+		th:first-of-type {
+			padding: 12px;
+		}
+		th:nth-child(2) {
+			padding-left: 13px; //m
+			padding-top: 13px; //m
+		}
+		th:nth-child(3) {
+			padding-left: 25px;
+		}
+		td {
+			padding: 0px 0px 5px 12px;
+			font-size: 12px;
+			border: hidden;
+			span {
+				display: flex;
+				mat-icon {
+					color: $primary;
+					height: 20px;
+					cursor: pointer;
+					font-size: 26px; //m
+					// padding: 0 0 0 14px; //m
+					// mat-input {
+					// 	padding-bottom:  12px !important;
+					// }
+				}
+			}
+		}
+		.form-control {
+			border: 0;
+			border-bottom: 1px solid #000000;
+			// width: 21em;
+			border-radius: 0px;
+			font-size: 16px;
+			padding-left: 2px;
+			background-color: white;
+		}
+		mat-select {
+			border: 0;
+			border-bottom: 1px solid $black;
+			width: 90%;
+			padding-bottom: 36px;
+			font-size: 16px;
+			height: 25px !important;
+			line-height: 33px !important;
+			text-align: left;
+		}
+		.uploadButton {
+			padding: 12px;
+			button {
+				@include filled-buttons;
+			}
+		}
+		.noteText {
+			font-size: 12px;
+			color: $primary;
+			text-align: left;
+			padding: 5px 16px 0px 5px;
+		}
+		
+		.input-container {
+			display: flex;
+			width: 100%;
+			.inputSection {
+				padding: 0px 10px 10px 16px;
+				p {
+					font-size: 12px;
+					color: $black;
+					text-align: left;
+				}
+				input {
+					width: 100%;
+					outline: none;
+					border: transparent;
+					border-bottom: solid 1.5px gray;
+					margin-bottom: 24px;
+				}
+			}
+			.one {
+				width: 30%;
+			}
+			.two {
+				width: 30%;
+				mat-select {
+					border: none;
+					border-bottom: solid 1.5px gray !important;
+					padding-top: 2px;
+					margin-bottom: 24px;
+				}
+			}
+			.three {
+				width: 30%;
+				div {
+					display: flex;
+					input {
+						width: 30vw;
+					}
+					mat-icon {
+						text-align: end;
+						color: $primary;
+						font-size: 22px;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+		.uploadSectionbuttons {
+			text-align: end;
+			button {
+				width: 15%;
+				font-size: 12px;
+				margin-right: 10px;
+			}
+			button:first-of-type {
+				@include no-outline-buttons;
+			}
+			button:nth-child(2) {
+				@include buttons;
+			}
+			.disable {
+				color: $white !important;
+				background-color: $mileStone_gray !important;
+			}
+			.disable {
+				color: $white !important;
+				background-color: $crowley_border_gray !important;
+			}
+		}
+		.table {
+			.details-table {
+				// margin: 16px 0px;
+				box-shadow: none;
+				width: 100%;
+				th {
+					color: $accent;
+					padding: 0px 6px 14px 10px !important;
+					font-weight: normal;
+				}
+				tr:hover {
+					cursor: pointer;
+					background-color: $crowley_gray;
+				}
+				td {
+					padding: 10px 6px 10px 16px;
+					word-break: break-all;
+				}
+			}
+		}
+	}
+}
+
+.ordercss {
+	.table {
+		box-shadow: none;
+		width: 100%;
+		padding: 5px;
+		margin-top: 10px;
+		.desc {
+			border: 0;
+			border-bottom: 1px solid $black;
+			width: 90%;
+			border-radius: 0px;
+			padding: 8px 8px 8px 1px;
+			font-size: 16px;
+			text-align: left;
+		}
+		td {
+			padding: 10px 6px 10px 16px;
+			word-break: break-all;
+		}
+		th {
+			color: $black;
+			width: 27%;
+			font-size: 12px;
+			font-weight: normal;
+			padding: 0 30px 0 12px;
+			cursor: pointer;
+			border: hidden;
+		}
+		th:first-of-type {
+			padding: 12px;
+			text-align: left;
+		}
+		th:nth-child(2) {
+			padding: 12px 12px 12px 34px;
+			text-align: left;
+		}
+		th:nth-child(3) {
+			padding: 12px 12px 12px 23px;
+			text-align: left;
+		}
+		td {
+			padding: 5px 0px 5px 12px;
+			font-size: 12px;
+			border: hidden;
+			mat-icon {
+				color: $primary;
+				height: 20px;
+				cursor: pointer;
+				font-size: 20px;
+				padding: 0 0 0 5px;
+				top: 10px;
+			}
+		}
+		.form-control {
+			border: 0;
+			border-bottom: 1px solid $black;
+			width: 90%;
+			border-radius: 0px;
+			font-size: 16px;
+			padding-left: 2px;
+		}
+		mat-select {
+			border: 0;
+			border-bottom: 1px solid $black;
+			width: 90%;
+			padding-bottom: 35px;
+			font-size: 16px;
+			height: 25px !important;
+			line-height: 33px !important;
+			text-align: left;
+		}
+		.uploadButton {
+			padding: 12px;
+			text-align: end;
+			button {
+				@include filled-buttons;
+				padding: 0px 5px;
+            }
+            .mat-button-disabled{
+                color: $primary;
+            }
+		}
+		.noteText {
+			font-size: 12px;
+			color: $accent;
+			text-align: left;
+			padding: 5px 16px 0px 11px;
+			.maxFile {
+				color: $primary;
+			}
+		}
+		
+		.input-container {
+			display: flex;
+			width: 100%;
+			.inputSection {
+				padding: 0px 10px 10px 16px;
+				p {
+					font-size: 12px;
+					color: $black;
+					text-align: left;
+				}
+				input {
+					width: 100%;
+					outline: none;
+					border: transparent;
+					border-bottom: solid 1.5px gray;
+					margin-bottom: 24px;
+				}
+			}
+			.one {
+				width: 30%;
+			}
+			.two {
+				width: 30%;
+				mat-select {
+					border: none;
+					border-bottom: solid 1.5px gray !important;
+					padding-top: 2px;
+					margin-bottom: 24px;
+				}
+			}
+			.three {
+				width: 30%;
+				div {
+					display: flex;
+					input {
+						width: 30vw;
+					}
+					mat-icon {
+						text-align: end;
+						color: $primary;
+						font-size: 22px;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+		.uploadSectionbuttons {
+			text-align: end;
+			button {
+				width: 15%;
+				font-size: 12px;
+				margin-right: 10px;
+			}
+			button:first-of-type {
+				@include no-outline-buttons;
+			}
+			button:nth-child(2) {
+				@include buttons;
+			}
+			.disable {
+				color: $white !important;
+				background-color: $mileStone_gray !important;
+			}
+		}
+		.table {
+			.details-table {
+				// margin: 16px 0px;
+				box-shadow: none;
+				width: 100%;
+				th {
+					color: $accent;
+					padding: 0px 6px 14px 10px !important;
+					font-weight: normal;
+				}
+				tr:hover {
+					cursor: pointer;
+					background-color: $crowley_gray;
+				}
+				td {
+					padding: 10px 6px 10px 16px;
+					word-break: break-all;
+				}
+			}
+		}
+	}
+}
+
+.orderAddInfocss {
+	.table {
+		box-shadow: none;
+		width: 100%;
+		padding: 5px;
+		margin-top: 10px;
+		.desc {
+			border: 0;
+			border-bottom: 1px solid $black;
+			width: 90%;
+			border-radius: 0px;
+			padding: 8px;
+			font-size: 16px;
+			text-align: left;
+		}
+		td {
+			padding: 10px 6px 10px 13px;
+			word-break: break-all;
+		}
+		th {
+			color: $black;
+			width: 27%;
+			font-size: 12px;
+			font-weight: normal;
+			padding: 0 30px 0 12px;
+			cursor: pointer;
+			border: hidden;
+		}
+		th:first-of-type {
+			padding: 12px;
+			text-align: left;
+		}
+		th:nth-child(2) {
+			padding: 12px 12px 12px 13px;
+			text-align: left;
+		}
+		th:nth-child(3) {
+			padding: 12px 12px 12px 13px;
+			text-align: left;
+		}
+		td {
+			padding: 5px 0px 5px 12px;
+			font-size: 12px;
+			border: hidden;
+			mat-icon {
+				color: $primary;
+				height: 20px;
+				cursor: pointer;
+				font-size: 20px;
+				padding: 0 0 0 5px;
+				margin: -9px;
+			}
+		}
+		.form-control {
+			border: 0;
+			border-bottom: 1px solid $black;
+			width: 90%;
+			border-radius: 0px;
+			font-size: 16px;
+			padding-left: 2px;
+		}
+		mat-select {
+			border: 0;
+			border-bottom: 1px solid $black;
+			width: 90%;
+			padding-bottom: 35px;
+			font-size: 16px;
+			height: 25px !important;
+			line-height: 33px !important;
+			text-align: left;
+		}
+		.uploadButton {
+			padding: 12px;
+			text-align: end;
+			button {
+				@include filled-buttons;
+            }
+            .mat-button-disabled{
+                color: $primary;
+            }
+		}
+		.noteText {
+			font-size: 12px;
+			color: $accent;
+			text-align: left;
+			padding: 5px 16px 0px 11px;
+			.maxFile {
+				color: $primary;
+			}
+		}
+		
+		.input-container {
+			display: flex;
+			width: 100%;
+			.inputSection {
+				padding: 0px 10px 10px 16px;
+				p {
+					font-size: 12px;
+					color: $black;
+					text-align: left;
+				}
+				input {
+					width: 100%;
+					outline: none;
+					border: transparent;
+					border-bottom: solid 1.5px gray;
+					margin-bottom: 24px;
+				}
+			}
+			.one {
+				width: 30%;
+			}
+			.two {
+				width: 30%;
+				mat-select {
+					border: none;
+					border-bottom: solid 1.5px gray !important;
+					padding-top: 2px;
+					margin-bottom: 24px;
+				}
+			}
+			.three {
+				width: 30%;
+				div {
+					display: flex;
+					input {
+						width: 30vw;
+					}
+					mat-icon {
+						text-align: end;
+						color: $primary;
+						font-size: 22px;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+		.uploadSectionbuttons {
+			text-align: end;
+			button {
+				width: 15%;
+				font-size: 12px;
+				margin-right: 10px;
+			}
+			button:first-of-type {
+				@include no-outline-buttons;
+			}
+			button:nth-child(2) {
+				@include buttons;
+			}
+			.disable {
+				color: $white !important;
+				background-color: $mileStone_gray !important;
+			}
+			.disable {
+				color: $white !important;
+				background-color: $crowley_border_gray !important;
+			}
+		}
+		.table {
+			.details-table {
+				// margin: 16px 0px;
+				box-shadow: none;
+				width: 100%;
+				th {
+					color: $accent;
+					padding: 0px 6px 14px 10px !important;
+					font-weight: normal;
+				}
+				tr:hover {
+					cursor: pointer;
+					background-color: $crowley_gray;
+				}
+				td {
+					padding: 10px 6px 10px 16px;
+					word-break: break-all;
+				}
+			}
+		}
+	}
+}
+
+.hide
+  {
+    display: none;
+  }
+  @media only screen and (max-width:812px) {
+	.ordercss{
+		.table{
+		  th:nth-child(2) {
+			  padding: 12px 6px 12px 1px;
+			  text-align: left;
+		  }
+		  th:nth-child(3) {
+			padding: 12px 12px 12px 1px;
+		}
+		  .uploadButton {		
+			button {
+				padding: 0px 10px;
+            }
+		}
+		.desc{
+			font-size: 15px;
+		}
+		td{
+			padding-left: 1px;
+		}
+		th:first-of-type  {
+			padding-left: 1px;
+		};
+
+
+		}
+	}
+	.incidentcss {
+		
+		::ng-deep mat-icon{
+			color: $primary;
+		}
+		.table {			
+			padding: 0px !important;
+			margin-left: -5px;
+			th{ 
+				width: auto;
+				&:nth-child(3){
+					padding-left: 0px;	
+								
+				}
+			}
+			td{
+				border: none;
+			}
+		}
+		.table .desc{
+			width: 100%;	
+		}
+	}
+	.uploadButton {
+		padding: 0 !important;
+	}
+	.uploadSectionbuttons {
+		text-align: center;
+		display: flex;
+		button {
+			width: auto !important;
+			font-size: 12px;
+			margin-right: 10px;
+		}
+		button:first-of-type {
+			@include no-outline-buttons;
+		}
+		button:nth-child(2) {
+			@include buttons;
+		}
+		button:nth-child(3) {
+			margin-right: 0px !important;
+		}
+		.disable {
+			color: $white !important;
+			background-color: $crowley_border_gray !important;
+		}
+	}	
+	.orderAddInfocss {
+		.table {
+			box-shadow: none;
+			width: 100%;
+			padding: 5px;
+			margin-top: 10px;
+			.desc {
+				border: 0;
+				border-bottom: 1px solid $black;
+				width: 90%;
+				border-radius: 0px;
+				padding: 8px;
+				font-size: 16px;
+				text-align: left;
+			}
+			td {
+				padding: 10px 6px 10px 16px;
+				word-break: break-all;
+			}
+			th {
+				color: $black;
+				width: auto;
+				font-size: 15px;
+				font-weight: normal;
+				padding: 0 30px 0 12px;
+				cursor: pointer;
+				border: hidden;
+			}
+			th:first-of-type {
+				padding: 12px 12px 12px 0px;
+				text-align: left;
+			}
+			th:nth-child(2) {
+				padding: 12px 12px 12px 0px;
+				text-align: left;
+			}
+			th:nth-child(3) {
+				padding: 12px 12px 12px 0px;
+				text-align: left;
+			}
+			td {
+				padding: 5px 0px 5px 0px;
+				font-size: 12px;
+				border: hidden;
+				mat-icon {
+					color: $primary;
+					height: 20px;
+					cursor: pointer;
+					font-size: 24px;
+					padding: 0 0 0 5px;
+					margin: -13px;
+				}
+			}
+			td:nth-child(3){
+				vertical-align: bottom;
+			}
+			.form-control {
+				border: 0;
+				border-bottom: 1px solid $black;
+				width: 90%;
+				border-radius: 0px;
+				font-size: 16px;
+				padding-left: 2px;
+			}
+			mat-select {
+				border: 0;
+				border-bottom: 1px solid $black;
+				width: 90%;
+				padding-bottom: 35px;
+				font-size: 16px;
+				height: 25px !important;
+				line-height: 33px !important;
+				text-align: left;
+			}
+			.uploadButton {
+				padding: 12px;
+				text-align: end;
+				button {
+					@include filled-buttons;
+				}
+				.mat-button-disabled{
+					color: $primary;
+				}
+			}
+			.noteText {
+				font-size: 12px;
+				color: $accent;
+				text-align: left;
+				padding: 5px 16px 0px 11px;
+				.maxFile {
+					color: $primary;
+				}
+			}
+			
+			.input-container {
+				display: flex;
+				width: 100%;
+				.inputSection {
+					padding: 0px 10px 10px 16px;
+					p {
+						font-size: 12px;
+						color: $black;
+						text-align: left;
+					}
+					input {
+						width: 100%;
+						outline: none;
+						border: transparent;
+						border-bottom: solid 1.5px gray;
+						margin-bottom: 24px;
+					}
+				}
+				.one {
+					width: 30%;
+				}
+				.two {
+					width: 30%;
+					mat-select {
+						border: none;
+						border-bottom: solid 1.5px gray !important;
+						padding-top: 2px;
+						margin-bottom: 24px;
+					}
+				}
+				.three {
+					width: 30%;
+					div {
+						display: flex;
+						input {
+							width: 30vw;
+						}
+						mat-icon {
+							text-align: end;
+							color: $primary;
+							font-size: 22px;
+							cursor: pointer;
+						}
+					}
+				}
+			}
+			.uploadSectionbuttons {
+				justify-content: flex-end;
+				button {
+					width: 15%;
+					font-size: 12px;
+					margin-right: 10px;
+				}
+				button:first-of-type {
+					@include no-outline-buttons;
+					margin-right: 0;
+					padding: 0;
+				}
+				button:nth-child(2) {
+					@include buttons;
+				}
+				.disable {
+					color: $white !important;
+					background-color: $mileStone_gray !important;
+				}
+				.disable {
+					color: $white !important;
+					background-color: $crowley_border_gray !important;
+				}
+			}
+			.table {
+				.details-table {
+					// margin: 16px 0px;
+					box-shadow: none;
+					width: 100%;
+					th {
+						color: $accent;
+						padding: 0px 6px 14px 10px !important;
+						font-weight: normal;
+					}
+					tr:hover {
+						cursor: pointer;
+						background-color: $crowley_gray;
+					}
+					td {
+						padding: 10px 6px 10px 16px;
+						word-break: break-all;
+					}
+				}
+			}
+		}
+	}
+  }

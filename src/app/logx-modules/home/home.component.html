@@ -1,0 +1,131 @@
+<div class="main">
+  <div class="header-main">
+<mat-sidenav-container class="head-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [ngClass]="{hidden: !(isHandset | async)!.matches}"
+    [attr.role]="isHandset ? 'dialog' : 'navigation'" [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandset | async)!.matches">
+    <mat-toolbar class="sideBarMenu">{{homeComponentConst.menuText}}</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let item of sideNavItems;let i=index;last as isLast">{{item}}</a>
+      <a mat-list-item (click)="openLoginForm()">{{homeComponentConst.loginText}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="(isHandset | async)!.matches">
+        <mat-icon>{{CommonConst.MatIcons.menu}}</mat-icon>
+      </button>
+      <img src="assets/crowley_white.png" width="152" height="24" class="logo"> 
+ 
+      <span class="spacer"></span>
+      <!-- TODO Need to take up in the next phase
+         <mat-nav-list *ngIf="!(isHandset | async)!.matches">
+        <a>Home</a>
+        <mat-icon>{{CommonConst.MatIcons.call}}</mat-icon><a>Contact Us</a>
+        <mat-icon>{{CommonConst.MatIcons.location}}</mat-icon><a>About Us</a>
+        <mat-icon>{{CommonConst.MatIcons.help}}</mat-icon><a>Help</a>
+      </mat-nav-list> -->
+      <span class="spacer"></span>
+      <mat-nav-list class="navBarEnd">     
+        <!-- TODO Need to take up in the next phase
+            <a>{{homeComponentConst.registerText}}</a> -->
+
+                  <!--Added for testing Okta workaround-->
+        <!-- <a *ngIf="userTokenExists" class="desktopLogin" routerLink="/dashboard">DASHBOARD</a> -->
+
+        <a *ngIf="!(isHandset | async)!.matches" (click)="openLoginForm()">{{homeComponentConst.loginText}}</a>
+        <a (click)="openLoginForm()" *ngIf="(isHandset | async)!.matches">{{homeComponentConst.loginTextMobile}}</a>
+        
+          
+        
+        
+      </mat-nav-list>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>
+
+<div class="main-container">
+  <div class="main-sub-container">
+  <div class="topSection">
+    <div class="leftSection">
+      <div class="section-one">
+        <p>{{homeComponentConst.inputHeaderText.govtShipment}}</p>
+        <p>{{homeComponentConst.inputHeaderText.crowelyName}}</p>
+        <div class="dashedLine"></div>
+      </div>
+
+      <div class="section-two">
+        <mat-card>
+          <p>{{homeComponentConst.inputHeaderText.trackTrace}}</p>
+          <p>{{homeComponentConst.inputHeaderText.trackInputText}}</p>
+          <div class="input-section">
+            <form (ngSubmit)="getOrderDetails()" [formGroup]="trackForm">
+              <input matInput type="text" class="track-control" placeholder={{homeComponentConst.placeHolder}}
+                formControlName="trackNumberField" (paste)="PasteSearchCreteria($event)" 
+                [ngClass]="{ 'inValid': submitted && f.trackNumberField.errors }">
+               
+              <button mat-raised-button type="submit" color="primary" *ngIf="!(isHandset | async)!.matches">{{homeComponentConst.inputHeaderText.trackShipment}}</button>
+              <button mat-raised-button type="submit" color="primary" *ngIf="(isHandset | async)!.matches">TRACK</button>        <!--mod-->
+              
+              <div *ngIf="submitted && f.trackNumberField.errors" class="errorMessage">
+                <div *ngIf="f.trackNumberField.errors.required">{{homeComponentConst.errorMessage.numberRequired}}</div>
+                <div *ngIf="f.trackNumberField.errors.minlength">
+                  {{homeComponentConst.errorMessage.minLength}}</div>
+                  <div *ngIf="f.trackNumberField.errors.maxlength">
+                    {{homeComponentConst.errorMessage.characterLength}}</div>               
+              </div>
+            </form>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <div class="rightSection">
+      <div class="right-card">
+     
+    
+
+        <img src="assets/ad_image.png" width="200" height="400">  <!--mod-->
+        
+        
+      </div>
+    </div>
+  </div>
+  <div class="bottomSection">
+    <mat-card (click)="openAccessDoc()">
+      <p>{{homeComponentConst.inputHeaderText.accessDocHeader}}</p>
+      <div class="dashedLine"></div>
+      <mat-icon>{{CommonConst.MatIcons.library_books}}</mat-icon>
+      <p class="loginText">{{homeComponentConst.pleaseText}} <a (click)="openLoginForm()">{{homeComponentConst.loginText}}</a></p> <!-- or <a (click)="openLoginForm()">{{homeComponentConst.registerText}}</a>-->
+    </mat-card>
+    <mat-card (click)="openSubmitOrderPage()">
+      <p>{{homeComponentConst.inputHeaderText.submitOrder}}</p>
+      <div class="dashedLine"></div>
+      <img src="assets/Icons/submit_order_white.svg" width="50" height="50">
+      <p class="loginText">{{homeComponentConst.pleaseText}} <a
+          (click)="openLoginForm()">{{homeComponentConst.loginText}}</a></p>
+           <!-- or <a (click)="openLoginForm()">{{homeComponentConst.registerText}}</a> -->
+    </mat-card>
+    <mat-card (click)="openSearch()">
+      <p>{{homeComponentConst.inputHeaderText.orderReport}}</p>
+      <div class="dashedLine"></div> 
+      <mat-icon>{{CommonConst.MatIcons.search}}</mat-icon>
+      <p class="loginText">{{homeComponentConst.pleaseText}} <!--<a href="/login">--><a (click)="openLoginForm()">{{homeComponentConst.loginText}}</a></p> <!-- or <a (click)="openLoginForm()">{{homeComponentConst.registerText}}</a>-->
+    </mat-card>
+  </div>
+</div>
+</div>
+
+
+<footer class="footer-container">
+  <div class="footer-section">
+      <ul class="copyright">
+        <li>
+          <mat-icon>{{CommonConst.MatIcons.copyright}}</mat-icon><a>{{CommonConst.fullYear}}{{CommonConst.footerText}}</a>
+        </li>
+        <li><a>{{version}}</a></li>
+      </ul>
+  </div>
+</footer>
+</div>

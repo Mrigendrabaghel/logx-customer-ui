@@ -1,0 +1,32 @@
+<div class="addInfo-main-container">
+  <p>{{AccessorialAdditionalInfo.header}}</p>
+<form [formGroup]="form" >
+ <div class="check-box"> 
+  <div class="checkbox-section" formArrayName="orders">
+    <section>
+       <mat-checkbox *ngFor="let order of ordersData; let i = index" color="primary" (change)="onCheckboxChange(ordersData[i].lookupText, $event.checked)" [formControlName]="i">
+      {{ordersData[i].lookupText}}
+    </mat-checkbox>
+    </section>
+    <section>
+      <mat-checkbox *ngFor="let order of orderFromArrayTwo; let i = index" color="primary" (change)="onCheckboxChange(orderFromArrayTwo[i].lookupText, $event.checked)" [formControlName]="i">
+     {{orderFromArrayTwo[i].lookupText}}
+   </mat-checkbox>
+   </section>
+  </div>
+ </div>
+ <div *ngIf="showtext" class="otherInfo">
+  <p>{{AccessorialAdditionalInfo.otherInfo}}</p>
+  <textarea formControlName="otherinfovalue" ></textarea>
+  </div>
+
+  <div *ngIf="!form.valid && error" class="errorMessage">{{AccessorialAdditionalInfo.atleastOne}}</div>
+  <br>
+  <!-- <button [disabled]="!form.valid">submit</button> -->
+  <div class="button">
+    <button mat-button id="navButton_1" (click)="closePopup()">{{CommonConst.btnCancel}}</button>
+    <button (click)="submit()"  [disabled]="!form.valid" mat-button>{{CommonConst.submit}}</button>
+  </div>
+</form>
+
+</div>

@@ -1,0 +1,679 @@
+@import "src/crowley-themes.scss";
+@import "../../../../Styles/mixins.scss";
+
+.main-container {
+  min-height: 100vh;
+  padding: 0% 30px 5% 20px;
+
+  .section-heading {
+    margin: 0px 0px 26px 0px;
+    color: $crowley_font;
+    font-size: 32px;
+  }
+
+  .details-section {
+    // padding: 6% 0%;
+
+    .card {
+      padding: 0px;
+      margin: 0px 0px 22px 0px;
+
+      .spacer {
+        display: flex;
+        justify-content: space-between;
+        background-color: $crowley_gray;
+        padding: 10px 16px 10px 16px !important;
+
+        p {
+          margin: 0px;
+          color: $crowley_font;
+        }
+
+        p:first-of-type {
+          font-size: 22px !important;
+          margin-bottom: 4px;
+          color: $crowley_font;
+        }
+
+        p:nth-child(2) {
+          font-size: 20px;
+        }
+      }
+
+      .expandCollapse {
+        cursor: pointer;
+      }
+
+      .center {
+        display: flex;
+        justify-content: space-between;
+
+        ul {
+          list-style-type: none;
+          padding: 16px 20px;
+          line-height: 26px;
+
+          li {
+            word-spacing: 1px;
+            display: flex;
+            line-height: 30px;
+            color: $crowley_font;
+
+            div:first-of-type {
+              font-size: 16px;
+              font-weight: 500;
+              width: 15vw;
+              text-align: right;
+              padding-right: 10px;
+            }
+
+            div:nth-child(2) {
+              font-size: 16px;
+              display: flex;
+              width: 24vw;
+            }
+          }
+        }
+        .table.no-header mat-header-row{
+          display: none !important;
+        }
+      }
+
+      .two {
+        div:first-of-type {
+          width: 16vw !important;
+        }
+      }
+
+      .button {
+        margin-top: 20px;
+        text-align: end;
+        padding: 10px;
+
+        .info {
+          @include buttons;
+          width: 20%;
+        }
+
+        .info:hover {
+          background: $accent;
+          color: $white;
+        }
+      }
+    }
+  }
+
+  .detailSection {
+    .card {
+      .spacer {
+        padding: 10px 16px 0px 16px !important;
+      }
+    }
+  }
+
+  .comment-section {
+    //Added newly on 16 Dec as per discussion Need to refer again
+    table {
+      width: 98%;
+    }
+
+    p {
+      color: $black;
+      font-size: 15px;
+      margin: 0px;
+    }
+
+    textarea {
+      padding: 16px 16px 10px;
+      margin: 10px 0px;
+      height: 8vh;
+      width: 98%;
+      outline: none;
+      border: transparent;
+    }
+
+    mat-icon {
+      float: right;
+      margin: 22px -10px 0px 0px;
+      color: $primary;
+      cursor: pointer;
+    }
+  }
+
+  .commentSection {
+    .card {
+      .spacer {
+        padding: 10px 16px 0px 16px !important;
+      }
+
+      .center {
+        display: block;
+
+        .inputComment {
+          padding: 16px;
+
+          textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            height: 40vh;
+          }
+        }
+
+        // .table {
+        //   height: 30vh;
+        //   overflow-y: auto;
+        //   margin: 0px;
+        //   table {
+        //     width: 100%;
+        //     box-shadow: none;
+
+        //     td {
+        //       padding: 12px;
+        //     }
+
+        //     tr:first-of-type {
+        //       display: none;
+        //     }
+        //   }
+        // }
+        .savebtn{
+        
+          margin-left: 15px;
+          padding: 10px 11px;
+          line-height: normal;
+        }
+        .addComment {
+          text-align: initial;
+          padding: 0px 6px 0px 6px;
+
+          button {
+            letter-spacing: 1px;
+            padding: 16px;
+            background-color: $white;
+            color: $accent;
+            cursor: pointer;
+          }
+
+          mat-paginator {
+            //mod
+            float: right;
+
+            margin: -4px 0 0 0;
+
+            ::ng-deep .mat-form-field-underline {
+              background-color: transparent;
+            }
+
+            ::ng-deep .mat-form-field.mat-focused .mat-form-field-underline {
+              display: none;
+            }
+            ::ng-deep .mat-select-value {
+              width: 58%;
+            }
+            ::ng-deep .mat-paginator-page-size-label {
+              margin: 0 21px;
+            }
+          }
+        }
+
+        .buttons {
+          font-size: 16px;
+          letter-spacing: 1px;
+          width: 100% !important;
+          padding: 16px;
+          border-top: solid 0.5px $crowley_border_gray;
+          margin-top: 40px;
+          display: flex;
+          justify-content: space-between;
+
+          div:first-of-type {
+            button {
+              background-color: $white;
+              color: $accent;
+              padding-top: 10px;
+              letter-spacing: 1px;
+              cursor: pointer;
+              font-size: 14px;
+            }
+          }
+
+          div:nth-child(2) {
+            button:first-of-type {
+              @include buttons;
+              width: 10vw;
+              font-size: 14px !important;
+            }
+
+            button:nth-child(2) {
+              @include filled-buttons;
+              width: 10vw;
+              font-size: 14px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mainButtons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+
+    div:first-of-type {
+      width: 50%;
+
+      button {
+        @include buttons;
+        font-size: 14px !important;
+        width: 20%;
+        margin-right: 16px;
+      }
+    }
+
+    div:nth-child(2) {
+      text-align: end;
+      width: 50%;
+
+      button:first-of-type {
+        margin-right: 10px;
+        width: 40%;
+        color: $accent;
+      }
+
+      button:nth-child(2) {
+        @include buttons;
+        font-size: 14px !important;
+        width: 20%;
+        margin-right: 16px;
+      }
+
+      button:nth-child(3) {
+        @include filled-buttons;
+        width: 20%;
+      }
+    }
+  }
+  .cmt{
+    margin-left: 20px;
+    display: grid;
+  }
+}
+.main-container1{
+  display: none;
+}
+@media only screen and (max-width: 812px) {
+  .main-container{
+    display: none;
+  }
+  .main-container1{
+    display: block;  
+    &__section{
+    padding: 0 15px;
+    margin-top: 75px;
+    margin-bottom: 145px;    
+    .section-heading {      
+      color: $crowley_font;
+      font-size: 30px;      
+    }
+    .details-section{ 
+      margin-top: 20px;
+      .product-card{
+        border: solid 0.5px #ffffff;
+        background: #ffffff;
+        border-radius: initial;
+        box-shadow: 0px 0 10px 1px rgb(0 0 0 / 24%);
+        position: relative;	
+        margin-bottom: 20px;	
+        padding: 0;
+        ::ng-deep .mat-card-header{			
+          background-color: #f3f3f3;
+          border-radius: 5px 0px 0px;			
+          color: rgba(0, 0, 0, 0.87);	
+          padding: 20px 15px;
+          .mat-card-header-text{
+            margin: 0;
+            .mat-card-title{
+              margin-bottom: 0;
+              P{
+                margin: 0px !important;
+                font-size: 16px;
+                font-weight: 300;
+                &:first-child{
+                  font-size: 18px;
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+        }
+        &__content{
+          padding: 15px;
+          .orderdetails{       
+            &__item{            
+              label{
+                color: $crowley_background;
+                font-size: 16px;
+                font-weight: 500;
+                margin-right: 10px;
+              }
+              p{
+                color: rgba(0, 0, 0, 0.6);
+                font-size: 16px;          
+              }
+            }
+          } 
+        }
+      }	
+      .mat-expansion-panel{
+        margin-bottom: 15px;				
+        .mat-expansion-panel-header{
+          padding: 0 15px !important;
+          font-size: 18px;
+          font-weight: 500;
+          background-color: #f3f3f3;
+          &.mat-expanded{
+            background-color: #f3f3f3;
+            border-radius: 5px 0px 0px;            
+          }
+        }
+        ::ng-deep .mat-expansion-panel-body {
+          padding: 0 15px !important;
+        }	
+        .mat-expansion-panel-header-title, .mat-expansion-panel-header-description{
+          display: block !important;
+          margin-right: 0px !important;          
+        }
+        
+      }
+      
+    }
+  
+    .details-section {    
+  
+        .center {
+          display: flex;
+          justify-content: space-between;
+  
+          ul {
+            list-style-type: none;
+            padding: 16px 20px;
+            line-height: 26px;
+  
+            li {
+              word-spacing: 1px;
+              display: flex;
+              line-height: 30px;
+              color: $crowley_font;
+  
+              div:first-of-type {
+                font-size: 16px;
+                font-weight: 500;
+                width: 15vw;
+                text-align: right;
+                padding-right: 10px;
+              }
+  
+              div:nth-child(2) {
+                font-size: 16px;
+                display: flex;
+                width: 24vw;
+              }
+            }
+          }
+        }
+  
+        .two {
+          div:first-of-type {
+            width: 16vw !important;
+          }
+        }
+  
+        .button {
+          margin-top: 20px;
+          text-align: end;
+          padding: 10px;
+  
+          .info {
+            @include buttons;
+            width: 20%;
+          }
+  
+          .info:hover {
+            background: $accent;
+            color: $white;
+          }
+        }
+      
+    }
+  
+    .comment-section {
+      //Added newly on 16 Dec as per discussion Need to refer again
+      // table {
+      //   width: 100%;
+      //   td{
+      //     position: relative;
+      //   }
+      // }
+  
+      p {
+        color: $black;
+        font-size: 15px;
+        margin: 0px;
+      }
+  
+      textarea {
+        padding: 16px 16px 0px 0px;
+        margin: 10px 0px;
+        height: 8vh;
+        width: 100%;
+        outline: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      }
+  
+      mat-icon {
+        position: absolute;
+        top: 9px;
+        right: -3px;
+        color: $primary;
+        cursor: pointer;
+      }
+    }
+  
+    .commentSection {      
+        .center {
+          display: block;
+  
+          .inputComment {
+            padding: 16px;
+  
+            textarea {
+              width: 100%;
+              border: none;
+              outline: none;
+              height: 40vh;
+            }
+          }
+  
+          // .table {
+          //   height: 10vh;
+          //   overflow-y: auto;
+          //   margin: 0px;
+  
+          //   table {
+          //     width: 98%;
+          //     box-shadow: none;
+  
+          //     td {
+          //       padding: 25px 0 5px 0;
+          //     }
+  
+          //     tr:first-of-type {
+          //       display: none;
+          //     }
+          //   }
+          // }
+
+          .addComment {
+            text-align: initial;
+            margin-bottom: 30px;            
+  
+            button {
+              letter-spacing: 1px;
+              padding: 0px;
+              background-color: $white;
+              color: $accent;
+              cursor: pointer;
+            }
+  
+            mat-paginator {
+              //mod
+              float: right;
+  
+              margin: -4px 0 0 0;
+  
+              ::ng-deep .mat-form-field-underline {
+                background-color: transparent;
+              }
+  
+              ::ng-deep .mat-form-field.mat-focused .mat-form-field-underline {
+                display: none;
+              }
+              ::ng-deep .mat-select-value {
+                width: 58%;
+              }
+              ::ng-deep .mat-paginator-page-size-label {
+                margin: 0 21px;
+              }
+            }
+          }
+  
+          .buttons {
+            font-size: 16px;
+            letter-spacing: 1px;
+            width: 100% !important;
+            padding: 0px;
+            border-top: solid 0.5px $crowley_border_gray;
+            margin-top: 40px;  
+            margin-bottom: 30px;         
+  
+            div:first-of-type {
+              button {
+                background-color: $white;
+                color: $accent;
+                padding-top: 10px;
+                letter-spacing: 1px;
+                cursor: pointer;
+                font-size: 14px;
+              }
+            }
+  
+            div:nth-child(2) {
+              display: flex;
+              justify-content: flex-end;
+              margin-top: 15px;
+              button:first-of-type {
+                @include buttons;                
+                font-size: 14px !important;
+                margin-right: 10px;
+              }
+  
+              button:nth-child(2) {
+                @include filled-buttons;                
+                font-size: 14px !important;
+              }
+            }
+          }
+        }
+      
+    }
+   
+  
+    // .mainButtons {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   padding: 10px 0px;
+  
+    //   div:first-of-type {
+    //     width: 50%;
+  
+    //     button {
+    //       @include buttons;
+    //       font-size: 14px !important;
+    //       width: 20%;
+    //       margin-right: 16px;
+    //     }
+    //   }
+  
+    //   div:nth-child(2) {
+    //     text-align: end;
+    //     width: 50%;
+  
+    //     button:first-of-type {
+    //       margin-right: 10px;
+    //       width: 40%;
+    //       color: $accent;
+    //     }
+  
+    //     button:nth-child(2) {
+    //       @include buttons;
+    //       font-size: 14px !important;
+    //       width: 20%;
+    //       margin-right: 16px;
+    //     }
+  
+    //     button:nth-child(3) {
+    //       @include filled-buttons;
+    //       width: 20%;
+    //     }
+    //   }
+    // }
+  }
+  .footer-button{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: #fff;
+    position: fixed;
+    bottom: 45px;
+    -webkit-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+    -moz-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+    box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+    padding: 12px 15px;	
+    .cancel, .reject{
+      color: #0957a3;
+      font-weight: 500;     
+      cursor: pointer;
+      background-color: #ffffff;
+      border: 1px solid #0957a3 !important;				
+      border-radius: 5px;
+      font-size: 12px;
+      padding: 10px 11px;
+      min-width: auto;
+      line-height: normal;
+    }
+    .info{
+      color: #0957a3;
+      font-weight: 500;
+      font-size: 12px;
+      padding: 10px 11px;
+      min-width: auto;
+      line-height: normal;
+    }
+    .approve{
+      margin-left: 15px;
+      font-weight: 500;
+      letter-spacing: 0px !important;
+      cursor: pointer;
+      @include filled-buttons;				
+      border-radius: 5px;
+      font-size: 12px;
+      padding: 10px 11px;
+      min-width: auto;
+      line-height: normal;
+    }
+   
+  }
+}
+}

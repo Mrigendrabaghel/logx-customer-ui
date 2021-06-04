@@ -1,0 +1,65 @@
+.cdk-overlay-pane.my-dialog {
+  position: relative!important;
+}
+.main {
+display: block;
+.first-section {
+  width: 100%;
+  display: flex;
+  title {
+    margin: 0px;
+    // width: 120px;
+  }
+  .fullscreen {
+    cursor: pointer; 
+    margin-left: 35vw;
+  }
+  .clear {
+    cursor: pointer;
+  }
+}
+.second-section {
+  margin-top: 5px;
+  text-align: center;
+  .download {
+    border: solid 1px black;
+    width: 500px;
+    height: 250px;
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+}
+}
+
+.close.mat-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  line-height: 14px;
+  min-width: auto;
+}
+
+@media only screen and (max-width:812px) {
+  ::ng-deep app-open-document-dialogue{
+    ::ng-deep iframe {
+      width: 100% !important;
+    }
+
+}
+::ng-deep ngx-extended-pdf-viewer #mainContainer {
+  min-width:0px !important;
+}
+
+::ng-deep #outerContainer .hiddenSmallView, #outerContainer .hiddenSmallView *{
+  display: inline !important;
+}
+
+
+
+.fullscreen {  
+  margin-left: 28vw !important;
+}
+
+}

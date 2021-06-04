@@ -1,0 +1,12 @@
+<mat-dialog-content>
+    <p>
+        {{message}}
+    </p>
+    <div *ngIf="rejectflag">
+        <p>{{message1}}</p>
+        <textarea class="rejectclass" matInput placeholder="Add comments" [(ngModel)]="rejectcomment"></textarea></div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close tabindex="-1" *ngIf="cancelButtonText != ''">{{cancelButtonText}}</button>
+    <button id="navButton_1" mat-button (click)="onConfirmClick()" tabindex="1" *ngIf="confirmButtonText != ''">{{confirmButtonText}}</button>
+</mat-dialog-actions>

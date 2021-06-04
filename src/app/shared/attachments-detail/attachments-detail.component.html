@@ -1,0 +1,48 @@
+<div class="table">
+  <table mat-table [dataSource]="orderAttachmentdataSource"  matSort class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="attachmentTableDrop($event)" >
+  
+  <ng-container *ngFor="let column of orderAttachmentColumns; let i = index" [matColumnDef]="column.field">
+  
+    <mat-header-cell mat-sort-header *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+      {{ column.header }} </mat-header-cell>
+    <mat-cell *matCellDef="let element">  {{ element[column.field]}}</mat-cell>
+  
+  </ng-container>
+  
+  <mat-header-row *matHeaderRowDef="attachmentDisplayedColumns" #tableHeaderRow></mat-header-row>
+  <mat-row *matRowDef="let row; columns: attachmentDisplayedColumns;" (click)="OpenDocument(row)"></mat-row>
+  
+  </table>
+  
+  <div class="pagination"><mat-paginator *ngIf="pageSize && pageSize>0 && orderAttachmentdataSource && orderAttachmentdataSource.data && orderAttachmentdataSource.data.length > commonNumbers.five" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator></div>
+  
+  </div>
+<div class="attachment-detail-list">
+  <mat-list>
+    <mat-list-item *ngFor="let element of activePageData" (click)="OpenDocument(element)">      
+       <div class="item d-flex align-items-center">
+          <mat-icon matListIcon>article</mat-icon>
+          <div>
+            <label>{{CommonConst.docType}}</label>
+            <p>{{element.documentType}}</p>
+          </div>
+       </div> 
+       <div class="two-col-item">
+          <div class="item">
+             <label>{{OrderDetailConst.date}}</label>
+             <p>{{element.documentDate}}</p> 
+          </div>        
+          <div class="item">
+             <label>{{OrderDetailConst.fileType}}</label>
+             <p>{{element.fileType}}</p>
+          </div> 
+       </div> 
+       <div class="item">
+        <label>{{CommonConst.description}}</label>
+        <p>{{element.docDescription}}</p>
+     </div>                    
+    </mat-list-item>
+  </mat-list>
+  <div class="pagination"> <mat-paginator [length]= "len" (page)="onPageChanged($event)" *ngIf="pageSize && pageSize>0 && len > commonNumbers.five" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

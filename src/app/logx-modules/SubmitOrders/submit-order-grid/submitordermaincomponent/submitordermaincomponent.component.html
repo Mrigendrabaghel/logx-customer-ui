@@ -1,0 +1,75 @@
+<div class="main-container">
+  <div class="padding-lr">
+  <div class="progress-bar">
+    <div class="progressBarcontainer">
+      <ul class="progressBar">
+        <li class="step"
+          [ngClass]="(originLocFlag == 'Complete' )?'isCompleted': (originLocFlag == 'saveForLater')?'saveforlater':'progressBar'"
+          (click)="onPressOriginLocation()"><span>{{orderInformationMessage}}</span></li>
+        <li
+          [ngClass]="(destLocFlag == 'Complete' )?'isCompleted': (destLocFlag == 'saveForLater')?'saveforlater':'progressBar'"
+          (click)="onPressDestination()"><span>{{destinationInformationMesage}}</span></li>
+        <li
+          [ngClass]="(orderDetailsFlag == 'Complete' )?'isCompleted': (orderDetailsFlag == 'saveForLater')?'saveforlater':'progressBar'"
+          (click)="onPressOrderDetails()"><span>{{orderDetailsMessage}}</span></li>
+        <li
+          [ngClass]="(orderLineFlag == 'Complete' )?'isCompleted': (orderLineFlag == 'saveForLater')?'saveforlater':'progressBar'"
+          (click)="onPressOrderLineItems()"><span>{{orderLineItemsMessage}}</span></li>
+        <li
+          [ngClass]="(addlInfoFlag == 'Complete' )?'isCompleted': (addlInfoFlag == 'saveForLater')?'saveforlater':'progressBar'"
+          (click)="onPressAdditionalInfo()"><span>{{additionalInfoMessage}}</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="order-number">
+    <form #submitOrderForm="ngForm">
+      <div *ngIf="isEditMode === false || showEditIcon === true">
+       <label>{{SubmitOderConst.orderNumber}}:</label> <span>{{orderNumber}}</span>
+        <img (click)="onEditOrderNumber()" src="/assets/Icons/edit_order_number.png">
+      </div>
+      <div class= "dis-f" *ngIf="isEditMode === true && showEditIcon != true">
+       <label>{{SubmitOderConst.orderNumber}}:</label> 
+       <div class="order-edit">
+        <input class="edit-order-number" [(ngModel)]="orderNumber" name="orderNumber" #ordNumber="ngModel" required
+          maxlength="20">
+      </div>
+      <span [class.disabled_icon]="!submitOrderForm.form.valid" (click)="afterEditingOrderNumber()"
+          class="material-icons icon-spacing">
+          {{CommonConst.MatIcons.checkCircle}}
+        </span>
+        <div *ngIf="ordNumber.invalid && ordNumber.touched" class="errorMessage validation">{{orderNoErrMessage}}</div>
+      </div>
+    </form>
+  </div>
+  <div class="saveandcreatedBy">
+    <div *ngIf="shipWith!=='' && shipWith!==orderNumber">
+      <p>{{SubmitOderConst.shipWith}}: {{shipWith}}</p>
+      <p>{{SubmitOderConst.createdBy}}: {{createdBy}}</p>
+    </div>
+  </div>
+</div>
+  <div [hidden]="!displayOrderLocation">
+    <div class="selected-title-mobile"><h3>{{orderInformationMessage}}</h3></div>
+    <app-origindestinationlocation [formName]="formName" [orderId]="orderId" [orderNumber]="orderNumber"
+      [shipWith]="shipWith" (getOrderId)="saveOrderId($event)"></app-origindestinationlocation>
+  </div>
+  <div [hidden]="!displayDestinationLocation">
+    <div class="selected-title-mobile"><h3>{{destinationInformationMesage}}</h3></div>
+    <app-orderdestion [formName]="formName" [orderId]="orderId" [orderNumber]="orderNumber">
+    </app-orderdestion>
+  </div>
+
+  <div [hidden]="!displayOrderDetails">
+    <div class="selected-title-mobile"><h3>{{orderDetailsMessage}}</h3></div>
+    <app-submitorderdetails [orderId]="orderId" [orderNumber]="orderNumber"></app-submitorderdetails>
+  </div>
+  <div [hidden]="!displayOrderLineItems">
+    <div class="selected-title-mobile"><h3>{{orderLineItemsMessage}}</h3></div>
+    <app-orderlineitems [orderId]="orderId" [orderNumber]="orderNumber"></app-orderlineitems>
+  </div>
+  <div [hidden]="!displayAdditionalInfo">
+    <div class="selected-title-mobile"><h3>{{additionalInfoMessage}}</h3></div>
+    <app-additionalinformation [orderId]="orderId" [orderNumber]="orderNumber" [shipWith]="shipWith"
+      [createdBy]="createdBy"></app-additionalinformation>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="main-container">
+  <form (ngSubmit)="getRecords(f.trackNumberFieldSecure.value)" [formGroup]="trackForm">
+    <mat-card *ngIf="!isShowOrderDetails">
+      <p class="header">{{BulkSearchConst.heading}}</p>
+      <div class="input-section">
+        <div class="selectOption">
+          <p>{{BulkSearchConst.searchBy}}</p>
+          <mat-select placeholder={{BulkSearchConst.selected}} name="searchValue" formControlName="selectedCriteriaField" (selectionChange)="selectedCriteriaField($event.value)"> <!-- -->
+            <mat-option *ngFor="let item of searchValue" [value]="item">{{ item }}</mat-option>
+          </mat-select>
+        </div>
+        <div class="input">
+          <div class="inputText">
+            <p>{{BulkSearchConst.inputText}}</p>
+            <textarea placeholder={{BulkSearchConst.placeHolder}} type="text" formControlName="trackNumberFieldSecure"
+              (paste)="PasteSearchCreteria($event)" (focusout)="focusOutFunction()"
+              [ngClass]="{ 'inValid': submitted && f.trackNumberFieldSecure.errors }"></textarea>
+          </div>
+          <div *ngIf="submitted && f.trackNumberFieldSecure.errors" class="errorMessage">
+              {{DashboardConst.errorMessage.docNumberRequired}}</div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button mat-button (click)="reset()">{{CommonConst.btnClear}}</button>
+        <button mat-button type="submit" [disabled]="trackForm.invalid" [class.disable]="trackForm.invalid">{{BulkSearchConst.track}}</button>
+      </div>
+      <div *ngIf="showError" class="message">{{message}}</div>
+    </mat-card>
+    <mat-card class="table" *ngIf="isShowOrderDetails">
+        <div class="tableHeader">
+            <p class="header">{{BulkSearchConst.resultHeading}}</p>
+            <p class="goBack" (click)="goBack()">{{BulkSearchConst.heading}}</p>
+        </div>
+        <p class="totalRecords">{{BulkSearchConst.total}} <strong>{{totalCount}}</strong> </p>
+        <table mat-table [dataSource]="dataSource" matSort class="details-table">
+    
+            <ng-container matColumnDef="orderNumber">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{AdvanceSearchAccessDoc.inputLabels.orderNumber}}
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.orderNum}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="firstTCN">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{TrackOderConst.tableValues.tcn}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.tcnNumber}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="originLocation">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{TrackOderConst.tableValues.originLocation}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.originLocation}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="deliveryLocation">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{TrackOderConst.tableValues.deliveryLocation}}</th>
+              <td mat-cell *matCellDef="let element"> {{element.deliveryLocation}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="pickUpDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{TrackOderConst.tableValues.pickUpDate}}</th>
+              <td mat-cell *matCellDef="let element"> {{element.pickupDateTimeUtc}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="aDeliveryDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>{{AdvanceSearchAccessDoc.inputLabels.deliveryDate}}</th>
+              <td mat-cell *matCellDef="let element"> {{element.deliveryDateTimeUtc}} </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row (click)="viewDetails(element)" *matRowDef="let element; columns: displayedColumns;"></tr>
+    
+          </table>
+          <mat-paginator class="onMobileView" *ngIf="pageSize && pageSize>0 && dataSource.data.length>9" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+    </mat-card>
+  </form>
+</div>
+
+<mat-card  class="multiRecord-container" *ngIf="isShowOrderDetails">
+  <mat-list>
+    <mat-list-item *ngFor="let element of activePageData"  (click)="viewDetails(element)">      
+       <div class="item">
+          <label>{{DocumentsConst.AccessDocuments.orderNumber}}</label>
+          <p> {{element.orderNum}}</p>
+       </div>        
+       <div class="icon">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+       </div>
+    </mat-list-item>
+  </mat-list>  
+  <mat-paginator *ngIf="pageSize && pageSize>0 && totalCount>commonNumbers.nine" [length] ="totalCount" (page)="onPageChanged($event)" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</mat-card>

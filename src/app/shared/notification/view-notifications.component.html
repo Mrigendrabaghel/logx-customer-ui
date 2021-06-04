@@ -1,0 +1,60 @@
+<div class="mainContainer">
+  <mat-card>
+      <p class="headerText">{{ commonConst.notifications.Notifications}}</p>
+  
+  <div class="totalRecord">
+      <div class="count">{{ commonConst.notifications.totalNotifications}} <span>{{totalCount}}</span></div>
+      <div class="countUnread">{{ commonConst.notifications.unreadNotifications}} <span>{{unReadCount}}</span></div>
+    
+    <mat-form-field><img src="/assets/Icons/filter.svg">
+      <mat-select>
+        <mat-option *ngFor="let day of daysLookup"
+        (click)="onSelect(day.lookupText)"
+        >
+          {{day.lookupDisplayText}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <ng-container *ngIf="topNotifications.length == commonNumbers.zero" >
+    <div class="nodata">{{commonConst.notifications.noResult}}{{dateFilterValue}}{{commonConst.notifications.days}}</div>
+  </ng-container>
+
+  <ng-container *ngIf="topNotifications.length == commonNumbers.zero && unFilteredNotificationData==false" >
+    <div class="nodata">{{commonConst.notifications.nodata}}</div>
+  </ng-container>
+      <div class="notifications">
+      <div class="notification" *ngFor="let notification of topNotifications"  [ngClass]="{ 'read ': (notification.read == true), 'unread': (notification.read == false) }">
+          <ng-container  *ngTemplateOutlet="notificationTpl;context:{notification:notification}"></ng-container>
+      </div>
+    </div>
+
+  
+  
+  
+  <ng-template #notificationTpl let-notification="notification">
+      <div class="d-flex flex-row">
+          <div class="d-flex flex-column" (click)="readNotification(notification)">
+              <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
+                  {{notification.notificationname}}
+              </div>
+              <div class="message">{{notification.notificationdescription | slice:0:commonConst.notifications.msgLength}}
+                  <span *ngIf="notification.notificationdescription.length > commonConst.notifications.msgLength" class="read-more"> Read more</span>
+              </div>
+              <div class="message-date">{{notification.displaydate}}</div>
+          </div>
+          <div class="delete-notification">
+              <button mat-icon-button 
+              (click)="close(notification)"
+              matTooltip="Delete the notification"
+              matTooltipPosition="before">
+              <mat-icon>{{commonConst.MatIcons.delete}}</mat-icon>
+              </button>
+          </div>
+      </div>
+  </ng-template>
+  <mat-paginator [length]="this.totalCount" (page)="onPaginateChange($event)" #paginator #paginatorElement 
+  *ngIf="pageSize"
+    [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+  </mat-card>
+  </div>

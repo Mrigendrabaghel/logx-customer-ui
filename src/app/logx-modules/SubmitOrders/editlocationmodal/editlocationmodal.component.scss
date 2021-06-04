@@ -1,0 +1,38 @@
+@import "src/crowley-themes.scss";
+
+mat-dialog-content {
+
+  padding: 5px 0px 0px 31px;
+
+  p {
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: 0.29px;
+    margin: 0 88px 41px 0;
+
+    width: 257px;
+  }
+}
+
+mat-dialog-actions {
+  margin-left: 408px;
+    margin-bottom: -11px;
+
+  button:nth-child(1) {
+   
+    border: 1px solid $accent !important;
+    color: $accent;
+    border-radius: 5px;
+    background-color: $white;
+    padding: 0px 28px;
+
+  }
+
+  button:nth-child(2) {
+    border-radius: 5px;
+    background-color: $accent;
+    
+    color: $white;
+    padding: 1px 40px;
+  }
+}

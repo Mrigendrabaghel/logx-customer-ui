@@ -1,0 +1,61 @@
+<mat-card class="gridView-desktop">
+   <p>Draft Incident Reports</p>
+    <div class="totalRecord">
+        <div class="count">{{BulkSearchConst.total}} <span>{{draftOrderCount}}</span></div>
+        <div *hasPermission="['TO','TA'];Widgets:['Report Incident'];Actions:['Add']">
+            <button (click)="goToSubmitOrder(null)">{{IncidentConst.NewReportNumber}}</button>
+        </div>
+    </div>
+    <div class="table-section">
+      <mat-table id="userTable" mat-table [dataSource]="dataSource" matSort cdkDropList cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="itemTableDrop($event)">
+        <ng-container *ngFor="let column of DraftIncidentGridColumns; let i = index"
+          [matColumnDef]="column.headingDBColumn">
+          <mat-header-cell mat-sort-header *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+            {{column.headingDisplayText}} </mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="goToSubmitOrder(element)">
+            <span *ngIf="column.headingDBColumn != 'usernamereported' && column.headingDBColumn != 'incidentdate' && column.headingDBColumn != 'createddate'">{{element[column.headingDBColumn]}}</span>
+            <span *ngIf="column.headingDBColumn == 'usernamereported'" matTooltip={{element.usernamereported}}>{{element[column.headingDBColumn]}}</span>
+            <span *ngIf="column.headingDBColumn == 'incidentdate' || column.headingDBColumn == 'createddate' ">{{element[column.headingDBColumn] | date: 'MM/dd/yyyy'}}</span>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="DraftIncidentColumns" #tableHeaderRow></mat-header-row>
+        <mat-row *matRowDef="let row; columns: DraftIncidentColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator [length]="draftOrderCount" (page)="onPaginateChange($event)" #paginator #paginatorElement 
+      *ngIf="pageSize && this.draftOrderCount>commonNumbers.ten"
+        [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+    </div>
+ </mat-card>
+ <mat-card class="gridView-mobile">
+  <p>Draft Incident Reports</p>
+  <button (click)="goToSubmitOrder(null)">{{IncidentConst.NewReportNumber}}</button>
+   <div class="totalRecord">
+       <div class="count">{{BulkSearchConst.total}} <span>{{draftOrderCount}}</span></div>       
+   </div>
+   <mat-card class="crowley-adv-listview">
+    <mat-list>
+       <mat-list-item *ngFor="let element of dataSource.data" >      
+          <div class="item" (click)="goToSubmitOrder(element)">
+             <h4>{{IncidentConst.incidentNumber}}</h4>
+             <p> {{element.incidentnumber}}</p>
+          </div> 
+          <div class="two-col-item">
+             <div class="item">
+                <h4>{{IncidentConst.incidentCreatedDate}}</h4>
+                <p>{{element.createddate}}</p> 
+             </div>        
+             <div class="item" (click)="goToSubmitOrder(element)">
+                <h4>{{IncidentConst.orderNum}}</h4>
+                <p>{{element.ordernum}}</p>
+             </div> 
+          </div>
+          <div class="icon">
+             <mat-icon>keyboard_arrow_right</mat-icon>
+          </div>
+       </mat-list-item>
+     </mat-list>     
+    </mat-card>   
+    <mat-paginator [length]="draftOrderCount" (page)="onPaginateChange($event)" #paginator #paginatorElement 
+     *ngIf="pageSize && draftOrderCount > commonNumbers.ten" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</mat-card>

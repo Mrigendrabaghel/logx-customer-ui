@@ -1,0 +1,223 @@
+<div class="dashboard-main-container" *ngIf="isDashboard">
+  <!-- TODO Need to take up in the next phase
+        <div *ngIf="!!annouuncementData && annouuncementData.length!==0 && isdismissAnnouncement">
+    <p class="previousAnnouncements">View the past 90 days of announcements</p>
+    <mat-card>
+        <p class="dismiss" (click)="dismissAnnouncement()">Dismiss All</p>
+        <div *ngFor="let i of annouuncementDataDisplay" class="announcements">
+            <p (click)="openDialog()">
+                <mat-icon>brightness_1</mat-icon> {{i.details}}
+            </p>
+            <mat-icon>remove_circle_outline</mat-icon>
+        </div> -->
+  <!-- <div class="allAnnouncement" *ngIf="!isExpanded"> -->
+  <!-- <p>Mark as Read</p> -->
+  <!-- <p (click)="moreAnnouncements('1')">View All Unread<mat-icon>keyboard_arrow_down</mat-icon>
+            </p>
+        </div>
+        <div class="allAnnouncement" *ngIf="isExpanded"> -->
+  <!-- <p>Mark as Read</p> -->
+  <!-- <p (click)="moreAnnouncements('0')">Collapse<mat-icon>keyboard_arrow_up</mat-icon>
+            </p>
+        </div>
+    </mat-card> -->
+  <!-- </div> -->
+  <div class="widget-section">
+    <mat-card class="widget-card">
+      <mat-card class="mainCard">
+        <form [formGroup]="trackTraceForm">
+          <mat-card *hasPermission="['TO','TA'];Widgets:['Track & Trace']">
+            <mat-card-title (click)="launchTrackTraceWidget()">
+              <mat-icon color="accent">{{CommonConst.MatIcons.location}}</mat-icon>
+              <p>{{homeComponentConst.inputHeaderText.trackTrace}}</p>
+            </mat-card-title>
+            <div class="widget-card-content">
+              <input matInput type="text" class="track-control mat-input-element"  placeholder={{DashboardConst.placeHolder.trackShipment}}
+                formControlName="trackNumberField"
+                (paste)="PasteSearchCreteria($event,trackTraceForm,'trackNumberField')"
+                (focusout)="focusOutFunction('trackNumberField',f.trackNumberField.value,trackTraceForm,'trackSubmitted')"
+                [ngClass]="{ 'inValid': trackSubmitted && f.trackNumberField.errors }">
+
+              <div class="inputSection"  *ngIf="!(trackSubmitted && f.trackNumberField.errors)">
+                <p>{{homeComponentConst.inputHeaderText.securetrackInputText}}</p>
+              </div>
+              <div *ngIf="trackSubmitted && f.trackNumberField.errors" class="errorMessage" >
+                <div *ngIf="f.trackNumberField.errors.required">
+                  <p>{{homeComponentConst.errorMessage.numberRequired}}</p>
+                </div>
+                <div *ngIf="f.trackNumberField.errors.minLength">
+                  <p>{{homeComponentConst.errorMessage.minLength}}</p>
+                </div>
+                <div *ngIf="isInvalidTrackSearchValue">
+                  <p>{{DashboardConst.errorMessage.characterLimit}}</p>
+                </div>
+              </div>
+              <div>
+                <p class="bulkSearch"><a (click)="openBulkSearch()">{{TrackOderConst.bulkSearch}}</a></p>
+                <button mat-raised-button type="submit"
+                (click)="getTrackRecords()">{{homeComponentConst.inputHeaderText.trackShipment}}</button>
+              </div>
+            </div>
+          </mat-card>
+        </form>
+        <form [formGroup]="orderLookupForm">
+          <mat-card *hasPermission="['TO','TA'];Widgets:['Order Lookup']">
+            <mat-card-title (click)="launchSearchReportWidget()">
+              <mat-icon color="accent">{{CommonConst.MatIcons.search}}</mat-icon>
+              <p>{{homeComponentConst.inputHeaderText.orderReport}}</p>
+            </mat-card-title>
+            <div class="widget-card-content">
+              <input matInput type="text" class="track-control" placeholder={{DashboardConst.placeHolder.findOrders}}
+                formControlName="orderLookupField"
+                (paste)="PasteSearchCreteria($event,orderLookupForm,'orderLookupField')"
+                (focusout)="focusOutFunction('orderLookupField',o.orderLookupField.value,orderLookupForm,'orderSubmitted')"
+                [ngClass]="{ 'inValid': orderSubmitted && o.orderLookupField.errors }">
+              
+              <div class="inputSection" *ngIf="!(orderSubmitted && o.orderLookupField.errors)">
+                <p>{{DashboardConst.inputLabels.searchOrder}}</p>
+              </div>
+              <div *ngIf="orderSubmitted && o.orderLookupField.errors" class="errorMessage">
+                <div *ngIf="o.orderLookupField.errors.required">
+                  <p>{{DashboardConst.errorMessage.orderNumberRequired}}</p>
+                </div>
+                <div *ngIf="o.orderLookupField.errors.minLength">
+                  <p>{{DashboardConst.errorMessage.orderNumberLimit}}</p>
+                </div>
+                <div *ngIf="isInvalidOrderLookupValue">
+                  <p>{{DashboardConst.errorMessage.orderCharLimit}}</p>
+                </div>
+              </div>
+              <div>
+                <p class="bulkSearch"><a (click)="openOrderAdvanceSearch()">{{DocumentsConst.ErrorMessage.advanceSearch}}</a></p>
+                <button class="orderButton" mat-raised-button type="submit"
+                (click)="getOrderRecords()">{{DashboardConst.inputLabels.findOrderText}}</button>
+              </div>
+            </div>
+          </mat-card>
+        </form>
+        <form [formGroup]="accessDocForm">
+          <mat-card *hasPermission="['TO','TA'];Widgets:['Access Documents']">
+            <mat-card-title (click)="launchAccessDocWidget()">
+              <mat-icon color="accent">{{CommonConst.MatIcons.library_books}}</mat-icon>
+              <p>{{homeComponentConst.inputHeaderText.accessDocHeader}}</p>
+            </mat-card-title>
+            <div class="widget-card-content">
+              <input matInput type="text" formControlName="accessDocField" class="track-control"
+                placeholder={{DashboardConst.placeHolder.findDocuments}}
+                (paste)="PasteSearchCreteria($event,accessDocForm,'accessDocField')"
+                (focusout)="focusOutFunction('accessDocField',a.accessDocField.value,accessDocForm,'accessDocSubmitted')"
+                [ngClass]="{ 'inValid': accessDocSubmitted && a.accessDocField.errors }">
+              
+              <div class="inputSection" *ngIf="!(accessDocSubmitted && a.accessDocField.errors)">
+                <p>{{DashboardConst.inputLabels.searchDoc}}</p>
+              </div>
+              <div *ngIf="accessDocSubmitted && a.accessDocField.errors" class="errorMessage">
+                <div *ngIf="a.accessDocField.errors.required">
+                  <p>{{DashboardConst.errorMessage.docNumberRequired}}</p>
+                </div>
+                <div *ngIf="a.accessDocField.errors.minLength">
+                  <p>{{DashboardConst.errorMessage.docNumberLimit}}</p>
+                </div>
+                <div *ngIf="isInvalidAccessSearchValue">
+                  <p>{{DashboardConst.errorMessage.characterLimit}}</p>
+                </div>
+              </div>
+              <div>
+                <p class="bulkSearch"><a (click)="openAccessAdvanceSearch()">{{DocumentsConst.ErrorMessage.advanceSearch}}</a></p>
+                <button mat-raised-button type="submit"
+                (click)="getDocumentRecords()">{{DashboardConst.inputLabels.findDoc}}</button>
+              </div>
+            </div>
+          </mat-card>
+        </form>
+      </mat-card>
+      <div class="divideAddSection">
+        <div class="left-section">
+          <mat-card class="mainCard">
+            <mat-card (click)="getAccessorials()" class="left-section-cards" *hasPermission="['TO','TA'];Widgets:['Approve Accessorials']">
+              <div>
+                <p> {{DashboardConst.inputLabels.approveAccessorials}}<span *ngIf="accessorialsCount>0">
+                    ({{accessorialsCount}})</span></p>
+                <mat-icon>{{CommonConst.MatIcons.assignment_turned_in}}</mat-icon>
+                <div *ngIf="countOfPendingApprovals>0" class="pending-approvals-count">
+                  <span class="material-icons">
+                    report_problem
+                  </span>
+                  <span>{{countOfPendingApprovals}}</span>
+                </div>
+              </div>
+            </mat-card>
+            <mat-card class="left-section-cards" (click)="launchReportIncident()" *hasPermission="['TO','TA'];Widgets:['Report Incidents']">
+              <div>
+                <p>{{DashboardConst.inputLabels.reportInc}}<span> ({{IncidentCount}})</span></p>
+                <mat-icon>{{CommonConst.MatIcons.edit}}</mat-icon>
+              </div>
+            </mat-card>
+            <mat-card class="left-section-cards" (click)="launchSubmitOrder()" *hasPermission="['TO','TA'];Widgets:['Submit Orders']">
+              <div>
+                <p>{{homeComponentConst.inputHeaderText.submitOrder}}<span>
+                  ({{draftOrderCount}})</span></p>
+                <img src="../assets/Icons/submit_order_hover.svg" class="img">
+              </div>
+            </mat-card>
+            <!-- <mat-card class="left-section-cards">
+              <div>
+                <p>{{DashboardConst.inputLabels.approveOrder}}</p>
+                <mat-icon>{{CommonConst.MatIcons.grading}}</mat-icon>
+              </div>
+            </mat-card> -->
+          </mat-card>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <!-- TODO Need to take up in the next phase 
+        <div class="report-section">
+        <mat-card class="report-cards">
+            <p class="reportHeader">Reports</p>
+            <mat-card class="mainCard-reports">
+                <mat-card>
+                    <mat-card-title>
+                        <p>{{DashboardConst.inputLabels.kpiReports}}</p>
+                        <mat-icon>{{CommonConst.MatIcons.info}}</mat-icon>
+                    </mat-card-title>
+                    <div class="report-body">
+                        {{commonNumbers.one}}
+                    </div>
+                    <div class="report-footer">
+                        footer
+                    </div>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>
+                        <p>{{DashboardConst.inputLabels.inboundOrders}}</p>
+                        <mat-icon>{{CommonConst.MatIcons.info}}</mat-icon>
+                    </mat-card-title>
+                    <div class="report-body">
+                        {{commonNumbers.two}}
+                    </div>
+                    <div class="report-footer">
+                        footer
+                    </div>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>
+                        <p>{{DashboardConst.inputLabels.dashboardReports}}</p>
+                        <mat-icon>{{CommonConst.MatIcons.info}}</mat-icon>
+                    </mat-card-title>
+                    <div class="report-body">
+                        {{commonNumbers.three}}
+                    </div>
+                    <div class="report-footer">
+                        footer
+                    </div>
+                </mat-card>
+            </mat-card>
+        </mat-card>
+    </div>
+    <div class="ad-section">
+        <mat-card class="advertisement">
+            {{DashboardConst.inputLabels.crowleyAd}}
+        </mat-card>
+    </div> -->
+</div>

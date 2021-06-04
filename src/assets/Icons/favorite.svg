@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="20px" viewBox="0 0 22 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <g id="Kibana---Report" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-opacity="0.8">
+        <g id="Favorite_Main_Menu" transform="translate(-198.000000, -233.000000)" fill="#CC162D" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="1.5">
+            <path d="M210.35,251.13 C209.59,251.82 208.42,251.82 207.66,251.12 L207.55,251.02 C202.3,246.27 198.87,243.16 199,239.28 C199.06,237.58 199.93,235.95 201.34,234.99 C203.98,233.19 207.24,234.03 209,236.09 C210.76,234.03 214.02,233.18 216.66,234.99 C218.07,235.95 218.94,237.58 219,239.28 C219.14,243.16 215.7,246.27 210.45,251.04 L210.35,251.13 Z" id="Path"></path>
+        </g>
+    </g>
+</svg>

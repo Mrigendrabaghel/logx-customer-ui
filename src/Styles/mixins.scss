@@ -1,0 +1,50 @@
+@mixin buttons {
+  border: solid 1px $accent !important;
+  color: $accent;
+  font-size: 11px;
+  cursor: pointer;
+  background-color: $white;
+  letter-spacing: 1px;
+}
+
+@mixin no-outline-buttons {
+  background-color: $white;
+  color: $accent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+@mixin filled-buttons {
+  background-color: $accent;
+  color: $white;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+@mixin pulicorderbuttons {
+  border: solid 1px $white !important;
+  color: $white;
+  font-size: 11px;
+  cursor: pointer;
+  background-color: $crowley_background;
+  letter-spacing: 1px;
+}
+
+
+
+@mixin public-order-filled-buttons {
+  color: $primary;
+  font-size: 11px;
+  cursor: pointer;
+  border: solid 1px $primary !important;
+  background-color: $white;
+}
+
+@mixin homePage-filled-buttons {
+  cursor: pointer;
+  border: solid 1px $primary !important;
+  background-color: $primary;
+  color: $white;
+}
+

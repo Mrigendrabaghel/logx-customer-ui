@@ -1,0 +1,356 @@
+@import "src/crowley-themes.scss";
+@import "../../../../Styles/mixins.scss";
+
+.main-container {
+  padding: 0% 30px 4% 0px;
+  margin: 0 0 0 20px;
+
+  mat-card {
+    background: $white;
+    border-radius: initial;
+    box-shadow: 0px 0 10px 1px rgba(0.24, 0.24, 0.24, 0.24);
+    padding: 30px 16px;
+
+    .header {
+      font-size: 46px;      
+      margin: 0px 0px 14px 0px;
+    }
+
+    .input-section {
+      display: flex;
+      padding: 20px 0px 0px 5px;
+
+      .selectOption {
+        width: 25%;
+        margin-right: 3%;
+      }
+
+      .selectOption {
+          p {
+            font-size: 16px;
+            color: $crowley_border_gray;
+          }
+
+          mat-select {
+            border-bottom: solid 1px $crowley_border_gray;
+            padding: 5px 0px;
+            font-size: 16px;
+            ::ng-deep.mat-select-placeholder {
+              color: $black;
+              font-size: 16px;
+          }
+          }
+        }
+
+      .input {
+        width: 100%;
+        .inputText {
+          textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            border-bottom: solid 1px $crowley_border_gray;
+            height: 20vh;
+            font-size: 16px;
+            line-height: 21px;
+          }
+        }
+
+        .selectOption,
+        .inputText {
+          p {
+            font-size: 16px;
+            color: $crowley_border_gray;
+          }
+        }
+
+        .errorMessage {
+          padding: 0px 0 0px 2px !important;
+        }
+      }
+    }
+
+    .buttons {
+      text-align: end;
+      margin: 20px 0px 0px 0px;
+
+      button {
+        letter-spacing: 1px;
+        width: 12%;
+      }
+
+      button:first-of-type {
+        margin-right: 16px;
+        @include no-outline-buttons;
+      }
+
+      button:nth-child(2) {
+        @include filled-buttons;
+      }
+
+      .disable {
+        background-color: $mileStone_gray !important;
+      }
+    }
+
+    .message {
+      font-size: 26px;
+      font-style: italic;
+      text-align: center;
+      padding: 32px 0px 0px 0px;
+    }
+  }
+  .table {
+    .tableHeader {
+      display: flex;
+      justify-content: space-between;
+      .header {
+        font-size: 46px;
+        color: $accent;
+        margin: 0px 0px 14px 0px;
+      }
+      .goBack {
+        color: $accent;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+
+    .totalRecords {
+      padding: 20px 0px 0px 5px;
+      font-size: 16px;
+      color: $accent;
+    }
+    
+    
+    table {
+      width: 100%;
+      margin: 30px 0px;
+      box-shadow: none;
+      tr.mat-header-row {
+        height: auto !important;
+      }
+      th {
+        color: $accent;
+        padding: 13px 3px 10px 16px;
+        width: 5%;
+      }
+  
+      tr:hover {
+        cursor: pointer;
+        background-color: $crowley_gray;
+      }
+  
+      td {
+        padding: 10px 6px 10px 16px;
+        word-break: break-all;
+      }
+    }
+  }
+}
+.multiRecord-container{
+  display: none;
+}
+
+
+@media only screen and (max-width:812px) {  
+  .onMobileView{
+    display: none;
+  }
+  .main-container {
+    padding: 0 15px;
+    margin: 0;
+    margin-top: 75px;
+    form{      
+      mat-card {
+        background: $white;
+        border-radius: initial;
+        box-shadow: 0px 0 10px 1px rgba(0.24, 0.24, 0.24, 0.24);        
+        padding: 20px 15px;
+    
+        .header {
+          font-size: 30px;
+        
+        }
+    
+        .input-section {
+          display: block;
+         
+          
+         
+          .selectOption {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+              p {
+                font-size: 14px;
+            
+              }
+    
+              mat-select {
+             
+                font-size: 14px;
+                ::ng-deep.mat-select-placeholder {
+            
+                  font-size: 14px;
+              }
+              }
+            }
+    
+          .input {
+                margin: 15px 0 0 0;
+
+           
+            .inputText {
+              textarea {
+           
+                font-size: 14px;
+              }
+            }
+    
+            .selectOption,
+            .inputText {
+              p {
+                font-size: 14px;
+               
+              }
+            }
+    
+            .errorMessage {
+              padding: 0px 0 0px 2px !important;
+            }
+          }
+        }
+    
+        .buttons {
+          text-align: center;
+        
+    
+          button {
+            letter-spacing: 1px;
+            width: 47%;
+          }
+    
+        }
+    
+        .message {
+        
+          padding: 42px 0px 14px 0px;
+
+        }
+      }
+      .table {
+        .tableHeader {
+          display: flex;
+          justify-content: space-between;
+          .header {
+            font-size: 24px;
+            color: $accent;
+            margin: 0px 0px 14px 0px;
+          }
+          .goBack {
+            color: $accent;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
+    
+        .totalRecords {
+          padding: 20px 0px 0px 5px;
+          font-size: 16px;
+          color: $accent;
+        }
+        
+        table {
+          width: 100%;
+          margin: 30px 0px;
+          box-shadow: none;         
+          th {
+            color: $accent;
+            padding: 10px 3px 10px 16px;
+            width: 5%;
+          }
+      
+          tr:hover {
+            cursor: pointer;
+            background-color: $crowley_gray;
+          }
+      
+          td {
+            padding: 10px 6px 10px 16px;
+            word-break: break-all;
+          }
+        }
+      }
+    }
+   
+  }
+  .details-table{
+    display: none;   
+    }
+  .multiRecord-container {
+    display: block;
+    padding: 14px 22px 1px 22px;
+    margin: 20px 15px;
+    background: #ffffff;
+    border-radius: initial;
+    box-shadow: 0px 0 10px 1px rgba(0, 0, 0, 0.24); 
+    margin-bottom: 120px;
+      .mat-list-base{
+        padding-top: 0px;
+        .mat-list-item, .mat-list-option{
+          border-bottom: 1px solid $crowley_warmGrey;
+          padding-bottom: 10px;
+          margin-bottom: 10px;
+          height: auto !important;
+          position: relative;			
+          &:last-child{ border-bottom: none;}
+          .two-col-item{
+            display: flex;
+            justify-content: space-between;
+            .item{
+              width: 55%;
+              &:last-child{
+                width: 40%;
+              }
+            }
+          }
+          .item{
+            label{
+              color: $crowley_background;
+              font-size: 16px;
+              font-weight: bold;
+              margin-right: 10px;
+            }
+            p{
+              color: rgba(0, 0, 0, 0.6);
+              font-size: 16px;  
+              margin-bottom: 0;        
+            }					
+          }
+          .icon{
+            mat-icon {
+              position: absolute;
+              right: -22px;
+              top: 15px;
+            }
+            }
+        }
+      }
+      ::ng-deep .mat-list-base .mat-list-item ::ng-deep .mat-list-item-content, ::ng-deep .mat-list-base .mat-list-option ::ng-deep .mat-list-item-content{
+        display: block !important;
+        padding: 0 !important;
+        width: 95%;
+      }			
+    }
+    ::ng-deep .mat-paginator-container{
+      margin-bottom: 40px;
+    }
+  
+}
+
+

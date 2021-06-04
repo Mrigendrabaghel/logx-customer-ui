@@ -1,0 +1,175 @@
+@import "src/crowley-themes.scss";
+@import "../../../Styles/mixins.scss";
+.mainContainer {
+    justify-content: space-between;
+    padding: 0% 30px 5% 20px;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    mat-card {
+        width: 90vw;
+        box-shadow: 0px 0 10px 1px rgba(27, 25, 25, 0.24);
+        padding: 30px;
+        .headerText {
+            font-size: 46px;
+            color: black;
+            padding: 16px 0px;
+       
+        }
+
+      
+    	.totalRecord {
+			display: flex;
+		  height: 50px;
+			.count {
+			  font-size: 16px;
+			  color: $accent;
+			  font-weight: normal;
+       
+			  span {
+				font-weight: 500;
+			  }
+
+      }
+      .countUnread{
+        font-size: 16px;
+        color: $accent;
+        font-weight: normal;
+        padding-left: 60px;
+        span {
+          font-weight: 500;
+          }
+      }
+      ::ng-deep .mat-form-field-flex{
+        width: 0px;
+        ::ng-deep .mat-form-field-infix{
+         top:-25px;
+         right: -20px;
+        }
+        
+      }
+      
+      ::ng-deep .mat-select-arrow{
+        display: none;
+      }
+
+
+		  }
+      .filter{
+          margin-right: 8px;
+          margin-left: 2px;
+          background-image: url("../../../assets/Icons/filter.svg");
+          background-repeat: no-repeat;
+          height: 17px;
+          width: 18px;
+      }
+      .notifications {
+            padding: 0px 12px 4px;
+          
+            
+
+            .read {
+                ::ng-deep .flex-row{
+              justify-content: space-between;
+              font-weight: normal;
+              font-size: 12px;
+              display: flex;
+              justify-content: flex-start;
+                
+            }
+          }
+
+           
+            
+            .unread {
+              ::ng-deep .flex-row{
+                justify-content: space-between;
+               
+              font-weight: bold;
+              font-size: 12px;
+              display: flex;
+              justify-content: flex-start;
+            
+            
+              }
+          }
+              .notification {
+                cursor: pointer;
+                padding-top: 10px;
+                padding-bottom: 7px;
+                color: $crowley_font;
+                overflow: hidden;
+                font-family: Helvetica;
+                line-height: 16px;
+                border-bottom: 1px solid rgb(33,35,33);
+                ::ng-deep .flex-row{
+                  justify-content: space-between !important;
+                }
+             
+                .message {
+                  font-size: 12px;
+                  max-height: 45px;
+                  overflow-y: auto;
+                }
+          
+                .read-more {
+                  cursor: pointer;
+                  font-size: 12px;
+                  color: #6074be;
+                  text-decoration: underline;
+                }
+          
+                .message-date {
+                  font-family: Helvetica;
+                  font-size: 10px;
+                  color: $crowley_warmGrey;
+                }
+          
+                .delete-notification {
+                  display: flex;
+                  justify-items: center;
+                  align-items: center;
+                  color: white;
+                  padding-left: 18px;
+          
+                  ::ng-deep .mat-icon {
+                    font-size: 12px;
+                    background-color: rgb(206,18,38);
+                    border-radius: 50%;
+                    padding: 0px 2.5px;
+                    width: 16px;
+                    height: 16px;
+                    line-height: 16px;
+                  }
+                }
+                .nodata {
+                  text-align: center;
+                  font-size: 28px;
+                  font-style: italic;
+                  color: $black;
+                }
+                // &.info {
+                //   background-color: rgba(189, 189, 189, 0.9);
+                // }
+            
+                // &.success {
+                //   background-color: rgba(27, 158, 119, 0.9);
+                // }
+            
+                // &.warning {
+                //   background-color: rgba(217, 95, 2, 0.9);
+                // }
+            
+                // &.error {
+                //   background-color:red;
+                // }
+              }
+      }
+      .nodata {
+        text-align: center;
+        font-size: 28px;
+        font-style: italic;
+        color: $black;
+      }
+          
+    }
+}

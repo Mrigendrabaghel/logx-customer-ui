@@ -1,0 +1,44 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../Styles/mixins.scss";
+
+::ng-deep.mat-dialog-container{
+    width: 700px !important ;
+}
+
+.mat-dialog-actions{
+    justify-content: flex-end;
+
+    
+.buttons {
+    .ButtonFont{
+        color: $accent;
+        
+    }
+    max-width: 100%;
+    background: #ffffff;
+    bottom: 50px;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+
+    .cancel {
+        @include buttons;
+        text-align: center;
+        margin:10px;
+
+    }
+    /*.cancel:hover {
+        background: $accent;
+        color: $white;
+    }*/
+    .search {
+        @include filled-buttons;
+        border-radius: 5px;
+        font-size: 11px !important;
+        border: solid 1px #0957a3 !important;
+        text-align: center;
+        margin:10px;
+    }
+}
+}

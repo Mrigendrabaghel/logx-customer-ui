@@ -1,0 +1,101 @@
+<div class="grid-view-desktop">
+<table mat-table [dataSource]="statusUpdatedataSource" cdkDropList cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="tableDrop($event)" matSort class="details-table">
+
+  <ng-container matColumnDef="loadNumber">
+    <th class ="width15percentage" mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x"
+      cdkDragBoundary="mat-header-row">
+      {{StatusUpdateRouting.tableValues.load}}</th>
+    <td mat-cell *matCellDef="let element"> {{element.loadNumber}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="carrier">
+    <th class ="width15percentage" mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x"
+      cdkDragBoundary="mat-header-row">
+      {{StatusUpdateRouting.tableValues.Carrier}} </th>
+    <td mat-cell *matCellDef="let element"> {{element.carrier}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th class="width30percentage" mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x"
+      cdkDragBoundary="mat-header-row">
+      {{StatusUpdateRouting.tableValues.statusEvent}} </th>
+    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="city">
+    <th class="width20percentage" mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x"
+      cdkDragBoundary="mat-header-row">
+      {{StatusUpdateRouting.tableValues.address}} </th>
+    <td mat-cell *matCellDef="let row">{{row.city}} , {{row.state}} {{row.zip}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="notes">
+    <th class="width10percentage" mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x"
+      cdkDragBoundary="mat-header-row">
+      {{StatusUpdateRouting.tableValues.noted}} </th>
+    <td mat-cell *matCellDef="let row">
+      <ng-container *ngIf="row.status.toLowerCase() != StatusUpdateRouting.podReceived">
+        {{row.notes}}
+      </ng-container>
+      <ng-container *ngIf="row.status.toLowerCase() === StatusUpdateRouting.podReceived">
+        <a href="#">{{row.notes}}</a>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateTime">
+    <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+      {{StatusUpdateRouting.tableValues.dateTime}}</th>
+    <td mat-cell *matCellDef="let element"> {{element.dateTime}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="noData">
+    <mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length">
+      {{StatusUpdateRouting.noRecord}}
+    </mat-footer-cell>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeaderRow" #tableHeaderRow></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator *ngIf="pageSize && pageSize>commonNumbers.zero && statusUpdatedataSource.data.length>commonNumbers.five" [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions">
+</mat-paginator>
+</div>
+<div class="crowley-listview">
+<mat-list>
+  <mat-list-item  *ngFor="let element of activePageData">
+    <h3 class="heading-row">
+      <div class="item d-flex py-1">
+        <label class="mb-0">{{StatusUpdateRouting.tableValues.loadNumber}}</label>
+        <p class="mb-0">{{element.loadNumber}}</p>
+      </div>
+    </h3>  
+    <div class="two-col-item">
+      <div class="item">
+        <label>{{StatusUpdateRouting.tableValues.Carrier}}</label>
+        <p>{{element.carrier}}</p>
+      </div>        
+      <div class="item">
+        <label>{{StatusUpdateRouting.tableValues.dateTime}}</label>
+        <p>{{element.dateTime}}</p>
+      </div> 
+    </div>       
+      <div class="item">
+      <label>{{StatusUpdateRouting.tableValues.statusEvent}}</label>
+      <p>{{element.status}}</p>
+      </div> 
+      <div class="item">
+      <label>{{StatusUpdateRouting.tableValues.address}}</label>
+      <p>{{element.city}}, {{element.state}} {{element.zip}}</p>
+    </div>
+    <div class="item">
+      <label>{{StatusUpdateRouting.tableValues.noted}}</label>
+      <p>{{element.notes}}</p>
+    </div>                             
+  </mat-list-item>
+</mat-list>   
+
+<mat-paginator *ngIf="pageSize && pageSize>commonNumbers.zero && len>commonNumbers.five" [length]="len" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)"></mat-paginator>       
+     
+</div>         

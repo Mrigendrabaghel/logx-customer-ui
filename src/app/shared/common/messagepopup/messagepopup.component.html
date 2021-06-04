@@ -1,0 +1,14 @@
+<div class="mainContainer" *ngIf="!mobileView">
+  <h2 mat-dialog-title>{{header}}</h2>
+  <mat-dialog-content class="mat-typography">
+    <h3>{{message}} {{searchstring}}</h3> 
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="cancelButton">{{CommonConst.btnCancel}}</button>
+  </mat-dialog-actions>
+</div>
+<div *ngIf="mobileView" class="mobileView">
+  <p>{{message}}</p>
+  <p>"{{searchstring}}"</p>
+  <p><a (click)="close()">{{homeComponentConst.errorMessage.goToHomePage}}</a>{{homeComponentConst.errorMessage.tryAgain}}</p>
+</div>

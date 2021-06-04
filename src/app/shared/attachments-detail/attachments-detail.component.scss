@@ -1,0 +1,257 @@
+@import "src/crowley-themes.scss";
+@import "../../../Styles/mixins.scss";
+
+ .table {
+ 
+    .details-table {
+      
+      box-shadow: none;
+      width: 100%;
+
+      .hazmatIcon {
+        background-image: url("../../../assets/Icons/hazmat_listview.svg");
+        width: 20px;
+        height: 20px;
+        margin: -6px 0px 0px 5px;
+      }
+
+      th {
+        color: $accent;
+        padding: 10px 3px 10px 16px;
+        font-size: 12px;
+        font-weight: normal;
+        
+      }
+
+      mat-row:hover {                 
+        cursor: pointer;
+        background-color: $crowley_gray;
+      }
+
+      tr:hover {
+        cursor: pointer;
+        background-color: $crowley_gray;
+      }
+
+      td {
+        padding: 10px 6px 10px 16px;
+        word-break: break-all;
+        text-align: left;
+      }
+
+      mat-header-cell {
+        color: $accent;
+        font-size: 12px;
+        font-weight: normal;
+        text-align: left;
+        padding: 0 30px 0 12px;
+        cursor: pointer;
+      }
+
+      mat-cell:first-of-type, mat-header-cell:first-of-type {            
+        margin-right: 0px;              
+      }
+
+      mat-cell {
+        padding: 5px 0px 5px 12px;
+        font-size: 12px;
+        text-align: left;
+        word-break: break-all;
+        mat-icon {
+          color: $accent;
+          height: 20px;
+          cursor: pointer;
+          font-size: 20px;
+          padding: 0 0 0 5px;
+        }
+      }
+
+    }
+
+    .uploadButton {
+      padding: 12px;
+      text-align: initial;
+
+      button {
+        @include filled-buttons;
+      }
+    }
+
+    .hide
+    {
+       display: none;
+    }
+
+    .noteText {
+      font-size: 12px;
+      color: $accent;
+      text-align: left;
+      padding: 5px 16px;
+    }
+
+    .input-container {
+      display: flex;
+      width: 100%;
+
+      .inputSection {
+        padding: 0px 10px 10px 16px;
+        justify-content: space-between;
+        p {
+          font-size: 12px;
+          color: black;
+          text-align: left;
+        }
+
+        input {
+          width: 100%;
+          outline: none;
+          border: transparent;
+          border-bottom: solid 1.5px gray;
+          margin-bottom: 24px;
+        }
+      }
+
+      .one {
+        width: 33%;
+        overflow: hidden;
+
+      }
+
+      .two {
+        width: 33%;
+        overflow: hidden;
+
+        mat-select {
+          border: none;
+          border-bottom: solid 1.5px gray !important;
+          padding-top: 2px;
+          margin-bottom: 24px;
+        }
+      }
+
+      .three {
+        width: 33%;
+        overflow: hidden;
+
+
+        div {
+          display: flex;
+
+          input {
+            width: 30vw;
+          }
+
+          mat-icon {
+            text-align: end;
+            color: $primary;
+            font-size: 22px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .uploadSectionbuttons {
+      text-align: end;
+
+      button {
+        width: 15%;
+        font-size: 12px;
+        margin-right: 10px;
+      }
+
+      button:first-of-type {
+        @include no-outline-buttons;
+      }
+
+      button:nth-child(2) {
+        @include buttons;
+      }
+
+    }
+
+    .table {
+      .details-table {
+        // margin: 16px 0px;
+        box-shadow: none;
+        width: 100%;
+
+        th {
+          color: $accent;
+          padding: 0px 6px 14px 10px !important;
+          font-weight: normal;
+        }
+
+        td {
+          padding: 10px 6px 10px 16px;
+          word-break: break-all;
+        }
+
+      }
+    }
+    .pagination{
+      float: right;
+    }
+  }
+  .attachment-detail-list{
+    display: none;
+  }
+  @media only screen and (max-width: 812px) {
+    .table{
+      display: none;
+    }
+    .attachment-detail-list{
+      display: block;
+      margin-top: 20px;
+    }
+    .mat-list-base{
+      padding-top: 0px;
+      .mat-list-item, .mat-list-option{
+        border-bottom: 1px solid $crowley_warmGrey;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        height: auto !important;
+        position: relative;			
+        &:last-child{ border-bottom: none;}
+        .two-col-item{
+          display: flex;
+          justify-content: space-between;
+        }
+        .item{
+          margin-bottom: 10px;
+          label{
+            color: $crowley_background;
+            font-size: 16px;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 0px;
+          }
+          p{
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 16px; 
+            margin-bottom: 0px;         
+          }				
+        }
+        .icon{
+          mat-icon {
+            position: absolute;
+            right: -22px;
+            top: 35px;
+          }
+          }
+      }
+    }
+    ::ng-deep .mat-list-base .mat-list-item ::ng-deep .mat-list-item-content, ::ng-deep .mat-list-base .mat-list-option ::ng-deep .mat-list-item-content{
+      display: block !important;
+      padding: 0 !important;
+      width: 100%;
+    }
+    .mat-list-base .mat-list-item .mat-list-icon, .mat-list-base .mat-list-option .mat-list-icon {						
+      width: 35px;
+      height: 35px;
+      font-size: 35px;						
+      padding: 0;
+      margin-left: -4px;
+      margin-right: 10px;
+    }
+  }

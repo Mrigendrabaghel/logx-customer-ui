@@ -1,0 +1,68 @@
+<form [formGroup]="uploadFileForm">
+   <div [ngClass]="finalCss">
+      <div class="table">
+         <p *ngIf="uploadFrom != CommonConst.orderAdditionalInfo && uploadFrom != CommonConst.incidentreports" class="noteText">{{UploadConst.uploadFileNote}}
+         </p>
+         <div>
+            <div class="noteText" *ngIf="isError">
+               <span *ngIf="filesMaxErrorList.length>0" class="maxFile"> {{CommonConst.files}} {{filesMaxErrorList.slice(1)}} {{UploadConst.fileTooLargeMsg}}
+               </span>
+               <span *ngIf="(filesExistError.length>0 && (uploadFrom == CommonConst.incidentreports))"> {{CommonConst.files}} {{filesExistError.slice(1)}} {{UploadConst.fileExistIncidentMsg}}</span>
+               <span *ngIf="(filesExistError.length>0 && (uploadFrom != CommonConst.incidentreports))"> {{CommonConst.files}} {{filesExistError.slice(1)}} {{UploadConst.fileExistMsg}}</span>
+               <span *ngIf="filesFormatNotSupport.length>0"> {{CommonConst.files}} {{filesFormatNotSupport.slice(1)}} {{UploadConst.fileNotSupportdMsg}}</span>
+               <p *ngIf="filesUploadMax.length>0"> {{filesUploadMax}} </p>      
+            </div>
+            <table class="table" *ngIf="files().controls.length > 0" formArrayName="files">
+               <tr>
+                  <th>{{CommonConst.fileName}}</th>
+                  <th *ngIf="uploadFrom != CommonConst.incidentreports">{{CommonConst.docType}}</th>
+                  <th>{{CommonConst.description}}</th>
+               </tr>
+               <tr *ngFor="let file of files().controls; let i=index" [formGroupName]="i">
+               <td>
+                  <input type="text" formControlName="DocName" class="form-control" disabled='true'>
+               </td>
+               <td *ngIf="uploadFrom == CommonConst.orderAdditionalInfo && uploadFrom != CommonConst.incidentreports">
+                  <mat-select formControlName="DocType" placeholder={{CommonConst.placeHolder.selectOption}}>
+                  <mat-option *ngFor="let docItem of DocTypeListAdd;" [value]="docItem.lookupDisplayText">
+                  {{ docItem.lookupDisplayText }}
+                  </mat-option>
+                  </mat-select>
+                  <div class="errorMessage"
+                  *ngIf="(file.controls.DocType && file.controls.DocType.invalid && (file.controls.DocType.dirty || file.controls.DocType.touched ||submitted))">
+                  <div *ngIf="file.controls.DocType.errors.required">{{CommonConst.required}}</div>
+                  </div>
+                  </td>
+                  <td *ngIf="uploadFrom != CommonConst.orderAdditionalInfo && uploadFrom != CommonConst.incidentreports">
+                  <mat-select formControlName="DocType" placeholder={{CommonConst.placeHolder.selectOption}}>
+                  <mat-option *ngFor="let docItem of DocTypeList;" [value]="docItem.lookupDisplayText">
+                  {{ docItem.lookupDisplayText }}
+                  </mat-option>
+                  </mat-select>
+                  <div class="errorMessage"
+                  *ngIf="(file.controls.DocType && file.controls.DocType.invalid && (file.controls.DocType.dirty || file.controls.DocType.touched ||submitted))">
+                  <div *ngIf="file.controls.DocType.errors.required">{{CommonConst.required}}</div>
+                  </div>
+                  </td>
+              
+                <td>                
+                  <span>
+                  <input class="desc" matInput formControlName="DocDescription" type="text" placeholder="{{CommonConst.description}}">
+                  <mat-icon (click)="removeFile(i,file.controls.DocName.value)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                </span>
+               </td>
+               </tr>
+            </table>
+         </div>
+         <div class="uploadButton uploadSectionbuttons">
+            <button mat-button (click)="fileInput.click()">
+            {{CommonConst.btnAddFiles}}
+            <input #fileInput type='file' class="hide" accept="{{UploadConst.fileExtensionsSupport}}"
+            (change)="AddFiles($event)" multiple>
+            </button>
+            <button mat-button *ngIf="uploadFrom != CommonConst.orderAdditionalInfo" (click)="closeUploadSection()">{{CommonConst.btnCancel}}</button>
+            <button mat-button *ngIf="uploadFrom != CommonConst.orderAdditionalInfo && uploadFrom != CommonConst.incidentreports" [disabled]="filesMaxErrorList.length>0 && files().controls.length===0" [class.disable]="filesMaxErrorList.length>0 && files().controls.length===0" (click)="UploadFiles()">{{CommonConst.uploadFiles}}</button>
+         </div>
+      </div>
+   </div>
+ </form>

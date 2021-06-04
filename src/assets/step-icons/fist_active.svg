@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="32px" viewBox="0 0 30 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>first_done</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.035294 0 0 0 0 0.341176 0 0 0 0 0.639216 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-8-Copy" transform="translate(0.000000, -0.000000)" filter="url(#filter-1)">
+            <g transform="translate(15.000000, 15.956977) rotate(90.000000) translate(-15.000000, -15.956977) translate(-0.956977, 0.956977)">
+                <path d="M6,0 L20.3993356,0 C21.0452378,0 21.6513795,0.311931368 22.0268026,0.837523613 L31.727687,14.4187618 C31.9760424,14.7664593 31.9760424,15.2335407 31.727687,15.5812382 L22.0268026,29.1624764 C21.6513795,29.6880686 21.0452378,30 20.3993356,30 L6,30 C2.6862915,30 -1.24344979e-13,27.3137085 -1.24344979e-13,24 L-1.24344979e-13,6 C-1.24344979e-13,2.6862915 2.6862915,0 6,0 Z" id="Rectangle" fill="#D2E9FF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

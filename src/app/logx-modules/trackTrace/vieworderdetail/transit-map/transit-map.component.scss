@@ -1,0 +1,15 @@
+@import "src/crowley-themes.scss";
+
+.map-container {
+    min-height: 300px;
+    max-height: 300px;
+    background-color: $white;
+}
+
+agm-map {
+    height: 300px;
+}
+
+strong {
+    color: $black;
+}

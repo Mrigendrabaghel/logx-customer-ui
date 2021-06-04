@@ -1,0 +1,240 @@
+@import "src/crowley-themes.scss";
+.material-icons {
+    font-family: 'Material Icons';
+    text-transform: none;  
+  }
+.main-container {
+	.progress-bar {
+		background-color: transparent;
+		.progressBarcontainer {
+			text-align: center;
+			margin: 0px auto; //m
+			color: $black;
+			ul {
+				display: flex;
+				justify-content: center;
+				li {
+					//m
+					list-style: none;
+					width: 10%;
+					text-align: center;
+					position: relative;
+					font-size: 13px;
+					letter-spacing: 1.5px;
+					font-weight: 500;
+					text-transform: uppercase;
+					color: black;
+					line-height: 20px;
+					margin: 0 30px 0 30px;
+					cursor: pointer; 
+				}
+				li:nth-of-type(4) {
+					width: 8%; //m
+				}
+				li:before {
+					content: '';
+					width: 40px; //m
+					height: 40px; //m
+					line-height: 30px;
+					border: 1px solid $crowley_border_gray;
+					display: block;
+					text-align: center;
+					margin: 0px auto 10px auto;
+					border-radius: 50%;
+					background-color: $mileStone_gray;
+				}
+				li.isCompleted, li.saveforlater{
+                    color: $accent;
+                }
+                 li.isCompleted:before {
+                    background-color: $accent;
+                
+                    color: $white;
+                    border:1px solid $accent;
+                    font-size: 25px;
+                    padding: 2px;
+                    @extend .material-icons;
+
+                    content: 'done';
+            
+                  }
+                 li.isCompleted + li:after {
+                    background-color: $accent;
+                    
+                  }
+                 li.saveforlater::before{
+                    border: 2px solid $accent;
+                    background-color: $white;
+                  }
+				li:after {
+					content: "";
+					position: absolute;
+					width: 146%;
+					height: 1.2px;
+					background-color: #00202c;
+					top: 20px; //m
+					left: -113%;
+					z-index: -1;
+				}
+				li:first-child:after {
+					content: none;
+				}
+				.active {
+					color: $accent;
+				}
+				.active:before {
+					content: "\2713";
+					font-size: 16px;
+					background-color: $accent;
+					color: $white;
+					border-color: $accent;
+				}
+				.active:after {
+					background-color: $accent;
+				}
+			}
+		}
+	}
+	.order-number {
+		//m
+		display: block;
+		text-align: left;
+		color: $accent;
+		font-size: 40px; //m
+		letter-spacing: 0.5px; //m
+		padding: 30px 16px 16px;
+		margin: 0px;
+		cursor: pointer; //m
+		img {
+			//m
+			cursor: pointer;
+		}
+		.dis-f{
+			display: flex;
+  		   align-items: center;
+		}
+	}
+	.saveandcreatedBy {
+		//m
+		margin: 0em 0 0 0;
+		padding: 3px 22px 15px 22px;
+	
+		div {
+		  //m
+		  display: flex;
+		  justify-content: space-between;
+	
+		  p {
+			font-size: 16px;
+			color: $accent;
+		  }
+	
+		  p:nth-child(2) {
+			text-align: right;
+		  }
+		}
+	  }
+}
+
+.edit-order-number {
+    /* display: block; */
+    text-align: left;
+    color: #0957a3;
+    padding: 0px 16px 0px !important;
+    /* margin: 0px 0 0 -1px; */
+    font-size: 40px;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+    width: fit-content;
+}
+
+.icon-spacing {
+  font-size: 40px !important;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.validation {
+  text-align: center;
+  padding: 0px 505px 0 0;
+}
+
+.disabled_icon {
+	pointer-events: none; 
+  }
+.selected-title-mobile{
+	display: none;
+}
+  @media only screen and (max-width:812px) {
+	.main-container {
+		margin-top: 80px;		
+		position: relative;
+		.padding-lr{
+			padding: 0 15px;
+		}
+		.selected-title-mobile{
+			position: absolute;
+			top: 60px;
+			display: block;
+			width: 100%;
+			left: 0;
+			h3{
+			display: block;
+			font-size: 20px;
+			font-weight: normal; 
+			letter-spacing: 1.11px;
+			color: #0957a3;
+			text-align: center;
+			}
+		}	
+		.progress-bar {			
+			.progressBarcontainer {		
+				margin: 0px; //m		
+				ul {
+					padding: 0;					
+					li {						
+						width: 10%;						
+						color: #fff;						
+						margin: 0 17px 0 17px;
+						span{
+							display: none;
+						}						
+					}					
+					li:before {						
+						width: 37px; //m
+						height: 37px; //m						
+					}					
+				}
+			}
+		}
+		.order-number {
+			padding: 0px;
+			margin-top: 35px;
+			form{
+				div{
+					label{
+						font-size: 14px;
+						display: block;
+					}
+					span{
+						font-size: 26px;
+						margin-right: 5px;
+					}
+					.edit-order-number {						
+						font-size: 26px;
+						margin-right: 5px !important;
+						padding: 0 !important;						
+					}
+				}
+			}
+			.order-edit{
+				display: flex;
+				span{
+				  margin-right: 0px;
+				}
+			  }
+		}
+	}
+  }

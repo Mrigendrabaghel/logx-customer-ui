@@ -1,0 +1,65 @@
+<div class="main-container">
+<mat-card class="gridView">
+    <p>{{SubmitorderdetailsConst.draftOrders}}</p>
+    <div class="totalRecord">
+        <div class="count">{{BulkSearchConst.total}} <span>{{draftOrderCount}}</span></div>
+        <div>
+            <button (click)="goToSubmitOrder(null)">{{SubmitorderdetailsConst.newOrders}}</button>
+        </div>
+    </div>
+    <div class="table-section">
+      <mat-table id="userTable" mat-table [dataSource]="dataSource" matSort cdkDropList cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="itemTableDrop($event)">
+        <ng-container *ngFor="let column of submitDraftOrdersGridColumns; let i = index"
+          [matColumnDef]="column.headingDBColumn">
+          <mat-header-cell mat-sort-header *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+            {{column.headingDisplayText}} </mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="goToSubmitOrder(element)">
+            <span *ngIf="column.headingDBColumn != 'createdBy'">{{element[column.headingDBColumn]}}</span>
+            <span class="username" *ngIf="column.headingDBColumn == 'createdBy'" matTooltip={{element.userEmail}}>{{element[column.headingDBColumn]}}</span>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="submitDraftOrderColumns" #tableHeaderRow></mat-header-row>
+        <mat-row *matRowDef="let row; columns: submitDraftOrderColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator [length]="draftOrderCount" (page)="onPaginateChange($event)" #paginator #paginatorElement 
+      *ngIf="pageSize && this.draftOrderCount>commonNumbers.ten"
+        [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+    </div>
+ </mat-card>
+</div>
+ <div class="main-container1">
+  <p>{{SubmitorderdetailsConst.draftOrders}}</p>
+  <button (click)="goToSubmitOrder(null)">{{SubmitorderdetailsConst.newOrders}}</button>
+  <div class="count">{{BulkSearchConst.total}} <span>{{draftOrderCount}}</span></div>
+  <mat-card class="crowley-adv-listview">
+    <mat-list>
+       <mat-list-item *ngFor="let element of dataSource.data" (click)="goToSubmitOrder(element)">      
+          <div class="item">
+             <h4>{{SubmitOderConst.orderNumber}}</h4>
+             <p> {{element.orderNumber}}</p>
+          </div> 
+          <div class="item">
+            <h4>{{SubmitOderConst.createdBy}}</h4>
+            <p> {{element.createdBy}}</p>
+         </div>
+          <div class="two-col-item">
+             <div class="item">
+                <h4>{{SubmitOderConst.created}}</h4>
+                <p>{{element.created}}</p> 
+             </div>        
+             <div class="item">
+                <h4>{{SubmitOderConst.modified}}</h4>
+                <p>{{element.modified}}</p>
+             </div> 
+          </div>
+          <div class="icon">
+             <mat-icon>keyboard_arrow_right</mat-icon>
+          </div>
+       </mat-list-item>
+     </mat-list>     
+    </mat-card> 
+    <mat-paginator [length]="draftOrderCount" (page)="onPaginateChange($event)" #paginator #paginatorElement 
+    *ngIf="pageSize && this.draftOrderCount>commonNumbers.ten"
+      [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>    
+</div>

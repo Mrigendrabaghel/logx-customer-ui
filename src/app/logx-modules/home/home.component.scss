@@ -1,0 +1,514 @@
+@import "src/crowley-themes.scss";
+@import "../../../Styles/mixins.scss";
+
+.main {
+	max-width: 100%;
+}
+.cdk-focused {
+	background-color: transparent!important;
+  }
+/* Header CSS section */
+
+.header-main {
+	max-width: 100%;
+	background-color: $dark-primary;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 1;
+	.head-container {
+		max-width: 100%;
+		margin-right: auto;
+		margin-left: auto;
+		.sidenav-container {
+			height: 100%;
+		}
+		.sidenav {
+			width: 200px;
+			box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+		}
+		.hidden {
+			display: none;
+		}
+		.spacer {
+			flex: 0.5 0.5 auto;
+		}
+		.sideBarMenu {
+			padding: 0px 20px 0 0px;
+		}
+		mat-toolbar {
+			background-color: #CE1226;
+			color: $white;
+			height: 50px;
+			padding: 0px 20px 0 0px;
+			
+			span:first-of-type {
+				font-size: 24px;
+			}
+			mat-nav-list {
+				padding-top: 0px !important;
+				mat-icon {
+					width: 0px;
+					font-size: 13px;
+					// color: #3DB5E2;
+				}
+			}
+			mat-icon {
+				color: $white;
+				padding-bottom: 26px;
+			}
+			a {
+				display: inline-block;
+				padding: 0px 0px 0px 0px;
+				text-decoration: none;
+				font-size: 15px;
+				font-weight: normal;
+			}
+			a:hover {
+				color: $white;
+				cursor: pointer;
+			}
+			.navBarEnd {
+				color: $white;
+				a {//:nth-child(1) {
+					border: 1px solid $white;
+					border-radius: 5px;
+					padding: 0 30px;
+					margin-left: 10px;
+				}
+			}
+			.logo {
+				margin: 0px 0px 0px 11px;
+			}
+		}
+	}
+}
+
+.main-container {
+	max-width: 100%;
+	background-color: $crowley_background;
+	background-image: url('src/assets/logx-background-30.svg');
+	background-size: 100% 100%;
+	.main-sub-container {
+		width: 100%;
+		min-height: 100vh;
+		// margin: 0px;
+		margin-right: auto;
+		margin-left: auto;
+		padding: 4% 30px 30px 30px;
+		.topSection {
+			display: flex;
+			.leftSection {
+				width: 70%;
+				padding: 15px;
+				.section-one {
+					text-align: left;
+					color: $white;
+					padding: 15px 30px 5px;
+					display: inline-block;
+					p:nth-child(1) {
+						font-size: 16px;
+					}
+					p:nth-child(2) {
+						font-size: 36px;
+						padding-bottom: 10px;
+						// border-bottom: 1px dashed;
+						// border-right-style: ;
+						display: inline;
+					}
+					.dashedLine {
+						border-bottom: 1px dashed;
+						padding-top: 20px;
+						.dot {
+							margin: -5px -15px 0px 0px;
+						}
+					}
+				}
+				.section-two {
+					padding: 35px 20px;
+					mat-card {
+						background: rgb(1, 20, 27, 0.75);
+						border-radius: 12px;
+						padding: 20px 20px 30px;
+						p:nth-child(1) {
+							font-size: 18px;
+							color: $crowley_pink;
+							font-weight: bold;
+						}
+						p:nth-child(2) {
+							color: $white;
+						}
+						.input-section {
+							height: 100%;
+							// display: flex;
+							input {
+								width: 70%;
+								padding: 10px;
+								outline: none;
+								// height: 11vh;
+							}
+							button,
+							button:focus {
+								width: 30%;
+								background-color:#CE1226 !important;
+								border-radius: inherit;
+								background-color:#CE1226 !important;
+								height: 45px;
+								outline: none;
+								@include homePage-filled-buttons;
+							}
+							.inValid {
+								border: 2px solid $dark-primary;
+							}
+						}
+					}
+				}
+			}
+			.rightSection {
+				width: 30%;
+				padding: 15px;
+				.right-card {
+					padding: 15px 0px 0px 0px;
+				}
+			}
+		}
+		.bottomSection {
+			display: flex;
+			justify-content: initial;
+			align-items: center;
+			height: fit-content;
+			padding: 5px 25px 20px;
+			mat-card {
+				width: 30.7%;
+				// width: 27%;
+				// margin: 10px;
+				margin: 10px 30px;
+				background: rgba(1, 20, 27, 0.6);
+				color: #ffffff;
+				text-align: center;
+				padding: 10px !important;
+				border-radius: 15px;
+				border: 0.5px solid #ffffff;
+				mat-icon {
+					font-size: 55px;
+					margin: 24px;
+				}
+				img {
+					margin: 18px 0px;
+				}
+				p:first-of-type {
+					font-size: 20px;
+					padding: 5px;
+				}
+				.loginText {
+					font-size: 14px;
+					word-spacing: 1px;
+					padding: 14px 0;
+					a {
+						color: $crowley_pink;
+						cursor: pointer;
+					}
+				}
+				.dashedLine {
+					.dot {
+						margin: -5px 0px 0px 0px;
+					}
+				}
+			}
+			mat-card:hover {
+				transform: scale(1.05);
+				box-shadow: 0 0 40px -10px $white;
+			}
+			@media only screen and (max-width:812px) {
+				flex-direction: column;
+				padding: 0px;
+				mat-card {
+					width: 100%;
+				}
+			}
+		}
+		.dashedLine {
+			border-bottom: 1px dashed $white;
+			.dot {
+				height: 10px;
+				width: 10px;
+				background-color: $white;
+				border-radius: 50%;
+				// display: inline-block;
+				float: right;
+				margin: -5px 0px 0px 0px;
+			}
+		}
+		.errorMessage {
+			color: $crowley_pink;
+		}
+	}
+}
+			@media only screen and (max-width:812px) {
+				.header-main {
+					.head-container {
+						mat-toolbar {
+							.logo {
+								margin: 0px 0px 0px 16px;
+							}
+						}
+					}
+				}
+				.main-container {
+					background-color: $crowley_background;
+					background-image: none;
+					flex-direction: column;
+				
+				.leftSection {
+					width: 100% !important;
+					padding: 10% 0px 0px 0px !important;
+					.section-one {
+						padding: 0px 0px 30px 0px;
+					}
+					.section-two {
+						padding: 20px 0px 0px 0px !important;
+						.input-section {
+							button,
+							button:focus {
+								font-size: 8px;
+								background-color:#CE1226 !important;
+								position: relative;
+								background-color:#CE1226 !important;
+								bottom: 2px;
+								padding: 0px;
+							}
+						}
+					}
+				}
+				.rightSection {
+					width: 100%;
+					padding: 0px;
+					display: none;
+
+					.right-card {
+						width: 100%;
+						div {
+							text-align: left !important;
+						}
+						mat-card {
+							height: fit-content;
+							width: 100%;
+							.try-free {
+								padding: 10px 0px 0px 0px;
+								text-align: left;
+							}
+							button,
+							button:focus {
+								width: 50%;
+							}
+						}
+					}
+				}
+			  }
+			}
+			@media only screen and (min-width:1024px) and (max-width: 1366px) {
+				.main-container {
+					
+				.topSection {
+					padding: 5% 0px 0px;
+				}
+				.rightSection {
+					.right-card {
+						mat-card {
+							height: fit-content;
+							width: 100%;
+							div {
+								text-align: center;
+							}
+							button,
+							button:focus {
+								width: 50%;
+							}
+						}
+					}
+				}
+				}
+			}
+		
+		
+
+
+.footer-container {
+	background-color: $public_footer;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	font-size: 10px;
+	position: fixed;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	.footer-section {
+		padding: 10px 30px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		ul {
+			list-style: none;
+			display: flex;
+			color: $white;
+			margin: 0px;
+			li {
+				padding: 0px 10px;
+				border-right: solid 1px $white;
+			}
+			li:last-child {
+				border-right: none;
+			}
+		}
+		.copyright {
+			mat-icon {
+				font-size: 10px;
+				width: 12px;
+				height: 0px;
+			}
+			li {
+				display: inline-block;
+				border: none;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width:812px) {
+	.footer-container {
+		justify-content: center;
+		font-size: 5px;
+		.footer-section {
+			padding: 10px 0px;
+			ul {
+				li {
+					padding: 0px 3px;
+				}
+			}
+			.copyright {
+				mat-icon {
+					font-size: 4px;
+					width: 6px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.main {
+		.header-main {
+			.head-container {
+				max-width: 1470px;
+			}
+		}
+		.main-container {
+			.main-sub-container {
+				max-width: 1470px;
+				.topSection {
+					.rightSection {
+						.right-card {
+							width: 100%;
+							text-align: left;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 480px),
+only screen and (max-device-width: 480px) {
+	.header-main {
+		.head-container {
+			.mat-sidenav-content {
+				mat-toolbar {
+					button {
+						display: none;
+					}
+					.logo {
+						margin: 0px 0 0px 20px;
+						width: 95pt;
+						height: 15pt;
+					}
+					.navBarEnd {
+						.desktopLogin {
+							display: none;
+						}
+						a:nth-child(1) {
+							border: none !important;
+							padding: 0;
+							font-size: 18px;
+						}
+					}
+				}
+			}
+		}
+	}
+	.main-container {
+		background-image: none;
+		.main-sub-container {
+			padding: 17% 22px 30px 22px;
+			.topSection {
+				.leftSection {
+					.section-one {
+						width: 100%;
+						padding: 0px;
+						p:first-child {
+							margin: 0 0 20px 0;
+							font-size: 12px;
+						}
+						.dashedLine {
+							padding-top: 12px;
+						}
+					}
+					.section-two {
+						mat-card {
+							p:first-child {
+								font-size: 14.3px !important;
+							}
+							p:nth-child(2) {
+								font-size: 12.3px;
+							}
+							.input-section {
+								form {
+									button {
+										top: 0px;
+										font-size: 12px;
+									}
+								}
+							}
+						}
+					}
+				}
+				.rightSection {
+					display: none;
+				}
+			}
+			.bottomSection {
+				top: 29pt;
+				position: relative;
+				margin-bottom: 58px;
+				mat-card:first-child {
+					bottom: 12pt;
+				}
+				mat-card {
+					height: 138pt !important;
+					.dashedLine {
+						border-bottom: 2px dashed #ffffff;
+					}
+					.loginText {
+						font-size: 10.7pt;
+						margin: 0 0 0 18px;
+						a {
+							text-transform: lowercase;
+						}
+					}
+				}
+			}
+		}
+	}
+}

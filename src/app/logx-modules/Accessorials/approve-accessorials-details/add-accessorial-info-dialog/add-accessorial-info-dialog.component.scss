@@ -1,0 +1,110 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../Styles/mixins.scss";
+
+.addInfo-main-container {
+    p:first-of-type {
+      font-size: 16px;
+      color: $black;
+      font-weight: normal;
+    }
+    
+    .check-box {
+      .orderInfo {
+        display: flex;
+        justify-content: space-between;
+        p:first-of-type {
+          margin: 10px 0px 10px 0px;
+          font-size: 12px;
+          font-weight: normal;
+          letter-spacing: 0.6px;
+          color: $crowley_border_gray;
+        }
+        p:nth-child(2) {
+          margin: 10px 0px 10px 0px;
+          font-size: 12px;
+          font-weight: normal;
+          color: $accent;
+          letter-spacing: 1px;
+          cursor: pointer;
+        }
+      }
+      .checkbox-section {
+        display: flex;
+        ::ng-deep.mat-checkbox-checked.mat-primary .mat-checkbox-background {
+          background-color: $accent !important;
+        }
+        ::ng-deep.mat-radio-button.mat-primary .mat-radio-inner-circle {
+          background-color: $accent !important;
+        }
+        ::ng-deep.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+          border-color: $accent !important;
+        }
+        section:first-of-type {
+          display: grid;
+          padding: 10px 30px 10px 0px;
+          mat-checkbox {
+            span {
+              font-size: 12px;
+              font-weight: normal;
+            }
+          }
+        }
+
+        section:nth-child(2) {
+          display: grid;
+          padding: 10px 30px 10px 0px;
+          .spacer {
+            height: 5vh;
+          }
+        }
+      }
+    }
+
+    .otherInfo {
+        p {
+            font-size: 16px;
+            font-weight: normal;
+        }
+        textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            border-bottom: solid 1px $crowley_border_gray;
+        }
+    }
+
+    .button {
+      text-align: end;
+      padding: 6% 0px 0px 0px;
+      button {
+        @include filled-buttons;
+        font-size: 12px !important;
+        margin-right: 10px;
+        width: 30%;
+      }
+      button:first-of-type {
+        @include buttons;
+      }
+    }
+  }
+
+  .errorMessage {
+    font-size: 11px;
+    color: $primary;
+    padding: 5px 0 0px 2px;
+}
+@media only screen and (max-width: 812px) {
+  .check-box{
+  .checkbox-section {
+    display: block !important;
+    section{
+      padding: 0 !important;
+    }
+  }
+}
+.button {    
+  button {   
+  width: auto !important;
+  }  
+}
+}

@@ -1,0 +1,23 @@
+@import "src/crowley-themes.scss";
+::ng-deep .cdk-overlay-pane{
+    max-width: 30vw !important;
+}
+ .mat-dialog-actions[align=end] {
+    justify-content: center;
+    .mat-button-base{
+        width: 100px;
+    margin-bottom: 20px;
+    background-color: $crowley_red;
+    color: $white;
+    }
+}
+.mat-dialog-content{
+    max-height: 100vh;
+    text-align: center;
+    img{
+        width: 56px;
+        height: 56px;
+        margin-bottom: 15px;
+    }
+}
+

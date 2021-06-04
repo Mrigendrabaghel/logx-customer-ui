@@ -1,0 +1,142 @@
+<div class="main-container" *ngIf="!isShowAdvanceSearch" [ngClass]="(isShowCustomized)? 'modifiedMain': 'main'">
+  <div class="right-section">
+    <form [formGroup]="searchReportForm">
+      <mat-card>
+        <p>{{AdvanceSearchAccessDoc.orderText.formName}}</p>
+        <p>{{OrderSearchReport.searchOrderCriteria}}</p>
+        <div class="input-section">
+          <div>
+            <fieldset>
+              <legend>{{OrderSearchReport.searchOrder}}</legend>
+              <input matInput type="text" class="track-control mat-input-element"
+                placeholder={{DashboardConst.placeHolder.findOrders}} formControlName="orderNumberField"
+                (paste)="PasteSearchCreteria($event)" (focusout)="focusOutFunction()">
+            </fieldset>
+          </div>
+          <button mat-raised-button (click)="getOrderData(f.orderNumberField.value)" type="submit"
+            color="accent">{{OrderSearchReport.btnSearchOrder}}</button>
+        </div>
+        <div *ngIf="submitted && f.orderNumberField.errors" class="errorMessage">
+          <div *ngIf="submitted && f.orderNumberField.errors.required">
+            {{DashboardConst.errorMessage.orderNumberRequired}}</div>
+          <div *ngIf="isSearchOrderLengthValid">{{DashboardConst.errorMessage.orderCharLimit}}</div>
+        </div>
+        <p class="advanceSearch"><a (click)="openAdvanceSearch()">{{DocumentsConst.ErrorMessage.advanceSearch}}</a></p>
+
+        <div class="export" *ngIf="isShowExport">
+          <button (click)="exportAsXLSX();">{{CommonConst.btnExport}}</button>
+          <button class="showCol" (click)="openCustomizeGrid()">Show/Hide Columns</button>
+        </div>
+        <div class="table-section" *ngIf="dataSource.data.length>0">
+          <table id="userTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8"
+            *ngIf="isShowOrderDetails" cdkDropList cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="itemTableDrop($event)">
+            <ng-container *ngFor="let column of searchReportDefaultGrid; let i = index"
+              [matColumnDef]="column.headingDBColumn">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef cdkDrag cdkDragLockAxis="x"
+                cdkDragBoundary="mat-header-row">
+                {{column.headingDisplayText}} </th>
+              <td mat-cell *matCellDef="let element" (click)="viewDetails(element['OrderNumber'])">
+                <span
+                  *ngIf="column.headingDBColumn != CommonConst.mileStoneProgress">{{element[column.headingDBColumn]}}</span>
+                <mat-progress-bar *ngIf="column.headingDBColumn == CommonConst.mileStoneProgress" class="progress"
+                  title="{{DisplayToolTip(element[column.headingDBColumn])}}" mode="determinate"
+                  value="{{element[column.headingDBColumn]}}"></mat-progress-bar>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="searchReportColumns" #tableHeaderRow></tr>
+            <tr mat-row *matRowDef="let row; columns: searchReportColumns;"></tr>
+          </table>
+          <mat-paginator
+            *ngIf="isShowOrderDetails && pageSize && pageSize>commonNumbers.zero && dataSource.data.length>commonNumbers.ten"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+        </div>
+      </mat-card>
+
+    </form>
+  </div>
+</div>
+<div class="main-container1" *ngIf="!isShowAdvanceSearch" [ngClass]="(isShowCustomized)? 'modifiedMain': 'main'">
+  <div class="right-section">
+    <form [formGroup]="searchReportForm">
+      <mat-card>
+        <p>{{AdvanceSearchAccessDoc.orderText.formName}}</p>
+        <p>{{OrderSearchReport.searchOrderCriteria}}</p>
+        <div class="input-section">
+          <div>
+            <fieldset>
+              <legend>{{OrderSearchReport.searchOrder}}</legend>
+              <input matInput type="text" class="track-control" placeholder={{DashboardConst.placeHolder.findOrders}}
+                formControlName="orderNumberField" (paste)="PasteSearchCreteria($event)"
+                (focusout)="focusOutFunction()">
+            </fieldset>
+          </div>
+
+        </div>
+        <div *ngIf="submitted && f.orderNumberField.errors" class="errorMessage">
+          <div *ngIf="submitted && f.orderNumberField.errors.required">
+            {{DashboardConst.errorMessage.orderNumberRequired}}</div>
+          <div *ngIf="isSearchOrderLengthValid">{{DashboardConst.errorMessage.orderCharLimit}}</div>
+        </div>
+        <div class="search-report-cta-section">
+          <p class="advanceSearch"><a (click)="openAdvanceSearch()">{{DocumentsConst.ErrorMessage.advanceSearch}}</a>
+          </p>
+          <button mat-raised-button (click)="getOrderData(f.orderNumberField.value)" type="submit"
+            color="accent">{{OrderSearchReport.btnSearchOrder}}</button>
+        </div>
+      </mat-card>
+      <div class="table-section">
+        <!-- <table id="userTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8"
+        *ngIf="isShowOrderDetails" cdkDropList cdkDropListOrientation="horizontal"
+        (cdkDropListDropped)="itemTableDrop($event)">
+        <ng-container *ngFor="let column of searchReportDefaultGrid; let i = index"
+          [matColumnDef]="column.headingDBColumn">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+            {{column.headingDisplayText}} </th>
+          <td mat-cell *matCellDef="let element" (click)="viewDetails(element['OrderNumber'])">
+            <span *ngIf="column.headingDBColumn != CommonConst.mileStoneProgress">{{element[column.headingDBColumn]}}</span>
+            <mat-progress-bar *ngIf="column.headingDBColumn == CommonConst.mileStoneProgress" class="progress"
+              title="{{DisplayToolTip(element[column.headingDBColumn])}}" mode="determinate"
+              value="{{element[column.headingDBColumn]}}"></mat-progress-bar>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="searchReportColumns" #tableHeaderRow></tr>
+        <tr mat-row *matRowDef="let row; columns: searchReportColumns;"></tr>
+      </table> -->
+        <mat-card class="crowley-adv-listview" *ngIf="isShowOrderDetails">
+          <mat-list>
+            <mat-list-item *ngFor="let element of activePageData " (click)="viewDetails(element['OrderNumber'])">
+              <div class="item">
+                <h4>{{OrderSearchReport.orderNumber}}</h4>
+                <p> {{element.OrderNumber}}</p>
+              </div>
+              <div class="two-col-item">
+                <div class="item">
+                  <h4>{{OrderSearchReport.status}}</h4>
+                  <p>{{element.OrderStatus}}</p>
+                </div>
+                <div class="item">
+                  <h4>{{OrderSearchReport.deliveryDateTime}}</h4>
+                  <p>{{element.DeliveryDate}}</p>
+                </div>
+              </div>
+              <div class="icon">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </div>
+            </mat-list-item>
+          </mat-list>
+          <mat-paginator *ngIf="isShowOrderDetails && pageSize && pageSize>commonNumbers.zero && len>commonNumbers.ten"
+            [length]="len" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
+          </mat-paginator>
+        </mat-card>
+
+
+      </div>
+
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,858 @@
+<div class="main-container">
+  <div class="details-section">
+    <mat-card class="card">
+      <p *ngIf="!editClick">{{SubmitorderdetailsConst.orderLineItem}} {{lineItemsDataSource.data.length+1}}</p>
+      <p *ngIf="editClick">{{SubmitorderdetailsConst.orderLineItem}} {{editDataIndex+1 }}</p>
+      <div class="content-section">
+        <form [formGroup]="orderLineItemsForm">
+          <div class="first-section">
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.TCN}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput type="tcn" placeholder={{SubmitorderdetailsConst.placeHolder.tcn}}
+                      (keypress)="omit_special_char($event)" formControlName="tcnNum" name="tcnNum" (change)="print()">
+                  </mat-form-field>
+                  <div *ngIf="orderLineItemsForm.controls.tcnNum.errors">
+                    <div
+                      *ngIf="orderLineItemsForm.controls.tcnNum.errors.required && orderLineItemsForm.controls.tcnNum.touched"
+                      class="errorMessage">{{SubmitorderdetailsConst.tcnRequired}}</div>
+                    <div
+                      *ngIf="orderLineItemsForm.controls.tcnNum.errors.minlength || orderLineItemsForm.controls.tcnNum.errors.maxlength"
+                      class="errorMessage">{{SubmitorderdetailsConst.tcnLength}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.freightClass}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select formControlName="freightclass"
+                      placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}>
+                      <mat-option *ngFor="let option of freightclass" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.freightclass.errors" class="errorMessage">
+                <span
+                  *ngIf="orderLineItemsForm.controls.freightclass.errors.required && orderLineItemsForm.controls.freightclass.touched">
+                  {{SubmitorderdetailsConst.frieghtClassType}}
+                </span>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.grossWeight}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="grossWt" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="grossWtValue">
+                      <mat-option *ngFor="let option of weight" [value]="option.preferenceText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.grossWtValue.errors" class="errorMessage">
+                <span
+                  *ngIf="(orderLineItemsForm.controls.grossWtValue.errors.required && orderLineItemsForm.controls.grossWtValue.touched)">
+                  {{SubmitorderdetailsConst.grossWeightRequired}}</span>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.grossVol}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="grossVol" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="grossVolValue">
+                      <mat-option *ngFor="let option of volume" [value]="option.preferenceText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                 </div>
+                </div>	
+              <div *ngIf="orderLineItemsForm.controls.grossVolValue.errors" class="errorMessage">	
+                <span	
+                  *ngIf="(orderLineItemsForm.controls.grossVolValue.errors.required && orderLineItemsForm.controls.grossVolValue.touched)">	
+                  {{SubmitorderdetailsConst.grossVolumeRequired}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="section-two">
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.huCount}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="huCount">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.huType}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="huType">
+                      <mat-option *ngFor="let option of hutype" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.pieceCount}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="pieceCount" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.pieceCount.errors" class="errorMessage">
+                <span
+                  *ngIf="orderLineItemsForm.controls.pieceCount.errors.required && orderLineItemsForm.controls.pieceCount.touched">
+                  {{SubmitorderdetailsConst.pieceCountRequired}}
+                </span>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.pieceType}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select formControlName="piecetype"
+                      placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}>
+                      <mat-option *ngFor="let option of piecetype" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.piecetype.errors" class="errorMessage">
+                <span
+                  *ngIf="orderLineItemsForm.controls.piecetype.errors.required && orderLineItemsForm.controls.piecetype.touched">
+                  {{SubmitorderdetailsConst.pieceTypeRequired}}
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="section-three">
+
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.Dimensions}}</p>
+              </div>
+
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="length" placeholder={{SubmitorderdetailsConst.placeHolder.Length}}>
+                  </mat-form-field>
+                  <div *ngIf="orderLineItemsForm.controls.length.errors" class="errorMessage">
+                    <span
+                      *ngIf="(orderLineItemsForm.controls.length.errors.required && orderLineItemsForm.controls.length.touched)">
+                      {{SubmitorderdetailsConst.lengthRequired}}</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div>
+
+
+              <div>
+                <mat-form-field floatLabel="never">
+                  <input matInput formControlName="width" placeholder={{SubmitorderdetailsConst.placeHolder.Width}}>
+                </mat-form-field>
+                <div *ngIf="orderLineItemsForm.controls.width.errors" class="errorMessage">
+                  <span
+                    *ngIf="(orderLineItemsForm.controls.width.errors.required && orderLineItemsForm.controls.width.touched)">
+                    {{SubmitorderdetailsConst.widthRequired}}</span>
+                </div>
+              </div>
+            </div>
+            <div>
+
+              <div>
+                <mat-form-field floatLabel="never">
+                  <input matInput formControlName="height" placeholder={{SubmitorderdetailsConst.placeHolder.Height}}>
+                </mat-form-field>
+                <div *ngIf="orderLineItemsForm.controls.height.errors" class="errorMessage">
+                  <span
+                    *ngIf="(orderLineItemsForm.controls.height.errors.required && orderLineItemsForm.controls.height.touched)">
+                    {{SubmitorderdetailsConst.heightRequired}}</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <mat-form-field floatLabel="never">
+                  <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.Inch}} formControlName="HLWUnit">
+                    <mat-option *ngFor="let option of Height" [value]="option.preferenceText">
+                      {{option.preferenceDisplayText}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="orderLineItemsForm.controls.HLWUnit.errors" class="errorMessage">
+             
+                </div>
+              </div>
+
+            </div>
+            <div class="checkbox-section">
+              <div>
+                <mat-checkbox class="checkbox" (change)="checkedHazmat($event)" formControlName="hazmat">
+                  {{SubmitorderdetailsConst.Hazmat}}
+                </mat-checkbox>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+        <form [formGroup]="hazmatSection">
+          <div class="section-four" *ngIf="hazmatChecked">
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.unClass}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="unClass">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.unClass.errors && hazmatChecked" class="errorMessage">
+                <span *ngIf="hazmatSection.controls.unClass.errors.required && hazmatSection.controls.unClass.touched">
+                  {{SubmitorderdetailsConst.unClassRequired}}
+                </span>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.hazmatClass}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="hazmatClass">
+                      <mat-option *ngFor="let option of hazmatclass" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.hazmatClass.errors && hazmatChecked" class="errorMessage">
+                <span
+                  *ngIf="hazmatSection.controls.hazmatClass.errors.required && hazmatSection.controls.hazmatClass.touched">
+                  {{SubmitorderdetailsConst.hazmatClassRequired}}
+                </span>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.hazmatContactNumber}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="hazmatContactNumber">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.hazmatContactNumber.errors && hazmatChecked" class="errorMessage">
+                <span
+                  *ngIf="hazmatSection.controls.hazmatContactNumber.errors.required && hazmatSection.controls.hazmatContactNumber.touched">
+                  {{SubmitorderdetailsConst.hazmatNumberRequired}}
+                </span>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.packingGroup}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="packingGroup">
+                      <mat-option *ngFor="let option of hazmatPacking" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.packingGroup.errors && hazmatChecked" class="errorMessage">
+                <span
+                  *ngIf="hazmatSection.controls.packingGroup.errors.required && hazmatSection.controls.packingGroup.touched">
+                  {{SubmitorderdetailsConst.packingGroupRequired}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form [formGroup]="descriptionSection">
+          <div class="section-five">
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.description}}</p>
+              </div>
+              <div>
+                <div class="comments-section">
+                  <textarea matInput placeholder={{SubmitorderdetailsConst.placeHolder.comment}}
+                    formControlName="description"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="add-section">
+
+              <p (click)="addLineItem(hazmatSection.value, orderLineItemsForm.value, descriptionSection.value); addMoreClicked = true;"
+                [ngClass]="(orderLineItemsForm.invalid || hazmatSection.invalid || addMoreClicked)?'disabled':'moreButton'" >
+                {{SubmitorderdetailsConst.addMoreItems}}</p>
+
+
+            </div>
+          </div>
+        </form>
+        <div class="bottom-section">
+          <button mat-button class="cancel" (click)="onCancel()">{{SubmitorderdetailsConst.cancel}}</button>
+          <div class="right-align-section">
+            <button mat-button
+              (click)="saveLineItem(hazmatSection.value, orderLineItemsForm.value, descriptionSection.value, 'saveForLater','saveForLater')">{{SubmitorderdetailsConst.saveLater}}</button>
+            <button mat-button class="saveButton"
+              (click)="saveLineItem(hazmatSection.value, orderLineItemsForm.value, descriptionSection.value, 'Complete','Complete')"
+              [disabled]="!saveAndContinueClick && orderLineItemsForm.invalid"
+              [ngClass]="(saveAndContinueClick == true) ? 'saveButton' :(orderLineItemsForm.invalid)?'disabled' :  'saveButton'">{{SubmitorderdetailsConst.saveContinue}}</button>
+          </div>
+        </div>
+      </div>
+      <form class="grid">
+        <div *ngIf="isDisplayGrid">
+          <div class="header">
+            <div class="line1">
+              <mat-divider></mat-divider>
+            </div>
+            <div class="text">
+              <p>{{SubmitorderdetailsConst.lineitemheader}}</p>
+            </div>
+            <div class="line2">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
+
+          <div class="accessorial-count">
+            <div>
+              {{SubmitorderdetailsConst.lineitemTotalCount}}: <strong>{{lineItemsDataSource.data.length}}</strong>
+            </div>
+          </div>
+          <div class="table orderline-table">
+            <mat-table table matSort class="details-table" [dataSource]="lineItemsDataSource">
+
+              <ng-container *ngFor="let column of lineitemGrid; let i = index" [matColumnDef]="column.headingDBColumn">
+
+
+                <mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{column.headingDisplayText}} </mat-header-cell>
+                <mat-cell *matCellDef="let element;let x = index">
+                  <ng-container *ngIf="column.headingDBColumn == 'LineItem'">
+                    {{lineItemsDataSource.filteredData.indexOf(element)+1}}
+                  </ng-container>
+                  <ng-container> {{element[column.headingDBColumn]}} </ng-container>
+                  <ng-container *ngIf="column.headingDBColumn == 'Edit'" class="edit">
+                    <img class="image" src="../assets/Icons/edit_order_number.png" (click)="LineItemEdit(element)"
+                      width="22" height="22">
+                  </ng-container>
+                  <ng-container *ngIf="column.headingDBColumn == 'Delete'">
+                    <mat-icon class="image" (click)="LineItemDelete(element)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                  </ng-container>
+                </mat-cell>
+
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="lineitemColumns" #tableHeaderRow></mat-header-row>
+              <mat-row *matRowDef="let row; columns: lineitemColumns;">
+              </mat-row>
+
+            </mat-table>
+            <mat-paginator #paginator
+              *ngIf="pageSize && pageSize>commonNumber.zero && lineItemsDataSource.data.length>commonNumber.five"
+              [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+          </div>
+
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>
+<div class="main-container1">
+  <div class="details-section">
+    <mat-card class="card">
+      <p *ngIf="!editClick">{{SubmitorderdetailsConst.orderLineItem}} {{lineItemsDataSource.data.length+1}}</p>
+      <p *ngIf="editClick">{{SubmitorderdetailsConst.orderLineItem}} {{editDataIndex+1 }}</p>
+      <div class="mr-bottom">
+      <div class="content-section">
+        <form [formGroup]="orderLineItemsForm">
+          <div class="first-section">
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.TCN}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput type="tcn" placeholder={{SubmitorderdetailsConst.placeHolder.tcn}}
+                      (keypress)="omit_special_char($event)" formControlName="tcnNum" name="tcnNum" (change)="print()">
+                  </mat-form-field>
+                  <div *ngIf="orderLineItemsForm.controls.tcnNum.errors">
+                    <div
+                      *ngIf="orderLineItemsForm.controls.tcnNum.errors.required && orderLineItemsForm.controls.tcnNum.touched"
+                      class="errorMessage">{{SubmitorderdetailsConst.tcnRequired}}</div>
+                    <div
+                      *ngIf="orderLineItemsForm.controls.tcnNum.errors.minlength || orderLineItemsForm.controls.tcnNum.errors.maxlength"
+                      class="errorMessage">{{SubmitorderdetailsConst.tcnLength}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mr-top-20">
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.freightClass}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select formControlName="freightclass"
+                      placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}>
+                      <mat-option *ngFor="let option of freightclass" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.freightclass.errors" class="errorMessage">
+                <span
+                  *ngIf="orderLineItemsForm.controls.freightclass.errors.required && orderLineItemsForm.controls.freightclass.touched">
+                  {{SubmitorderdetailsConst.frieghtClassType}}
+                </span>
+              </div>
+            </div>
+            <div class="mr-top-20">
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.grossWeight}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="grossWt" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="grossWtValue">
+                      <mat-option *ngFor="let option of weight" [value]="option.preferenceText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.grossWtValue.errors" class="errorMessage">
+                <span
+                  *ngIf="(orderLineItemsForm.controls.grossWtValue.errors.required && orderLineItemsForm.controls.grossWtValue.touched)">
+                  {{SubmitorderdetailsConst.grossWeightRequired}}</span>
+              </div>
+            </div>
+            <div class="mr-top-20">
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.grossVol}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="grossVol" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="grossVolValue">
+                      <mat-option *ngFor="let option of volume" [value]="option.preferenceText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                 </div>
+                </div>	
+              <div *ngIf="orderLineItemsForm.controls.grossVolValue.errors" class="errorMessage">	
+                <span	
+                  *ngIf="(orderLineItemsForm.controls.grossVolValue.errors.required && orderLineItemsForm.controls.grossVolValue.touched)">	
+                  {{SubmitorderdetailsConst.grossVolumeRequired}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="section-two">
+            <div class="mr-top-20">
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.huCount}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="huCount">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.huType}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="huType">
+                      <mat-option *ngFor="let option of hutype" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.pieceCount}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="pieceCount" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.pieceCount.errors" class="errorMessage">
+                <span
+                  *ngIf="orderLineItemsForm.controls.pieceCount.errors.required && orderLineItemsForm.controls.pieceCount.touched">
+                  {{SubmitorderdetailsConst.pieceCountRequired}}
+                </span>
+              </div>
+            </div>
+            <div class="mr-top-20">
+              <div class="sub-heading-important">
+                <p>{{SubmitorderdetailsConst.pieceType}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select formControlName="piecetype"
+                      placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}>
+                      <mat-option *ngFor="let option of piecetype" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="orderLineItemsForm.controls.piecetype.errors" class="errorMessage">
+                <span
+                  *ngIf="orderLineItemsForm.controls.piecetype.errors.required && orderLineItemsForm.controls.piecetype.touched">
+                  {{SubmitorderdetailsConst.pieceTypeRequired}}
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="section-three">
+            <div class="sub-heading-important mr-top-20">
+              <p>{{SubmitorderdetailsConst.Dimensions}}</p>
+            </div>
+            <div class="two-col">
+              <div class="two-col-one">
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="length" placeholder={{SubmitorderdetailsConst.placeHolder.Length}}>
+                  </mat-form-field>
+                  <div *ngIf="orderLineItemsForm.controls.length.errors" class="errorMessage">
+                    <span
+                      *ngIf="(orderLineItemsForm.controls.length.errors.required && orderLineItemsForm.controls.length.touched)">
+                      {{SubmitorderdetailsConst.lengthRequired}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="two-col-two">
+                <mat-form-field floatLabel="never">
+                  <input matInput formControlName="width" placeholder={{SubmitorderdetailsConst.placeHolder.Width}}>
+                </mat-form-field>
+                <div *ngIf="orderLineItemsForm.controls.width.errors" class="errorMessage">
+                  <span
+                    *ngIf="(orderLineItemsForm.controls.width.errors.required && orderLineItemsForm.controls.width.touched)">
+                    {{SubmitorderdetailsConst.widthRequired}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="two-col mr-top-30">
+
+              <div class="two-col-one">
+                <mat-form-field floatLabel="never">
+                  <input matInput formControlName="height" placeholder={{SubmitorderdetailsConst.placeHolder.Height}}>
+                </mat-form-field>
+                <div *ngIf="orderLineItemsForm.controls.height.errors" class="errorMessage">
+                  <span
+                    *ngIf="(orderLineItemsForm.controls.height.errors.required && orderLineItemsForm.controls.height.touched)">
+                    {{SubmitorderdetailsConst.heightRequired}}</span>
+                </div>
+              </div>           
+              <div class="two-col-two">
+                <mat-form-field floatLabel="never">
+                  <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.Inch}} formControlName="HLWUnit">
+                    <mat-option *ngFor="let option of Height" [value]="option.preferenceText">
+                      {{option.preferenceDisplayText}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="orderLineItemsForm.controls.HLWUnit.errors" class="errorMessage">
+             
+                </div>
+              </div>
+
+            </div>
+            <div class="checkbox-section">
+              <div>
+                <mat-checkbox class="checkbox" (change)="checkedHazmat($event)" formControlName="hazmat">
+                  {{SubmitorderdetailsConst.Hazmat}}
+                </mat-checkbox>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+        <form [formGroup]="hazmatSection">
+          <div class="section-four mr-top-20" *ngIf="hazmatChecked">
+            <div class="two-col">
+            <div class="two-col-one">
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.unClass}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="unClass">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.unClass.errors && hazmatChecked" class="errorMessage">
+                <span *ngIf="hazmatSection.controls.unClass.errors.required && hazmatSection.controls.unClass.touched">
+                  {{SubmitorderdetailsConst.unClassRequired}}
+                </span>
+              </div>
+            </div>
+            <div class="two-col-two">
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.hazmatClass}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="hazmatClass">
+                      <mat-option *ngFor="let option of hazmatclass" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.hazmatClass.errors && hazmatChecked" class="errorMessage">
+                <span
+                  *ngIf="hazmatSection.controls.hazmatClass.errors.required && hazmatSection.controls.hazmatClass.touched">
+                  {{SubmitorderdetailsConst.hazmatClassRequired}}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="two-col mr-top-30">
+            <div class="two-col-one">
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.hazmatContactNumber}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <input matInput formControlName="hazmatContactNumber">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.hazmatContactNumber.errors && hazmatChecked" class="errorMessage">
+                <span
+                  *ngIf="hazmatSection.controls.hazmatContactNumber.errors.required && hazmatSection.controls.hazmatContactNumber.touched">
+                  {{SubmitorderdetailsConst.hazmatNumberRequired}}
+                </span>
+              </div>
+            </div>
+            <div class="two-col-two">
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.packingGroup}}</p>
+              </div>
+              <div>
+                <div>
+                  <mat-form-field floatLabel="never">
+                    <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.selectOption}}
+                      formControlName="packingGroup">
+                      <mat-option *ngFor="let option of hazmatPacking" [value]="option.displayName">
+                        {{option.displayName}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngIf="hazmatSection.controls.packingGroup.errors && hazmatChecked" class="errorMessage">
+                <span
+                  *ngIf="hazmatSection.controls.packingGroup.errors.required && hazmatSection.controls.packingGroup.touched">
+                  {{SubmitorderdetailsConst.packingGroupRequired}}
+                </span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </form>
+        <form [formGroup]="descriptionSection">
+          <div class="section-five">
+            <div>
+              <div class="sub-heading">
+                <p>{{SubmitorderdetailsConst.description}}</p>
+              </div>
+              <div>
+                <div class="comments-section">
+                  <textarea matInput placeholder={{SubmitorderdetailsConst.placeHolder.comment}}
+                    formControlName="description"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="add-section">
+
+              <p (click)="addLineItem(hazmatSection.value, orderLineItemsForm.value, descriptionSection.value); addMoreClicked = true;"
+                [ngClass]="(orderLineItemsForm.invalid || hazmatSection.invalid || addMoreClicked)?'disabled':'moreButton'" >
+                {{SubmitorderdetailsConst.addMoreItems}}</p>
+
+
+            </div>
+          </div>
+        </form>
+        
+      </div>
+      <form class="grid">
+        <div *ngIf="isDisplayGrid">
+          <div class="header">
+            <div class="line1">
+              <mat-divider></mat-divider>
+            </div>
+            <div class="text">
+              <p>{{SubmitorderdetailsConst.lineitemheader}}</p>
+            </div>
+            <div class="line2">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
+
+          <div class="accessorial-count">
+            <div>
+              {{SubmitorderdetailsConst.lineitemTotalCount}}: <strong>{{lineItemsDataSource.data.length}}</strong>
+            </div>
+          </div>
+          <div class="table orderline-table">            
+            <mat-card class="crowley-adv-listview">
+              <mat-list>
+                 <mat-list-item *ngFor="let element of lineItemsDataSource.data">      
+                  <div class="two-col-item">
+                    <div class="item">
+                       <h4>{{OrderDetailConst.grossWeight}}</h4>
+                       <p>{{element.grossweight}}</p> 
+                    </div>        
+                    <div class="item">
+                       <h4>{{OrderDetailConst.pieceCount}}</h4>
+                       <p>{{element.piececount}}</p>
+                    </div> 
+                 </div>
+                 <div class="two-col-item">
+                  <div class="item">
+                     <h4>{{OrderDetailConst.pieceType}}</h4>
+                     <p>{{element.piecetypename}}</p> 
+                  </div>        
+                  <div class="item">
+                     <h4>{{OrderDetailConst.freightClass}}</h4>
+                     <p>{{element.freightclassname}}</p>
+                  </div> 
+               </div>
+                    <div class="item">
+                      <h4>{{OrderDetailConst.tcn}}</h4>
+                      <p> {{element.tcnnumber}}</p>
+                   </div>
+                   
+                    <div class="icon">
+                      <span> <img class="image" src="../assets/Icons/edit_order_number.png" (click)="LineItemEdit(element)"
+                        width="22" height="22"></span>
+                        <mat-icon class="image" (click)="LineItemDelete(element)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                    </div>
+                 </mat-list-item>
+               </mat-list>     
+              </mat-card> 
+            <mat-paginator #paginator
+              *ngIf="pageSize && pageSize>commonNumber.zero && lineItemsDataSource.data.length>commonNumber.five"
+              [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+          </div>
+
+        </div>
+      </form>
+    </div>
+    </mat-card>
+    <div class="bottom-section footer-button">
+      <button mat-button class="cancel" (click)="onCancel()">{{SubmitorderdetailsConst.cancel}}</button>
+      <button mat-button class="savelateer"
+      (click)="saveLineItem(hazmatSection.value, orderLineItemsForm.value, descriptionSection.value, 'saveForLater','saveForLater')">{{SubmitorderdetailsConst.saveLater}}</button>
+    <button mat-button class="saveButton"
+      (click)="saveLineItem(hazmatSection.value, orderLineItemsForm.value, descriptionSection.value, 'Complete','Complete')"
+      [disabled]="!saveAndContinueClick && orderLineItemsForm.invalid"
+      [ngClass]="(saveAndContinueClick == true) ? 'saveButton' :(orderLineItemsForm.invalid)?'disabled' :  'saveButton'">{{SubmitorderdetailsConst.saveContinue}}</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>flag-24px</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.807843 0 0 0 0 0.066667 0 0 0 0 0.149020 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Mobile_Screens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="04_Order_Detail_02" transform="translate(-230.000000, -116.000000)">
+            <g id="flag-24px" transform="translate(16.000000, 81.000000)" filter="url(#filter-1)">
+                <g transform="translate(214.000000, 35.000000)">
+                    <polygon id="Path" points="0 0 30 0 30 30 0 30"></polygon>
+                    <polygon id="Path" fill="#000000" fill-rule="nonzero" points="18 7.5 17.5 5 6.25 5 6.25 26.25 8.75 26.25 8.75 17.5 15.75 17.5 16.25 20 25 20 25 7.5"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

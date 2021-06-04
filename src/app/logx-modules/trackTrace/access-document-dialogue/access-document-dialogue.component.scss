@@ -1,0 +1,11 @@
+@import "src/crowley-themes.scss";
+@import "../../../../Styles/mixins.scss";
+
+div {
+    text-align: end;
+    button {
+        @include filled-buttons;
+        width: 110px;
+        letter-spacing: 1px;
+    }
+}

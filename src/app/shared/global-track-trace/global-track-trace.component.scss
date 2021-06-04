@@ -1,0 +1,104 @@
+@import "src/crowley-themes.scss";
+@import "../../../Styles/mixins.scss";
+
+.main-container {
+    .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+        opacity: 0;
+    }
+    .cdk-overlay-container {
+        top: -31px;
+        left: 254px;
+    }
+    .inputSection {
+        height: 11vh;
+        .inputField {
+            display: flex;
+            position: relative;
+            input {
+                outline: none;
+                border: transparent;
+                border-bottom: solid 1px $crowley_border_gray;
+                width: 100%;
+                padding: 10px 10px 5px 0px;
+                font-size: 18px;
+                color: $crowley_border_gray;
+                position: relative;
+                z-index: 1;
+            }
+            mat-icon {
+                margin: 10px 0px 0px -25px;
+                font-size: 20px;
+                cursor: pointer;
+                position: relative;
+                z-index: 2;
+            }
+        }
+        .displayText {
+            font-size: 14px;
+            line-height: 18px;
+            padding: 5px 10px 0px 0px;
+            color: $accent;
+        }
+        .errorMessage {
+            p {
+                margin: 0px;
+            }
+        }
+    }
+    .notFoundText {
+        font-size: 22px;
+        font-style: italic;
+        margin-top: 20px;
+    }
+    .trackButton {
+        width: 100%;
+        height: 7vh;
+        border-radius: 5px;
+        margin-top: 20px;
+        @include filled-buttons;
+    }
+    .displayResult {
+        .sectionOne {
+            display: flex;
+            div {
+                width: 50%;
+                p:first-of-type {
+                    color: $accent;
+                    font-size: 18px;
+                }
+                p:nth-child(2) {
+                    color: $crowley_border_gray;
+                    font-size: 20px;
+                }
+            }
+        }
+        .sectionTwo {
+            display: flex;
+            div {
+                width: 50%;
+                p:first-of-type {
+                    color: $accent;
+                    font-size: 18px;
+                }
+                p:nth-child(2) {
+                    color: $crowley_border_gray;
+                    font-size: 20px;
+                }
+            }
+        }
+        .resultButtons {
+            display: grid;
+            button:first-of-type {
+                height: 6vh;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                @include filled-buttons;
+            }
+            button:nth-child(2) {
+                height: 6vh;
+                border-radius: 5px;
+                @include buttons;
+            }
+        }
+    }
+}

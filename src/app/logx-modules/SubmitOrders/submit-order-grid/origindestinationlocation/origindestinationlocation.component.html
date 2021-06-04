@@ -1,0 +1,382 @@
+<div class="main-container">
+  <div class="details-section">
+
+    <!-- ORIGIN -->
+    <form #originInfo="ngForm">
+      <mat-card class="card">
+        <p>{{SubmitorderdetailsConst.originInfo}}</p>
+
+        <div class="sub-section" *ngIf="showAddress">
+          <div class="display-flex" *ngFor="let loc of locationVal">
+            <mat-card class="address">
+              <div class="locationText">
+                {{loc.ReportingLocation}}
+              </div>
+              <div class="buttons">
+                <button mat-button class="ButtonFont" (click)="editAddress($event,loc)">{{
+                  CommonConst.btnEdit}}</button>
+                <button mat-button class="ButtonFont" (click)="onDeleteAddress($event,loc)">{{ CommonConst.btnDelete
+                  }}</button>
+                <button mat-button class="save" [class.disable]="loc.showUseAddress" [disabled]="loc.showUseAddress"
+                  (click)="notifyClick($event,loc)">{{SubmitorderdetailsConst.useAdress}}</button>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="three">
+            <div>
+              <div class="origin-location">
+                <div class="sub-heading-section">
+                  <p class="sub-heading">{{SubmitorderdetailsConst.originLoc}}</p>
+                  <p>
+                    <mat-icon matSuffix matTooltip={{SubmitorderdetailsConst.newLocationTooltip}}>
+
+                      info
+                    </mat-icon>
+                  </p>
+                </div>
+                <div class="favorites">
+                </div>
+                <div class="favorites">
+                  <p>
+                    <mat-icon matSuffix matTooltip={{SubmitorderdetailsConst.addToFavoritesToolTip}}>
+                      {{CommonConst.MatIcons.info}}
+                    </mat-icon>
+                  </p>
+                  <p>
+                    <mat-checkbox [disabled]="IsDisable" [(ngModel)]="unCheckMeCheckbox[0].checked" name="checked"
+                      value=[uncheckMe] (change)="addTofavotires($event)">
+                      {{SubmitorderdetailsConst.addtofav}}
+                    </mat-checkbox>
+                  </p>
+                </div>
+              </div>
+
+              <div class="location">
+                <app-location-search #locationForm [checked]="checked" (check)="unCheck($event)" [formName]="formName"
+                  [clickSubjectOrigin]="clickSubjectOrigin"
+                  [updatedOriginLocationDetails]="updatedOriginLocationDetails"
+                  (incidentLocationField)="getLocationContactDetails($event)"></app-location-search>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+
+          <div class="contact-info">
+            <div>
+              <p>{{SubmitorderdetailsConst.Contact}}</p>
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder={{SubmitorderdetailsConst.placeHolder.contact}} name="contactname"
+                  [(ngModel)]="orgContactInfo.contactName">
+              </mat-form-field>
+            </div>
+            <div>
+              <p>{{SubmitorderdetailsConst.Phone}}</p>
+              <mat-form-field floatLabel="never">
+                <input matInput type="tel" placeholder={{SubmitorderdetailsConst.placeHolder.Phone}}
+                  name="contactnumber" [(ngModel)]="orgContactInfo.phone">
+              </mat-form-field>
+            </div>
+            <div>
+              <p>{{SubmitorderdetailsConst.Email}}</p>
+              <mat-form-field floatLabel="never">
+                <input matInput type="email" placeholder={{SubmitorderdetailsConst.placeHolder.Email}} name="email"
+                  [(ngModel)]="orgContactInfo.email">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="contact-info">
+            <div>
+              <p>Timezone</p>
+              <mat-form-field floatLabel="never">
+                <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.Timezone}} name="pickuptimezone"
+                  [(ngModel)]="PickupTimeZone">
+                  <mat-option *ngFor="let option of timeZoneValues" [value]="option.displayName">
+                    {{option.displayName}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="time-section">
+            <div>
+              <p class="duration-heading">{{SubmitorderdetailsConst.earlyPickup}} </p>
+              <mat-form-field floatLabel="never" hideRequiredMarker>
+                <input matInput [matDatepicker]="picker" [max]="maxEarlypickupDate" name="earlyPickUpDate"
+                  #earlyPickUp="ngModel" required placeholder={{placeholder}} [(ngModel)]="OrgearlyPickUpDate"
+                  (dateChange)="changedateEarlyPickup(OrgearlyPickUpDate)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="dateValidate">{{CommonConst.invalidDate}}</mat-error>
+              </mat-form-field>
+              <div class="errorSection">
+                <span *ngIf="(earlyPickUp.invalid && earlyPickUp.touched) && !dateValidate" class="errorMessage">Date
+                  Required</span>
+              </div>
+            </div>
+            <div>
+              <div class="timePicker">
+                <mat-form-field floatLabel="never">
+                  <input matInput [ngxTimepicker]="toggleTimepickerStartTime" name="earlyPickUpTime"
+                    [format]="timeFormatValue" [(ngModel)]="earlyPickUpTime" [disableClick]="true" readonly>
+                  <ngx-material-timepicker-toggle [for]="toggleTimepickerStartTime"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #toggleTimepickerStartTime></ngx-material-timepicker>
+                </mat-form-field>
+              </div>
+
+
+            </div>
+
+            <div>
+              <p class="duration-heading">{{SubmitorderdetailsConst.latePickUp}}</p>
+              <mat-form-field floatLabel="never" hideRequiredMarker>
+                <input [disabled]="disabled" [min]="maxLatepickupDate" name="latePickUpDate" matInput
+                  [matDatepicker]="picker1" placeholder={{placeholder}} [(ngModel)]="OrglatePickUpDate"
+                  #latePickUp="ngModel" (dateChange)="changedate(OrglatePickUpDate)" required>
+                <mat-datepicker-toggle [disabled]="disabled" matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker [disabled]="disabled" #picker1></mat-datepicker>
+                <mat-error *ngIf="dateValidate">{{CommonConst.invalidDate}}</mat-error>
+              </mat-form-field>
+              <div class="errorSection">
+                <span *ngIf="(latePickUp.invalid && latePickUp.touched) && !dateValidate" class="errorMessage">Date
+                  Required</span>
+              </div>
+            </div>
+            <div>
+
+              <div class="timePicker">
+                <mat-form-field floatLabel="never">
+                  <input matInput [disabled]="disabled" [ngxTimepicker]="toggleTimepickerEndTime" name="latePickUpTime"
+                    [format]="timeFormatValue" [(ngModel)]="latePickUpTime" [disableClick]="true" readonly>
+                  <ngx-material-timepicker-toggle [for]="toggleTimepickerEndTime"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #toggleTimepickerEndTime></ngx-material-timepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="appointment-section">
+            <p>
+              <mat-checkbox name="appointment" [(ngModel)]="disabled">
+                Appointment
+              </mat-checkbox>
+            </p>
+          </div>
+          <div class="bottom-section">
+            <button mat-button class="cancel" (click)="onCancel($event)">{{SubmitorderdetailsConst.cancel}}</button>
+            <div class="right-align-section">
+              <button mat-button (click)="submit('saveForLater')">{{SubmitorderdetailsConst.saveLater}}</button>
+
+
+
+              <button mat-button (click)="submit('Complete')" class="saveButton" [disabled]="originInfo.invalid
+               || locationForm.locPostalDetails.PostalCode=='' || locationForm.locPostalDetails.PostalCode==null  
+              || locationForm.incLocValue.LocationName == ''|| locationForm.incLocValue.LocationName == null
+              || locationForm.locPostalDetails.StateCode == '' || locationForm.locPostalDetails.StateCode == null
+              || locationForm.locPostalDetails.CityName  == '' || locationForm.locPostalDetails.CityName == null"
+                [class.disable]="originInfo.invalid
+               || locationForm.locPostalDetails.PostalCode=='' || locationForm.locPostalDetails.PostalCode==null  
+              || locationForm.incLocValue.LocationName == ''|| locationForm.incLocValue.LocationName == null
+              || locationForm.locPostalDetails.StateCode == '' || locationForm.locPostalDetails.StateCode == null
+              || locationForm.locPostalDetails.CityName  == '' || locationForm.locPostalDetails.CityName == null">{{SubmitorderdetailsConst.saveContinue}}</button>
+
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </form>
+  </div>
+</div>
+<div class="main-container1">
+  <div class="details-section">
+
+    <!-- ORIGIN -->
+    <form #originInfo="ngForm" class="form-origin-info">
+      <mat-card class="card">      
+
+        <div class="sub-section" *ngIf="showAddress">
+          <div class="display-flex" *ngFor="let loc of locationVal">
+            <mat-card class="address">
+              <div class="locationText">
+                {{loc.ReportingLocation}}
+              </div>
+              <div class="buttons">
+                <div class="left-section">
+                  <button mat-button class="ButtonFont btn-edit" (click)="editAddress($event,loc)"><mat-icon>{{CommonConst.MatIcons.edit}}</mat-icon></button>
+                  
+                  <button mat-button class="ButtonFont btn-delete" (click)="onDeleteAddress($event,loc)"><mat-icon>{{CommonConst.MatIcons.delete}}</mat-icon></button>
+                    
+                </div>
+                <div class="right-section">
+                  <button mat-button class="save" [class.disable]="loc.showUseAddress" [disabled]="loc.showUseAddress"
+                    (click)="notifyClick($event,loc)">{{SubmitorderdetailsConst.useAdress}}</button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="three">
+            <div>
+              <div class="origin-location">
+                <div class="sub-heading-section">
+                  <p class="sub-heading">{{SubmitorderdetailsConst.originLoc}}</p>
+                  <p>
+                    <mat-icon matSuffix matTooltip={{SubmitorderdetailsConst.newLocationTooltip}}>
+
+                      info
+                    </mat-icon>
+                  </p>
+                </div>
+                              
+              </div>
+
+              <div class="location">
+                <app-location-search #locationForm [checked]="checked" (check)="unCheck($event)" [formName]="formName"
+                  [clickSubjectOrigin]="clickSubjectOrigin"
+                  [updatedOriginLocationDetails]="updatedOriginLocationDetails"
+                  (incidentLocationField)="getLocationContactDetails($event)"></app-location-search>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="favorites">
+          </div>
+          <div class="favorites">
+            <p>
+              <mat-checkbox [disabled]="IsDisable" [(ngModel)]="unCheckMeCheckbox[0].checked" name="checked"
+                value=[uncheckMe] (change)="addTofavotires($event)">
+                {{SubmitorderdetailsConst.addtofav}}
+              </mat-checkbox>
+            </p>
+            <p>
+              <mat-icon matSuffix matTooltip={{SubmitorderdetailsConst.addToFavoritesToolTip}}>
+                {{CommonConst.MatIcons.info}}
+              </mat-icon>
+            </p>
+          
+          </div>
+          <div class="contact-info">
+            <div>
+              <p>{{SubmitorderdetailsConst.Contact}}</p>
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder={{SubmitorderdetailsConst.placeHolder.contact}} name="contactname"
+                  [(ngModel)]="orgContactInfo.contactName">
+              </mat-form-field>
+            </div>
+            <div>
+              <p>{{SubmitorderdetailsConst.Phone}}</p>
+              <mat-form-field floatLabel="never">
+                <input matInput type="tel" placeholder={{SubmitorderdetailsConst.placeHolder.Phone}}
+                  name="contactnumber" [(ngModel)]="orgContactInfo.phone">
+              </mat-form-field>
+            </div>
+            <div>
+              <p>{{SubmitorderdetailsConst.Email}}</p>
+              <mat-form-field floatLabel="never">
+                <input matInput type="email" placeholder={{SubmitorderdetailsConst.placeHolder.Email}} name="email"
+                  [(ngModel)]="orgContactInfo.email">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="contact-info">
+            <div>
+              <p>Timezone</p>
+              <mat-form-field floatLabel="never">
+                <mat-select placeholder={{SubmitorderdetailsConst.placeHolder.Timezone}} name="pickuptimezone"
+                  [(ngModel)]="PickupTimeZone">
+                  <mat-option *ngFor="let option of timeZoneValues" [value]="option.displayName">
+                    {{option.displayName}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="time-section">
+            <div>
+              <p class="duration-heading">{{SubmitorderdetailsConst.earlyPickup}} </p>
+              <mat-form-field floatLabel="never" hideRequiredMarker>
+                <input matInput [matDatepicker]="picker" [max]="maxEarlypickupDate" name="earlyPickUpDate"
+                  #earlyPickUp="ngModel" required placeholder={{placeholder}} [(ngModel)]="OrgearlyPickUpDate"
+                  (dateChange)="changedateEarlyPickup(OrgearlyPickUpDate)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="dateValidate">{{CommonConst.invalidDate}}</mat-error>
+              </mat-form-field>
+              <div class="errorSection">
+                <span *ngIf="(earlyPickUp.invalid && earlyPickUp.touched) && !dateValidate" class="errorMessage">Date
+                  Required</span>
+              </div>
+            </div>
+            <div>
+              <div class="timePicker">
+                <mat-form-field floatLabel="never">
+                  <input matInput [ngxTimepicker]="toggleTimepickerStartTime" name="earlyPickUpTime"
+                    [format]="timeFormatValue" [(ngModel)]="earlyPickUpTime" [disableClick]="true" readonly>
+                  <ngx-material-timepicker-toggle [for]="toggleTimepickerStartTime"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #toggleTimepickerStartTime></ngx-material-timepicker>
+                </mat-form-field>
+              </div>
+
+
+            </div>
+
+            <div>
+              <p class="duration-heading">{{SubmitorderdetailsConst.latePickUp}}</p>
+              <mat-form-field floatLabel="never" hideRequiredMarker>
+                <input [disabled]="disabled" [min]="maxLatepickupDate" name="latePickUpDate" matInput
+                  [matDatepicker]="picker1" placeholder={{placeholder}} [(ngModel)]="OrglatePickUpDate"
+                  #latePickUp="ngModel" (dateChange)="changedate(OrglatePickUpDate)" required>
+                <mat-datepicker-toggle [disabled]="disabled" matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker [disabled]="disabled" #picker1></mat-datepicker>
+                <mat-error *ngIf="dateValidate">{{CommonConst.invalidDate}}</mat-error>
+              </mat-form-field>
+              <div class="errorSection">
+                <span *ngIf="(latePickUp.invalid && latePickUp.touched) && !dateValidate" class="errorMessage">Date
+                  Required</span>
+              </div>
+            </div>
+            <div>
+
+              <div class="timePicker">
+                <mat-form-field floatLabel="never">
+                  <input matInput [disabled]="disabled" [ngxTimepicker]="toggleTimepickerEndTime" name="latePickUpTime"
+                    [format]="timeFormatValue" [(ngModel)]="latePickUpTime" [disableClick]="true" readonly>
+                  <ngx-material-timepicker-toggle [for]="toggleTimepickerEndTime"></ngx-material-timepicker-toggle>
+                  <ngx-material-timepicker #toggleTimepickerEndTime></ngx-material-timepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="appointment-section">
+            <p>
+              <mat-checkbox name="appointment" [(ngModel)]="disabled">
+                Appointment
+              </mat-checkbox>
+            </p>
+          </div>
+          
+        </div>
+      </mat-card>
+    </form>
+    <div class="bottom-section footer-button">
+      <button mat-button class="cancel" (click)="onCancel($event)">{{SubmitorderdetailsConst.cancel}}</button>
+      <button mat-button class="savelateer" (click)="submit('saveForLater')">{{SubmitorderdetailsConst.saveLater}}</button>
+        <button mat-button (click)="submit('Complete')" class="saveButton" [disabled]="originInfo.invalid
+         || locationForm.locPostalDetails.PostalCode=='' || locationForm.locPostalDetails.PostalCode==null  
+        || locationForm.incLocValue.LocationName == ''|| locationForm.incLocValue.LocationName == null
+        || locationForm.locPostalDetails.StateCode == '' || locationForm.locPostalDetails.StateCode == null
+        || locationForm.locPostalDetails.CityName  == '' || locationForm.locPostalDetails.CityName == null"
+          [class.disable]="originInfo.invalid
+         || locationForm.locPostalDetails.PostalCode=='' || locationForm.locPostalDetails.PostalCode==null  
+        || locationForm.incLocValue.LocationName == ''|| locationForm.incLocValue.LocationName == null
+        || locationForm.locPostalDetails.StateCode == '' || locationForm.locPostalDetails.StateCode == null
+        || locationForm.locPostalDetails.CityName  == '' || locationForm.locPostalDetails.CityName == null">{{SubmitorderdetailsConst.saveContinue}}</button>
+     
+    </div>
+  </div>
+</div>

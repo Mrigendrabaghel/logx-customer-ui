@@ -1,0 +1,464 @@
+@import "src/crowley-themes.scss";
+@import "../../../Styles/mixins.scss";
+
+.modifiedMain {
+  padding: 0% 25px 0% 0px;
+}
+
+.main {
+  padding: 0px !important;
+}
+
+.main-container {
+  display: flex;
+  padding: 0% 30px 0px 0px !important;
+
+  .right-section {
+    width: 100%;
+    margin: 0 0 0 20px;
+
+    form {
+      width: 100%;
+
+      mat-card {
+        .export {
+          padding: 16px 0px 5% 0px;
+
+          .showCol {
+            background-color: $white;
+            color: $accent;
+            width: 20%;
+            font-size: 14px;
+          }
+
+          button {
+            color: $white;
+            width: 12%;
+            background: $accent;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-align: center;
+            float: right;
+            cursor: pointer;
+          }
+
+        }
+
+        background: $white;
+        border-radius: initial;
+        box-shadow: 0px 0 10px 1px rgba(0.24, 0.24, 0.24, 0.24);
+        padding: 30px 16px;
+
+        p:nth-child(1) {
+          font-size: 46px;
+          color: $crowley_font;
+          margin: 0px 0px 14px 0px;
+        }
+
+        p:nth-child(2) {
+          color: $crowley_border_gray;
+          font-size: 12px;
+        }
+
+        .input-section {
+          height: 100%;
+          display: flex;
+
+          div {
+            width: 100%;
+
+            fieldset {
+              border: solid 2px $crowley_border_gray;
+              border-radius: 6px;
+              margin-right: 20px;
+
+              legend {
+                background-color: transparent;
+                color: $crowley_font;
+                padding: 0px 10px;
+                margin: 10px;
+                width: fit-content;
+                font-size: 13px;
+              }
+
+              input {
+                padding: 6px;
+                background-color: $white;
+                width: 98%;
+                height: 20px;
+                outline: none;
+                border: none;
+                margin: 0px 10px 10px;
+              }
+            }
+          }
+
+          button,
+          button:focus {
+            width: 35%;
+            height: 52px;
+            border-radius: 6px;
+            outline: none;
+            margin: 9px 0 0 0;
+            font-size: 14px !important;
+            @include filled-buttons;
+          }
+        }
+
+
+        .advanceSearch {
+          text-align: end;
+          padding: 2px;
+          margin-top: 10px;
+
+          a {
+            color: $accent;
+            text-decoration: underline;
+            cursor: pointer;
+            padding-right: 8%;
+          }
+        }
+
+        .errorMessage {
+          padding: 3px 0 0px 2px;
+        }
+
+        .chip-set {
+          background-color: $crowley_gray;
+          margin-top: 15px;
+          padding: 10px;
+
+          .mat-chip.mat-standard-chip {
+            width: 181px;
+            background-color: $accent;
+            border-radius: 16px;
+            font-size: 14px;
+            color: $white;
+            padding: 6px 13px 6px 25px;
+            margin: 7px;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          a {
+            font-family: Helvetica;
+            font-size: 13px;
+            color: $accent;
+            margin-top: 12px;
+          }
+
+          //    ::ng-deep.mat-menu-panel {
+
+
+          //     margin-top: 28em !important;
+          //     margin-left: 2em !important;
+          //     overflow: hidden;
+          // }
+
+          ::ng-deep .cdk-overlay-connected-position-bounding-box {
+            top: 24em !important;
+            left: 65em !important;
+          }
+
+          ::ng-deep.cdk-overlay-pane {
+
+            margin-top: 21em;
+            margin-left: 2em;
+          }
+
+        }
+
+        .table-section {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+          margin-bottom: 16px;
+          table {
+            width: 100%;
+            th {
+              color: $accent;
+              padding: 10px 6px 10px 16px;
+            }
+
+            tr:hover {
+              cursor: pointer;
+              background-color: $crowley_gray;
+            }
+
+            td {
+              padding: 10px 6px 10px 16px;
+              word-break: break-all;
+              cursor: pointer;
+
+              .progress {
+                height: 12px;
+                border-radius: 24px;
+                border: solid 1px gray;
+
+                ::ng-deep .mat-progress-bar-fill::after {
+                  background-color: $accent;
+                }
+
+                ::ng-deep .mat-progress-bar-buffer {
+                  // border: solid 0.5px black;
+                  background-color: $white;
+                }
+
+                ::ng-deep .mat-progress-bar {
+                  border-radius: 3px;
+                  border: solid 1px$accent;
+                  width: 80%;
+                  height: 10px;
+                }
+              }
+            }
+          }
+        }
+
+        // .table-section {
+        //   width: 100%;
+        //   table {
+        //     overflow-x: scroll;
+        //     th {
+        //       width: 150px;
+        //     }
+        //   }
+        // }
+      }
+    }
+  }
+
+}
+.main-container1{
+  display: none;
+}
+.section-container {
+  padding: 0px 30px 30px 0px;
+}
+@media only screen and (max-width:812px) {
+	.main-container{display: none;}	
+	.main-container1{		
+		display: block;
+    .right-section {
+      width: 100%;   
+      margin-top: 75px;
+      margin-bottom: 90px;
+      form {
+        width: 100%;
+        .search-report-cta-section{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 10px;
+          .advanceSearch {
+            font-size: 14px !important;
+            margin-bottom: 0 !important;
+  
+            a {
+              color: $accent;
+              text-decoration: underline;
+              cursor: pointer;              
+            }
+          }
+        }
+        mat-card {
+          background: $white;
+          border-radius: initial;
+          box-shadow: 0px 0 10px 1px rgba(0.24, 0.24, 0.24, 0.24);  
+          margin: 15px;        
+  
+          p:nth-child(1) {
+            font-size: 30px;
+            color: $crowley_font;
+            margin: 0px 0px 14px 0px;
+          }
+  
+          p:nth-child(2) {
+            color: $crowley_border_gray;
+            font-size: 12px;
+          }
+  
+          .input-section {
+            height: 100%; 
+            margin-bottom: 10px;
+            div {
+              width: 100%;
+  
+              fieldset {
+                border: solid 2px $crowley_border_gray;
+                border-radius: 6px;             
+  
+                legend {
+                  background-color: transparent;
+                  color: $crowley_font;
+                  padding: 0px 10px;
+                  margin: 10px;
+                  width: fit-content;
+                  font-size: 13px;
+                }
+  
+                input {
+                  padding: 6px;
+                  background-color: $white;
+                  width: 100%;
+                  margin-bottom:12px;
+                  outline: none;
+                  border: none; 
+                  font-size: 13px;                 
+                }
+              }
+            }
+  
+            button,
+            button:focus {
+              width: 35%;
+              height: 52px;
+              border-radius: 6px;
+              outline: none;
+              margin: 9px 0 0 0;
+              font-size: 14px !important;
+              @include filled-buttons;
+            }
+          }
+  
+  
+        
+  
+          .errorMessage {
+            padding: 3px 0 0px 2px;
+          }
+  
+          .chip-set {
+            background-color: $crowley_gray;
+            margin-top: 15px;
+            padding: 10px;
+  
+            .mat-chip.mat-standard-chip {
+              width: 181px;
+              background-color: $accent;
+              border-radius: 16px;
+              font-size: 14px;
+              color: $white;
+              padding: 6px 13px 6px 25px;
+              margin: 7px;
+              cursor: pointer;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+  
+            a {
+              font-family: Helvetica;
+              font-size: 13px;
+              color: $accent;
+              margin-top: 12px;
+            }
+  
+            //    ::ng-deep.mat-menu-panel {
+  
+  
+            //     margin-top: 28em !important;
+            //     margin-left: 2em !important;
+            //     overflow: hidden;
+            // }
+  
+            ::ng-deep .cdk-overlay-connected-position-bounding-box {
+              top: 24em !important;
+              left: 65em !important;
+            }
+  
+            ::ng-deep.cdk-overlay-pane {
+  
+              margin-top: 21em;
+              margin-left: 2em;
+            }
+  
+          }      
+  
+          // .table-section {
+          //   width: 100%;
+          //   table {
+          //     overflow-x: scroll;
+          //     th {
+          //       width: 150px;
+          //     }
+          //   }
+          // }
+        }
+        ::ng-deep .table-section {
+          display: block;
+          margin: 30px 0px;
+        }
+        .crowley-adv-listview{          
+          margin-bottom: 10px;
+          box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 13px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+          .mat-list-base{
+            padding-top: 0px;
+            .mat-list-item, .mat-list-option{
+              border-bottom: 1px solid $crowley_warmGrey;
+              padding-bottom: 10px;
+              margin-bottom: 10px;
+              height: auto !important;
+              position: relative;			
+              &:last-child{ border-bottom: none;}
+              .two-col-item{
+                display: flex;
+                justify-content: space-between;
+                .item{
+                  width: 35%;
+                  &:last-child{
+                    width: 65%;
+                  }
+                }
+              }
+              .item{
+                h4{ color: $crowley_font; font-size: 13px; margin-bottom: 0px !important;}
+                P{margin-bottom: 5px; font-size: 16px;}						
+              }
+              .icon{
+                mat-icon {
+                  position: absolute;
+                  right: -22px;
+                  top: 35px;
+                }
+                }
+            }
+          }
+          ::ng-deep .mat-list-base .mat-list-item ::ng-deep .mat-list-item-content, ::ng-deep .mat-list-base .mat-list-option ::ng-deep .mat-list-item-content{
+            display: block !important;
+            padding: 0 !important;
+            width: 95%;
+          }			
+        }
+        ::ng-deep .mat-paginator-container{
+          margin-bottom: 40px;
+        }
+      }
+    }
+  
+  }
+  .section-container {
+    padding: 0px;
+  }
+}
+@media only screen and (max-width:360px) {
+
+  .right-section {
+    form {     
+      mat-card {
+
+        .input-section {         
+          div {
+            fieldset {
+              input {              
+                font-size: 12.5px !important;                 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

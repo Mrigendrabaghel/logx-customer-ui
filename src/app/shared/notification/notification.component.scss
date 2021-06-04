@@ -1,0 +1,116 @@
+@import "src/crowley-themes.scss";
+
+::ng-deep .mat-dialog-container {
+  padding: 0;
+}
+
+::ng-deep .mat-dialog-content {
+  margin: 0;
+  padding: 0;
+}
+
+::ng-deep .mat-icon-button {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+}
+
+::ng-deep .mat-dialog-actions {
+  padding: 0;
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+.notifications {
+  padding: 0px 12px 4px;
+  
+    .notification {
+      cursor: pointer;
+      padding-top: 10px;
+      padding-bottom: 7px;
+      color: $crowley_font;
+      overflow: hidden;
+      font-family: Helvetica;
+      line-height: 16px;
+      border-bottom: 1px solid rgb(33,35,33);
+      ::ng-deep .flex-row{
+        justify-content: space-between;
+      }
+      .title {
+        font-weight: bold;
+        font-size: 12px;
+        display: flex;
+        justify-content: flex-start;
+      }
+  
+      .message {
+        font-size: 12px;
+        max-height: 45px;
+        overflow-y: auto;
+      }
+
+      .read-more {
+        cursor: pointer;
+        font-size: 12px;
+        color: #6074be;
+        text-decoration: underline;
+      }
+
+      .message-date {
+        font-family: Helvetica;
+        font-size: 10px;
+        color: $crowley_warmGrey;
+      }
+
+      .delete-notification {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        color: white;
+        padding-left: 18px;
+
+        ::ng-deep .mat-icon {
+          font-size: 12px;
+          background-color: rgb(206,18,38);
+          border-radius: 50%;
+          padding: 0px 2.5px;
+          width: 16px;
+          height: 16px;
+          line-height: 16px;
+        }
+      }
+  
+      // &.info {
+      //   background-color: rgba(189, 189, 189, 0.9);
+      // }
+  
+      // &.success {
+      //   background-color: rgba(27, 158, 119, 0.9);
+      // }
+  
+      // &.warning {
+      //   background-color: rgba(217, 95, 2, 0.9);
+      // }
+  
+      // &.error {
+      //   background-color:red;
+      // }
+    }
+}
+
+.viewall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Helvetica;
+  padding-top: 3px;
+  padding-bottom: 10px;
+  
+  ::ng-deep .mat-flat-button {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(96, 116, 190);
+    text-decoration: underline;
+    line-height: 1;
+  }
+}

@@ -1,0 +1,53 @@
+@import "src/crowley-themes.scss";
+
+.dialog-container {
+    display: flex;
+    flex-direction: column;
+    font-family: Helvetica;
+    padding: 20px;
+
+    .dialog-header {
+        display: flex;
+        flex-direction: column;
+        margin: 0px;
+        ::ng-deep .mat-dialog-title {
+            margin: 0px;
+            font-family: Helvetica;
+            font-weight: normal;
+        }
+        .title {
+            font-size: 16px;
+            line-height: 1.5;
+            color: rgba(0, 0, 0, 0.87);
+            font-weight: normal;
+        }
+
+        .date-time {
+            font-size: 14px;
+            line-height: 1;
+            color: $crowley_warmGrey;
+            font-weight: normal;
+        }
+    }
+
+    .dialog-content {
+        padding: 16px 0px;
+        font-size: 16px;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.87);
+    }
+
+    .dialog-actions {
+        display: flex;
+        justify-content: flex-end;
+        height: 40px;
+        ::ng-deep .mat-flat-button {
+            border-radius: 4px;
+            color: $white;
+            border: solid 1px #6074be;
+            background-color: #6074be;
+            width: 167px;
+            font-weight: normal;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<mat-dialog-content>
+    <p>
+        Your previous order number was {{previousOrderNumber}}. The new order number will be {{updatedOrderNumber}} .<br><br> {{message}}
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close (click)= "onCancelClick()" *ngIf="cancelButtonText != ''">{{cancelButtonText}}</button>
+    <button mat-button (click)="onConfirmClick()"  *ngIf="confirmButtonText != ''">{{confirmButtonText}}</button>
+</mat-dialog-actions>

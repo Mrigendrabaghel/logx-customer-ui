@@ -1,0 +1,28 @@
+@import "src/crowley-themes.scss";
+.mainContainer {
+  width: 230px;
+  letter-spacing: 0.5px;
+  height: 150px;
+  line-height: 25px;
+  text-align: center;
+  font-size: 16px;
+  padding: 15px;
+  color: $black;
+
+  .text {
+    padding: 10px 10px 10px 0px;
+  }
+
+  .buttons {
+    float: right;
+    padding: 10px 26% 10px 0px;
+    
+    .close {
+      border: solid 1px $primary !important;
+      margin: 10px 0px 0px 0px;
+      padding: 0px 25px 0px 25px;
+      color: $primary;
+      letter-spacing: 1px;
+    }
+  }
+}

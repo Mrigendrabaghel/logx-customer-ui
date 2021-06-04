@@ -1,0 +1,284 @@
+@import "src/crowley-themes.scss";
+
+.main {
+  max-width: 100%;
+  background: $white;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.12), 0 3px 4px rgba(0, 0, 0, 0.24);
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 1;
+
+  .head-container {
+
+    .sidenav-container {
+      height: 100%;
+    }
+
+    .sidenav {
+      width: 200px;
+      box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    .sideBarMenu {
+      padding: 0px 20px 0 10px;
+    }
+
+    .toolbar {
+      background-color: $white;
+    }
+
+    mat-toolbar {
+      //background-color: #006699;
+      color: $crowley_font;
+      height: 50px;
+      padding: 0px 20px 0 0px;
+
+      span:first-of-type {
+        font-size: 20px;
+      }
+
+      mat-nav-list {
+        padding-top: 0px !important;
+      }
+
+      mat-icon {
+        color: $crowley_font;
+        padding-bottom: 26px;
+        span {
+          margin-right: 20px !important;
+        }
+      }
+
+      a {
+        display: inline-block;
+        padding: 0 20px 0px 10px;
+        text-decoration: none;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      button {
+        margin-right: 5px;
+      }
+
+      button:hover {
+        cursor: pointer;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      .notifications {
+        cursor: pointer;
+        font-size: 36px;
+        width: 40px;
+        height: 36px;
+      }
+
+      ::ng-deep .mat-badge-content {
+        width: 25px;
+        height: 20px;
+        line-height: 20px;
+      }
+      ::ng-deep .mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+        right: 3px;
+      }
+      ::ng-deep .mat-badge-medium.mat-badge-above .mat-badge-content {
+        top: -2px;
+      }
+
+      .location {
+        cursor: pointer;
+        font-size: 34px;
+        width: 40px;
+        height: 36px;
+      }
+
+      ::ng-deep .mat-menu-content {
+        mat-card {
+          box-shadow: none !important;
+          input {
+            width: 16vw;
+          }
+        }
+      }
+
+      .headerImage {
+        font-size: 40px;
+        margin: 0px 10px 16px 0;
+        cursor: pointer;
+      }
+
+      .location {
+        color: $crowley_font;
+        font-size: 35px;
+        cursor: pointer;
+        padding: 0px 44px 35px 0px !important;
+      }
+
+      .logo {
+        margin: 0px 0px 0px 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1900px) {
+  .main {
+    .head-container {
+      // max-width: 1870px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 480px),
+only screen and (max-device-width: 480px) {
+  .main{
+    .head-container{
+      .sidenav{
+        width: 283px;
+        background-color: $crowley_background;
+        mat-nav-list{
+          ::ng-deep .mat-list-item-content {
+            font-size: 15px;
+            color: $white;
+            mat-icon{
+              color: $white;
+              padding: 0 50px 0 0px;
+            }
+            img{
+              // filter: brightness(0%)  ;
+              padding: 0 34px 0 0px;
+              margin: 0 -4px 0px 4px;
+
+            }
+           
+       
+          }
+     
+          ::ng-deep .mat-list-item-content:hover {
+            background-color: $font_gray;
+            color: $white; 
+             mat-icon{
+             color: $white;
+            }                          
+          }
+        }
+        mat-accordion{
+          ::ng-deep .mat-expansion-panel:not([class*=mat-elevation-z]){
+              box-shadow:none;
+           
+              }
+              ::ng-deep .mat-expansion-panel:not(.mat-expanded):not([aria-disabled=true]) .mat-expansion-panel-header:hover
+              {
+                background-color:$crowley_background; 
+              }
+              
+              ::ng-deep .mat-expansion-panel-body{
+                  padding : 0px 0px 0px 24px;
+              }
+              ::ng-deep .mat-list-item-content, .mat-list-item-content-reverse{
+                 padding: 0px;
+              }
+
+              .bullet-list {
+                   content: '*';
+                   color: $white;
+                   font-weight: bold;
+                   padding: 2px;
+                }
+          mat-expansion-panel{
+            .circle{
+              font-size: 7px !important;
+              height: 10px;
+              width: 10px;
+              margin-top: 9px;
+              padding: 20px;
+          }
+
+              background-color:$crowley_background; 
+              position: fixed;   
+              display: contents;                        
+              mat-panel-title{
+                  color:$white;
+                  a {
+                      mat-icon {
+                          margin-right: 5px;
+                          font-size: 21px;
+                          color: $white;
+                          cursor: pointer;
+                      }
+
+                    
+
+
+                      .report_img {
+                          margin-right: 8px;
+                          margin-left: 2px;
+                          background-image: url("../../../assets/Icons/bar_chart-24px.svg");
+                          background-repeat: no-repeat;
+                          height: 17px;
+                          width: 18px;
+                      }
+                      display: flex;
+                      color:$white;
+                      text-decoration: none;
+                  }
+              }
+              mat-panel-description{
+                  color:$white;
+               
+              }
+              mat-expansion-panel-header{
+                  padding-left: 9px;
+                  
+              }
+              ::ng-deep .mat-expansion-indicator::after{
+                  color:$white;
+              }
+              mat-list-option{
+                  color:$white;
+              }
+
+              ::ng-deep .mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus{
+                  background-color:$font_gray;
+              }
+
+              ::ng-deep .mat-list-option:hover, .mat-list-option:focus, .mat-nav-list .mat-list-item:hover, .mat-nav-list .mat-list-item:focus, .mat-action-list .mat-list-item:hover, .mat-action-list .mat-list-item:focus{
+                  background-color:$font_gray;
+              }
+          }
+          
+
+      }
+      }
+      
+      mat-toolbar{
+        .logo {
+          margin: 0px 0px 0px 9px;
+           cursor: pointer;
+        }
+      }
+
+      
+    }
+  }
+  
+ 
+ 
+}

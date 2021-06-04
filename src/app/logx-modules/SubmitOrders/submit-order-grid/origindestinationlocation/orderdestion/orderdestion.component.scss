@@ -1,0 +1,1076 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../../Styles/mixins.scss";
+
+.main-container {
+  .saveandcreatedBy {
+    //m
+    margin: 0em 0 0 0;
+    padding: 3px 22px 15px 22px;
+
+    div {
+      //m
+      display: flex;
+      justify-content: space-between;
+
+      p {
+        font-size: 16px;
+        color: $accent;
+      }
+
+      p:nth-child(2) {
+        text-align: right;
+      }
+    }
+  }
+
+  .details-section {
+    margin: -16px 18px 0 18px; //m
+
+    .card {
+      padding: 20px 20px;
+      margin: 0 0 71px 0;
+
+      p {
+        color: $black;
+        font-size: 26px; //m
+        padding: 12px 0; //,
+      }
+
+      .three {
+        div {
+          .origin-location {
+            letter-spacing: 0.5px;
+            display: flex;
+            padding: 7px 0 0 0;
+            justify-content: space-between;
+
+            .sub-heading-section {
+              display: flex;
+            }
+
+            p {
+              color: #000000;
+              font-size: 15px !important;
+              margin: 0;
+            }
+
+            p:nth-child(2) {
+
+              //m
+              mat-icon {
+                cursor: pointer;
+              }
+            }
+          }
+
+          .sub-heading::after {
+            content: '*';
+            color: $primary;
+            font-weight: bold;
+            padding: 2px;
+          }
+
+          mat-checkbox {
+            float: right;
+            padding: 0 0 0 7px; //m
+          }
+        }
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: space-between;
+
+        div {
+          margin: 0 181px 0 0; //m
+
+          p {
+            color: #000000;
+            font-size: 15px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            letter-spacing: 0.5px;
+          }
+
+          ::ng-deep .mat-form-field {
+            width: 200%; //m    
+          }
+          ::ng-deep  .mat-form-field-label {              
+            color: gray !important;                         
+        }  
+        }
+      }
+
+      .time-section {
+        display: flex;
+        justify-content: space-between;
+        .timePicker {
+          margin-top: 7px;
+          ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix{
+                   display: contents;
+                   input{
+                       padding-bottom: 6px;
+                       font-size: 14px;
+        
+                    }
+               }
+             }
+        div {
+          p {
+            color: #000000;
+            font-size: 15px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            letter-spacing: 0.5px;
+          }
+
+          mat-form-field {
+            width: 130%;
+            ::ng-deep  .mat-form-field-label {              
+              color: gray !important;                         
+          }  
+          }
+
+          mat-datepicker-toggle {
+            color: $black
+          }
+
+          .duration-heading::after {
+            content: '*';
+            color: $primary;
+            font-weight: bold;
+            padding: 2px;
+          }
+        }
+
+        div:nth-child(3) {
+          mat-form-field {
+            width: 24vw;
+            ::ng-deep  .mat-form-field-label {              
+              color: gray !important;                         
+          }  
+          }
+        }
+
+        div:first-of-type {
+          mat-form-field {
+            width: 24vw;
+            ::ng-deep  .mat-form-field-label {              
+              color: gray !important;                         
+          }  
+          }
+        }
+
+        div:nth-child(2),
+        :nth-child(4) {
+          input {
+            border: none;
+          }
+
+          //remove
+          mat-form-field {
+            width: 90% !important; 
+            margin: 17px 0px 0px 0px !important;
+            ::ng-deep  .mat-form-field-label {              
+              color: gray !important;                         
+          }  
+          }
+        }
+      }
+
+      .appointment-section {
+        p {
+          color: #000000;
+          font-size: 15px !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .bottom-section {
+        margin: 38px 0 14px 0;
+
+        button {
+          color: $white;
+        }
+
+        .cancel {
+          @include buttons;
+          padding: 0px 28px;
+          font-size: 14px !important;
+        }
+
+        .right-align-section {
+          float: right;
+
+          button:nth-child(1) {
+            @include no-outline-buttons;
+          }
+          .saveButton {
+            background-color: $accent;
+          }
+
+          .disable {
+            background-color: $mileStone_gray !important;
+          }
+        }
+      }
+    }
+
+    //ORIGIN INFO
+    .card {
+      padding: 20px 20px;
+      margin: 0 0 71px 0;
+
+      p {
+        color: $black;
+        font-size: 26px; //m
+        padding: 12px 0; //m
+      }
+
+      p:nth-child(2) {
+
+        //m
+        mat-icon {
+          cursor: pointer;
+        }
+      }
+
+      .saved-locations {
+        display: flex;
+        justify-content: space-between;
+
+        mat-card {
+          width: 49%;
+          height: 155px;
+          border: 3px solid rgb(174 174 174);
+          box-shadow: none;
+          padding: 20px;
+        }
+
+        .saved-location {
+          
+
+          .last-section {
+            bottom: -77px;
+            color: #0957a3;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            left: -15px; //m
+            position: relative;
+
+            .address {
+              @include filled-buttons;
+              padding: 3px 20px;
+              border-radius: 5px;
+              float: right;
+              margin: 0 -22px; //m
+              text-align: center;
+            }
+          }
+        }
+      }
+
+      .sub-heading {
+        display: flex;
+        margin: 20px 0 0 0;
+
+        .mat-divider {
+          border-top-width: 3px;
+          border-top-style: solid;
+          flex: 1;
+          position: relative;
+          background-color: #00202c;
+          top: 23px;
+          height: 3px;
+        }
+
+        p {
+          padding: 16px 12px;
+          text-align: center;
+        }
+      }
+      .sub-section{
+        display: flex;
+        .display-flex{
+         
+          .address{
+            width: 550px;
+            border: 3px solid grey !important;
+            margin-right: 20px;
+            box-shadow: none;
+          }
+        mat-card{
+        width: 50%;
+        margin-right: 30px;
+        height: 200px;
+          .locationText{
+            height: 100px;
+           
+            margin: 2px;
+            p{
+                overflow-wrap: break-word;
+                font-size: 16px;
+            }
+          }
+          .buttons{
+            .ButtonFont{
+                color: $accent;
+                
+            }
+            .save {
+              @include filled-buttons;
+              border-radius: 5px;
+              margin: 10px 5px;
+              font-size: 11px !important;
+              text-align: center;
+              right: -200px
+          }
+          .disable {
+            background-color: $mileStone_gray !important;
+          }
+          
+          }
+        }
+      }
+    }
+      .three {
+        div {
+          .origin-location {
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+
+            .favorites {
+              display: flex;
+            }
+
+            .sub-heading-section {
+              display: flex;
+            }
+
+            p {
+              color: #000000;
+              font-size: 15px !important;
+              margin: 0;
+            }
+          }
+
+          .sub-heading::after {
+            content: '*';
+            color: $primary;
+            font-weight: bold;
+            padding: 2px;
+          }
+
+          mat-checkbox {
+            float: right;
+            padding: 0 0 0 7px; //m
+          }
+        }
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: space-between;
+
+        div {
+          margin: 0 181px 0 0; //m
+
+          p {
+            color: #000000;
+            font-size: 15px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            letter-spacing: 0.5px;
+          }
+
+          ::ng-deep .mat-form-field {
+            width: 200%; //m
+          }
+        }
+      }
+
+      .time-section {
+        display: flex;
+        justify-content: space-between;
+
+        div {
+          p {
+            color: #000000;
+            font-size: 15px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            letter-spacing: 0.5px;
+          }
+
+          // mat-form-field {
+          //   width: 130%;
+          // }
+
+          mat-datepicker-toggle {
+            color: $black
+          }
+
+          .duration-heading::after {
+            content: '*';
+            color: $primary;
+            font-weight: bold;
+            padding: 2px;
+          }
+        }
+
+        div:first-of-type {
+          mat-form-field {
+            width: 23.5vw;
+            ::ng-deep  .mat-form-field-label {              
+              color: gray !important;                         
+          }  
+          }
+        }
+
+        div:nth-child(2),
+        :nth-child(5) {
+
+          //remove
+          input {
+            border: none;
+          }
+
+          mat-form-field {
+            width: 90% !important;
+            margin: 19px 0px 0 0px !important;
+            ::ng-deep  .mat-form-field-label {              
+              color: gray !important;                         
+          }  
+          }
+        }
+      }
+
+      .appointment-section {
+        p {
+          color: #000000;
+          font-size: 15px !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .bottom-section {
+        margin: 38px 0 14px 0;
+
+        button {
+          color: $white;
+        }
+
+        .cancel {
+          @include buttons;
+          padding: 0px 28px;
+          font-size: 14px !important;         
+        }
+
+        .right-align-section {
+          float: right;
+
+          button:nth-child(1) {
+            @include no-outline-buttons;
+            margin-right: 15px;
+          }
+
+          .saveButton {
+            background-color: $accent;
+          }
+
+          .disable {
+            background-color: $mileStone_gray !important;
+          }
+        }
+      }
+    }
+  }
+}
+.main-container1{
+  display: none;
+}
+@media only screen and (max-width:812px) {
+  .main-container{
+    display: none;
+  }
+  .main-container1 {
+    display: block;
+    
+    // .saveandcreatedBy {
+    //   //m
+    //   margin: 0em 0 0 0;
+    //   padding: 3px 22px 15px 22px;
+  
+    //   div {
+    //     //m
+    //     display: flex;
+    //     justify-content: space-between;
+  
+    //     p {
+    //       font-size: 16px;
+    //       color: $accent;
+    //     }
+  
+    //     p:nth-child(2) {
+    //       text-align: right;
+    //     }
+    //   }
+    // }
+  
+    .details-section {
+      // margin: -16px 18px 0 18px; //m
+      .form-dest-info{
+        padding: 0 15px;
+        margin-bottom: 150px;
+      }
+      .card {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0;
+        box-shadow: none;
+  
+        p {
+          color: $black;
+          font-size: 26px; //m
+          padding: 12px 0; //,
+        }
+  
+        .three {
+          div {
+            .origin-location {
+              letter-spacing: 0.5px;
+              display: flex;
+              padding: 7px 0 0 0;
+              justify-content: space-between;
+  
+              .sub-heading-section {
+                display: flex;
+              }
+  
+              p {
+                color: #000000;
+                font-size: 15px !important;
+                margin: 0;
+              }
+  
+              p:nth-child(2) {
+  
+                //m
+                mat-icon {
+                  cursor: pointer;
+                }
+              }
+            }
+  
+            .sub-heading::after {
+              content: '*';
+              color: $primary;
+              font-weight: bold;
+              padding: 2px;
+            }
+  
+            mat-checkbox {
+              float: right;
+              padding: 0 0 0 7px; //m
+            }
+          }
+        }
+  
+        .contact-info {
+          display: flex;
+          justify-content: space-between;
+  
+          div {
+            margin: 0 181px 0 0; //m
+  
+            p {
+              color: #000000;
+              font-size: 15px !important;
+              padding: 0 !important;
+              margin: 0 !important;
+              letter-spacing: 0.5px;
+            }
+  
+            ::ng-deep .mat-form-field {
+              width: 200%; //m
+            }
+            ::ng-deep  .mat-form-field-label {              
+              color: gray !important;                         
+          }
+      
+          }
+        }
+  
+        .time-section {
+          display: block;
+          margin-top: 10px;
+          //justify-content: space-between;
+  
+          .timePicker {
+            margin-top: 7px;
+            ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix{
+                     display: contents;
+                     input{
+                         padding-bottom: 6px;
+                         font-size: 14px;
+          
+                      }
+                 }
+               }
+  
+          div {
+            p {
+              color: #000000;
+              font-size: 15px !important;
+              padding: 0 !important;
+              margin: 7px 0px !important;
+              letter-spacing: 0.5px;
+            }
+  
+            mat-form-field {
+              width: 100%;
+              ::ng-deep .mat-form-field-wrapper{ 
+                ::ng-deep .mat-form-field-suffix{
+                  left: -8px;
+                  top: -5px;
+                  ::ng-deep .mat-button-wrapper{
+                    .mat-datepicker-toggle-default-icon{
+                      width: 2em;
+                    }
+    
+                  }
+                } 
+              }
+             
+              ::ng-deep  .mat-form-field-label {              
+                color: gray !important;                         
+            }  
+    
+            }
+  
+            mat-datepicker-toggle {
+              color: $black
+            }
+  
+            .duration-heading::after {
+              content: '*';
+              color: $primary;
+              font-weight: bold;
+              padding: 2px;
+            }
+          }
+  
+          div:nth-child(3) {
+            mat-form-field {
+              width: 100%;
+              ::ng-deep  .mat-form-field-label {              
+                color: gray !important;                         
+            }  
+            }
+          }
+  
+          div:first-of-type {
+            mat-form-field {
+              width: 100%;
+              ::ng-deep  .mat-form-field-label {              
+                color: gray !important;                         
+            }  
+            }
+          }
+  
+          div:nth-child(2),
+          :nth-child(4) {
+            input {
+              border: none;
+            }
+  
+            //remove
+            mat-form-field {
+              width: 100% !important; 
+              margin: 0px !important;
+              ::ng-deep  .mat-form-field-label {              
+                color: gray !important; 
+
+            }
+           
+            ::ng-deep .mat-form-field-infix{
+              padding: 0;
+              border: 0;
+              .bmd-form-group{
+                width: 100%;
+              }
+            }
+            }
+          }
+        }
+  
+        .appointment-section {
+          p {
+            color: #000000;
+            font-size: 15px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            letter-spacing: 0.5px;
+          }
+        }
+  
+        .bottom-section {
+          margin: 38px 0 14px 0;
+  
+          button {
+            color: $white;
+          }
+  
+          .cancel {
+            @include buttons;
+            padding: 0px 28px;
+            font-size: 14px !important;
+          }
+          .savelateer {
+                @include no-outline-buttons;
+                margin-right: 15px;
+              }
+              .saveButton {
+                background-color: $accent;
+              }
+    
+              .disable {
+                background-color: $mileStone_gray !important;
+              }
+          // .right-align-section {
+          //   float: right;
+  
+          //   button:nth-child(1) {
+          //     @include no-outline-buttons;
+          //     margin-right: 15px;
+          //   }
+          //   .saveButton {
+          //     background-color: $accent;
+          //   }
+  
+          //   .disable {
+          //     background-color: $mileStone_gray !important;
+          //   }
+          // }
+        }
+      }
+  
+      //ORIGIN INFO
+      .card {
+        padding: 20px 20px;
+        margin: 0 0 71px 0;
+  
+        p {
+          color: $black;
+          font-size: 26px; //m
+          padding: 12px 0; //m
+        }
+  
+        p:nth-child(2) {
+  
+          //m
+          mat-icon {
+            cursor: pointer;
+          }
+        }
+  
+        .saved-locations {
+          display: flex;
+          justify-content: space-between;
+  
+          mat-card {
+            width: 49%;
+            height: 155px;
+            border: 3px solid rgb(174 174 174);
+            box-shadow: none;
+            padding: 20px;
+          }
+  
+          .saved-location {
+            
+  
+            .last-section {
+              bottom: -77px;
+              color: #0957a3;
+              font-size: 12px;
+              letter-spacing: 1px;
+              cursor: pointer;
+              left: -15px; //m
+              position: relative;
+  
+              .address {
+                @include filled-buttons;
+                padding: 3px 20px;
+                border-radius: 5px;
+                float: right;
+                margin: 0 -22px; //m
+                text-align: center;
+              }
+            }
+          }
+        }
+  
+        .sub-heading {
+          display: flex;
+          margin: 20px 0 0 0;
+  
+          .mat-divider {
+            border-top-width: 3px;
+            border-top-style: solid;
+            flex: 1;
+            position: relative;
+            background-color: #00202c;
+            top: 23px;
+            height: 3px;
+          }
+  
+          p {
+            padding: 16px 12px;
+            text-align: center;
+          }
+        }
+        .sub-section{
+          display: block;
+          .display-flex{
+           
+            .address{
+              width: 100%;
+              border: 3px solid #aeaeae !important;              
+              box-shadow: none;              
+              margin-bottom: 20px;              
+            }
+          mat-card{
+          width: 100%;
+          margin-right: 0px;
+          height: auto;
+            .locationText{                        
+              margin: 0px 0px 30px 0px;
+              overflow-wrap: break-word;
+              font-size: 16px;              
+            }
+            .buttons{
+              display: flex;
+              justify-content: space-between;
+              .ButtonFont{
+                  color: $accent; 
+                  margin: 0; 
+                  border: 1px solid #0957a3 !important;                  
+                  margin-right: 15px;
+                  min-width: auto;
+                  padding: 7px;
+                  line-height: normal;                                  
+              }
+              .save {
+                @include filled-buttons;
+                border-radius: 5px;
+                margin: 0;
+                font-size: 11px !important;
+                text-align: center;                
+            }
+            .disable {
+              background-color: $mileStone_gray !important;
+            }
+            }
+          }
+        }
+      }
+  
+      .favorites {
+        display: flex;
+        margin: 15px 0 5px 0;
+        p{
+          margin: 0;
+          ::ng-deep .mat-checkbox-layout{
+            font-size: 14px;
+            margin-right: 8px;
+          }
+        }
+      }
+        .three {
+          div {
+            .origin-location {
+              letter-spacing: 0.5px;
+              display: flex;
+              justify-content: space-between;
+  
+              .favorites {
+                display: flex;
+              }
+  
+              .sub-heading-section {
+                display: flex;
+              }
+              .sub-heading{
+                margin-right: 8px;
+              }
+              p {
+                color: #000000;
+                font-size: 15px !important;
+                margin: 0;
+              }
+            }
+  
+            .sub-heading::after {
+              content: '*';
+              color: $primary;
+              font-weight: bold;
+              padding: 2px;
+            }
+  
+            mat-checkbox {
+              float: right;
+              padding: 0 0 0 7px; //m
+            }
+          }
+        }
+  
+        .contact-info {
+          display: block;         
+  
+          div {
+            margin: 0; //m
+  
+            p {
+              color: #000000;
+              font-size: 15px !important;
+              padding: 0 !important;
+              margin: 0 !important;
+              letter-spacing: 0.5px;
+            }
+  
+            ::ng-deep .mat-form-field {
+              width: 100%; //m
+            }
+          }
+        }
+  
+        // .time-section {
+        //   display: flex;
+        //   justify-content: space-between;
+  
+        //   div {
+        //     p {
+        //       color: #000000;
+        //       font-size: 15px !important;
+        //       padding: 0 !important;
+        //       margin: 0 !important;
+        //       letter-spacing: 0.5px;
+        //     }
+  
+        //     // mat-form-field {
+        //     //   width: 130%;
+        //     // }
+  
+        //     mat-datepicker-toggle {
+        //       color: $black
+        //     }
+  
+        //     .duration-heading::after {
+        //       content: '*';
+        //       color: $primary;
+        //       font-weight: bold;
+        //       padding: 2px;
+        //     }
+        //   }
+  
+        //   div:first-of-type {
+        //     mat-form-field {
+        //       width: 23.5vw;
+        //       ::ng-deep  .mat-form-field-label {              
+        //         color: gray !important;                         
+        //     }  
+        //     }
+        //   }
+  
+        //   div:nth-child(2),
+        //   :nth-child(5) {
+  
+        //     //remove
+        //     input {
+        //       border: none;
+        //     }
+  
+        //     mat-form-field {
+        //       width: 90% !important;
+        //       margin: 19px 0px 0 0px !important;
+        //       ::ng-deep  .mat-form-field-label {              
+        //         color: gray !important;                         
+        //     }  
+        //     }
+        //   }
+        // }
+  
+        .appointment-section {
+          p {
+            color: #000000;
+            font-size: 15px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            letter-spacing: 0.5px;
+          }
+        }
+  
+        
+      }
+      .bottom-section {
+        // margin: 38px 0 14px 0;
+
+        button {
+          color: $white;
+        }
+
+        .cancel {
+          @include buttons;
+          padding: 0px 15px;
+          font-size: 14px !important;
+        }
+            .savelateer {
+            @include no-outline-buttons;
+          }
+
+          .saveButton {
+            background-color: $accent;
+          }
+
+          .disable {
+            background-color: $mileStone_gray !important;
+          }
+
+        // .right-align-section {
+        //   float: right;
+
+        //   button:nth-child(1) {
+        //     @include no-outline-buttons;
+        //   }
+
+        //   .saveButton {
+        //     background-color: $accent;
+        //   }
+
+        //   .disable {
+        //     background-color: $mileStone_gray !important;
+        //   }
+        // }
+      }
+      .footer-button{
+        display: flex;
+        justify-content:space-between;
+        width: 100%;
+        background: #fff;
+        position: fixed;
+        bottom: 45px;
+        -webkit-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+        -moz-box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+        box-shadow: 0px -4px 4px rgb(0 0 0 / 20%);
+        padding: 12px 15px
+      }
+    }
+   
+  }
+}

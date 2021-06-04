@@ -1,0 +1,242 @@
+<div class="main-container">
+  <div class="main-section">
+    <mat-card>
+      <div class="header-section">
+        <p>{{ReportIncidentDisplayRecord.header}} {{IncidentNumber}}</p>
+        <button (click)="goToAdvanceSearch()">{{IncidentConst.reportIncidentadvsearch}}</button>
+      </div>
+      <div class="top-section">
+        <div class="left-section">
+          <div>
+            <p>{{IncidentConst.client}}</p>
+            <P>{{incidentRecord.client}}</P>
+          </div>
+          <div class="dateType">
+            <div>
+              <p>{{IncidentConst.incidentDate}}</p>
+              <P>{{incidentRecord.incidentDate}}</P>
+            </div>
+            <div>
+              <p>{{IncidentConst.incidentType}}</p>
+              <P>{{incidentRecord.incidentType}}</P>
+            </div>
+          </div>
+          <div>
+            <p>{{IncidentConst.orderNum}}</p>
+            <p>{{incidentRecord.orderNumber}}</p>
+          </div>
+          <div>
+            <p>{{IncidentConst.repLocation}}</p>
+            <p>{{incidentRecord.reportingLocation}}</p>
+            <!-- <p>Somerset PA 15501</p> -->
+          </div>
+          <div>
+            <p>{{IncidentConst.incLocation}}</p>
+            <p>{{incidentRecord.incidentLocation}}</p>
+          </div>
+        </div>
+        <div class="right-section">
+          <div>
+            <p>{{IncidentConst.priority}}</p>
+            <p>{{incidentRecord.priority}}</p>
+          </div>
+          <div>
+            <p>{{IncidentConst.reportedBy}}</p>
+            <p>{{incidentRecord.reportedBy}}</p>
+          </div>
+          <div>
+            <p>{{IncidentConst.reportedDate}}</p>
+            <p>{{incidentRecord.reportedDate}}</p>
+          </div>
+          <div>
+            <p>{{IncidentConst.orderContactName}}</p>
+            <p>{{incidentRecord.orderContactName}}</p>
+          </div>
+          <div>
+            <p>{{ReportIncidentDisplayRecord.ordercontactnumber}}</p>
+            <p>{{incidentRecord.orderContactNumber}}</p>
+          </div>
+          <div>
+            <p>{{OrderDetailConst.carrier}}</p>
+            <p>Awesome Carrier LLC</p>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="comment-section">
+          <p>{{IncidentConst.comments}}</p>
+          <table>
+            <tbody>
+              <tr *ngFor="let row of enterComments; let i = index">
+                <td>
+                  <textarea disabled=true>{{row}}</textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bottom-section">
+          <p>{{ReportIncidentDisplayRecord.Attachments}} ({{attachmentCount}})</p>
+          <mat-table table matSort class="details-table" [dataSource]="attachmentDataSource" *ngIf="attachmentCount > 0">
+            <ng-container *ngFor="let column of attachmentGrid; let i = index" [matColumnDef]="column.headingDBColumn">
+              <mat-header-cell mat-sort-header *matHeaderCellDef>
+                {{column.headingDisplayText}} </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element[column.headingDBColumn]}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="attachmentColumns" #tableHeaderRow></mat-header-row>
+            <mat-row class="attachments" *matRowDef="let row; columns: attachmentColumns;" (click)="OpenDocument(row)"></mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+<div class="main-container1">
+  <div class="main-section">
+    <mat-card>
+      <div class="header-section">
+        <p>{{ReportIncidentDisplayRecord.header}} {{IncidentNumber}}</p>
+        <button (click)="goToAdvanceSearch()">{{IncidentConst.reportIncidentadvsearch}}</button>
+      </div>
+      <div class="Crowley-Incident-details">
+        <div class="Crowley-Incident-details__row-1">
+            <div><label>{{IncidentConst.client}}</label><p>{{incidentRecord.client}}</p></div>
+            <div><label>{{IncidentConst.priority}}</label><p>{{incidentRecord.priority}}</p></div>
+        </div>
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+             <mat-expansion-panel-header>
+             <mat-panel-title>
+                {{IncidentConst.orderInformation}}
+             </mat-panel-title>
+             </mat-expansion-panel-header>
+             <mat-panel-description>
+              <div>
+                <label>{{IncidentConst.orderNum}}</label>
+                <p>{{incidentRecord.orderNumber}}</p>
+              </div>
+              <div>
+                <label>{{IncidentConst.orderContactName}}</label>
+                <p>{{incidentRecord.orderContactName}}</p>
+              </div>
+              <div>
+                <label>{{ReportIncidentDisplayRecord.ordercontactnumber}}</label>
+                <p>{{incidentRecord.orderContactNumber}}</p>
+              </div>
+              <div class="mb-3">
+                <label>{{OrderDetailConst.carrier}}</label>
+                <p>Awesome Carrier LLC</p>
+              </div>
+             </mat-panel-description>                  
+          </mat-expansion-panel>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+             <mat-expansion-panel-header>
+             <mat-panel-title>
+                {{IncidentConst.incidentInformation}}
+             </mat-panel-title>
+             </mat-expansion-panel-header>
+             <mat-panel-description>
+              <div class="dateType">
+                <div>
+                  <label>{{IncidentConst.incidentDate}}</label>
+                  <P>{{incidentRecord.incidentDate}}</P>
+                </div>
+                <div>
+                  <label>{{IncidentConst.incidentType}}</label>
+                  <P>{{incidentRecord.incidentType}}</P>
+                </div>
+              </div>
+              <div>
+                <label>{{IncidentConst.reportedBy}}</label>
+                <p>{{incidentRecord.reportedBy}}</p>
+              </div>
+              <div class="mb-3">
+                <label>{{IncidentConst.reportedDate}}</label>
+                <p>{{incidentRecord.reportedDate}}</p>
+              </div>
+             </mat-panel-description>                  
+          </mat-expansion-panel>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+             <mat-expansion-panel-header>
+             <mat-panel-title>
+                {{IncidentConst.location}}
+             </mat-panel-title>
+             </mat-expansion-panel-header>
+             <mat-panel-description>
+              <div>
+                <label>{{IncidentConst.repLocation}}</label>
+                <p>{{incidentRecord.reportingLocation}}</p>                
+              </div>
+              <div class="mb-3">
+                <label>{{IncidentConst.incLocation}}</label>
+                <p>{{incidentRecord.incidentLocation}}</p>
+              </div>
+             </mat-panel-description>                  
+          </mat-expansion-panel>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+             <mat-expansion-panel-header>
+             <mat-panel-title>
+                {{IncidentConst.comments}}
+             </mat-panel-title>
+             </mat-expansion-panel-header>
+             <mat-panel-description>
+              <div class="comment-section">                
+                <table>
+                  <tbody>
+                    <tr *ngFor="let row of enterComments; let i = index">
+                      <td>
+                        <textarea disabled=true>{{row}}</textarea>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+             </mat-panel-description>                  
+          </mat-expansion-panel>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+             <mat-expansion-panel-header>
+             <mat-panel-title>
+                {{IncidentConst.attachments}}
+             </mat-panel-title>
+             </mat-expansion-panel-header>
+             <mat-panel-description>
+              <div class="bottom-section">
+                <p *ngIf="attachmentCount == 0">{{ReportIncidentDisplayRecord.Attachments}} ({{attachmentCount}})</p>
+                <mat-list *ngIf="attachmentCount > 0">
+                  <mat-list-item *ngFor="let element of attachments" (click)="OpenDocument(element)">      
+                     <div class="item d-flex align-items-center">
+                        <mat-icon matListIcon>article</mat-icon>
+                        <div>
+                          <h4>{{IncidentConst.fileName}}</h4>
+                          <p>{{element.DocName}}</p>
+                        </div>
+                     </div> 
+                     <div class="two-col-item">
+                        <div class="item">
+                           <h4>{{IncidentConst.date}}</h4>
+                           <p>{{element.DocDate}}</p> 
+                        </div>        
+                        <div class="item">
+                           <h4>{{IncidentConst.fileType}}</h4>
+                           <p>{{element.DocFormat}}</p>
+                        </div> 
+                     </div> 
+                     <div class="item">
+                      <h4>{{IncidentConst.description}}</h4>
+                      <p>{{element.DOCDESCRIPTION}}</p>
+                   </div>                    
+                  </mat-list-item>
+                </mat-list>
+              </div>
+             </mat-panel-description>                  
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>      
+    </mat-card>
+  </div>
+</div>

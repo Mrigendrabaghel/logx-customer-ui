@@ -1,0 +1,210 @@
+<div class="header">
+    <img src="assets/crowley_logo.png" class="logo">
+</div>
+<div class="container">
+    <h1 class="crw-title">Registration</h1>
+    <form [formGroup]="regForm" class="crw-registration">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="main-userdtls">
+                    <h3 class="crw-sub-title">USER DETAILS</h3>
+                    <div class="radio-button">
+                        <mat-radio-group formControlName="gradeType" #radioGroup="matRadioGroup"
+                            *ngIf="gradeTypeList.length > 0" (change)="changeRadiogradeType($event)" class="radio">
+                            <mat-radio-button [checked]="selectedValue" [value]="gradeTypeList[0].lookupDisplayText"
+                                color="primary">{{gradeTypeList[0].lookupDisplayText}}</mat-radio-button>
+                            <mat-radio-button [value]="gradeTypeList[1].lookupDisplayText" color="primary">
+                                {{gradeTypeList[1].lookupDisplayText}}</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-12 p-0 mb-3">
+                        <mat-select formControlName="gradeTypeOptions" placeholder="Select" class="col-4"
+                            (ngModelChange)="updateGradeType($event)">
+                            <mat-option *ngFor="let grade of gradeList" [value]="grade">
+                                {{ grade.lookupDisplayText }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-md-12 p-0 mb-3">
+                        <p>Service / Command</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-select formControlName="main_ServiceCommand" placeholder="Select"
+                                    (ngModelChange)="updateMainServiceCommand($event)">
+                                    <mat-option *ngFor="let serv of mainServiceCommandList" [value]="serv">
+                                        {{ serv.lookupDisplayText }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <ng-container
+                                *ngIf="isSubServiceCommandDropdown; then subServiceDropdown else subServiceText">
+                            </ng-container>
+                            <ng-template #subServiceDropdown>
+                                <div class="col-6">
+                                    <mat-select formControlName="sub_ServiceCommand1" placeholder="Select"
+                                        (ngModelChange)="updateSubServiceCommand($event)">
+                                        <mat-option *ngFor="let subServ of subServiceCommandList" [value]="subServ">
+                                            {{ subServ.lookupDisplayText }}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </ng-template>
+                            <ng-template #subServiceText>
+                                <div class="col-6">
+                                    <input matInput formControlName="sub_ServiceCommand2"
+                                        placeholder="Enter service/Command">
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0 mb-3">
+                        <p>Unit Name</p>
+                        <input matInput formControlName="unitName" placeholder="Enter Unit Name">
+                    </div>
+                    <div class="col-md-12 p-0 mb-3">
+                        <p>Installation</p>
+                        <input matInput formControlName="installation" placeholder="Enter appropriate information">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>DODAAC <span class="req-asterisk">*</span></p>
+                            <input matInput formControlName="dodaac" placeholder="Enter appropriate information">
+                        </div>
+                        <div *ngIf="formSubmitted && f.dodaac.errors" class="errorMessage">
+                            <div *ngIf="f.dodaac.errors.required">
+                                <p>{{registrationValidationConst.errorMessage.dodaac}}</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p>CAGE</p>
+                            <input matInput formControlName="cage" placeholder="Enter appropriate information">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>SPLC</p>
+                            <input matInput formControlName="splc" placeholder="Enter appropriate information">
+                        </div>
+                        <div class="col-6">
+                            <p>GBLOC</p>
+                            <input matInput formControlName="gbloc" placeholder="Enter appropriate information">
+                        </div>
+                    </div>
+                </div>
+                <div class="main-contactdtls">
+                    <h3 class="crw-sub-title">CONTACT DETAILS</h3>
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <p>First Name <span class="req-asterisk">*</span></p>
+                            <input matInput formControlName="firstName" placeholder="Enter First Name">
+                        </div>
+                        <div *ngIf="formSubmitted && f.firstName.errors" class="errorMessage">
+                            <div *ngIf="f.firstName.errors.required">
+                                <p>{{registrationValidationConst.errorMessage.firstName}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <p>Middle Name</p>
+                            <input matInput formControlName="middleName" placeholder="Enter Middle Name">
+                        </div>
+                        <div class="col-4">
+                            <p>Last Name <span class="req-asterisk">*</span></p>
+                            <input matInput formControlName="lastName" placeholder="Enter Last Name">
+                        </div>
+                        <div *ngIf="formSubmitted && f.lastName.errors" class="errorMessage">
+                            <div *ngIf="f.lastName.errors.required">
+                                <p>{{registrationValidationConst.errorMessage.lastName}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0 mb-3">
+                        <p>Mailing Address <span class="req-asterisk">*</span></p>
+
+                        <div class="row mb-3">
+                            <app-location-search [formName]="formName"
+                                (incidentLocationField)="getLocationContactDetails($event)"></app-location-search>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 p-0 mb-3">
+                        <p>Phone Number <span class="req-asterisk">*</span></p>
+                        <div class="row">
+                            <div class="col-6">
+                                <input (keypress)="omit_special_char($event)" matInput formControlName="officeNo"
+                                    placeholder="Office">
+                            </div>
+                            <div *ngIf="formSubmitted && f.officeNo.errors" class="errorMessage">
+                                <div *ngIf="f.officeNo.errors.required">
+                                    <p>{{registrationValidationConst.errorMessage.phoneNumber}}</p>
+                                </div>
+                                <div *ngIf="f.officeNo.errors.maxLength">
+                                    <p>{{registrationValidationConst.errorMessage.maxLength}}</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <input (keypress)="omit_special_char($event)" matInput formControlName="mobileNo"
+                                    placeholder="Mobile">
+                            </div>
+                            <div *ngIf="formSubmitted && f.mobileNo.errors" class="errorMessage">
+                                <div *ngIf="f.mobileNo.errors.maxLength">
+                                    <p>{{registrationValidationConst.errorMessage.maxLength}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0 mb-3">
+                        <p>Email Address <span class="req-asterisk">*</span></p>
+                        <input matInput type="email" formControlName="emailAddr" placeholder="username@websitename.com">
+                    </div>
+                    <div *ngIf="formSubmitted && f.emailAddr.errors" class="errorMessage">
+                        <div *ngIf="f.emailAddr.errors.required">
+                            <p>{{registrationValidationConst.errorMessage.email}}</p>
+                        </div>
+                        <div *ngIf="f.emailAddr.errors.email">
+                            <p>{{registrationValidationConst.errorMessage.emailFormat}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <h3 class="crw-sub-title">ACCESS</h3>
+                <div class="row">
+                    <div class="col-md-12" *ngIf="basicAccessList.length >0">
+                        <b>
+                            <label>Basic Access</label>
+                        </b>
+                        <mat-radio-group formArrayName="basicAccess" (change)="updateBasicAccess($event)">
+                            <mat-radio-button *ngFor="let radioBut of basicAccessList; let i = index"
+                                [value]="radioBut.lookupText" [checked]="radioBut.isDefault">
+                                {{radioBut.lookupDisplayText}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 1em;" *ngIf="addnAccessList.length >0">
+                        <b>
+                            <label>Additional Access</label>
+                        </b>
+                        <ng-container *ngFor="let checkboxLbl of addnAccessList; let i = index">
+                            <mat-checkbox id="addnAccid_{{i}}" formControlName="addnAccess{{i}}"
+                                (change)="updateAddnAccess($event)"> {{checkboxLbl.lookupDisplayText}}
+                            </mat-checkbox>
+                        </ng-container>
+                        <div class="col-6" *ngIf="isAdditionalDODAAC">
+                            <input matInput formControlName="addnDODAACExtra" placeholder="Enter details">
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 1em;">
+                        <b>
+                            <label>Special Request</label>
+                        </b>
+                        <textarea matInput formControlName="splRequest"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row crw-button mt-4 justify-content-end">
+            <div class="col-md-3"><button class="crw-button-cancel" (click)="cancel()" mat-button>CANCEL</button></div>
+            <div class="col-md-3"><button class="crw-button-submit" (click)="submit()" mat-button>SUBMIT</button></div>
+        </div>
+    </form>
+</div>

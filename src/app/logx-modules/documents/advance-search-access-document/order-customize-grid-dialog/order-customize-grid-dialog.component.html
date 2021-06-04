@@ -1,0 +1,90 @@
+<div class="orderfilter-main-container">
+  <div class="orderfilter-sub-container">
+    <p>Order Lookup & Reporting Filter</p>
+    <p>Selecting fields will add them to your search. Deselecting fields will remove them from your search.</p>
+    <div class="check-box">
+      <div class="checkbox-section one">
+        <div class="orderInfo">
+          <p>{{identifyingNumbers[0].headingSubCategory}}</p>
+        </div>
+        <section>
+          <mat-checkbox color="primary" *ngFor="let item of identifyingNumbers" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+      </div>
+      <div class="checkbox-section two">
+        <div class="orderInfo">
+          <p>{{originInfo[0].headingSubCategory}}</p>
+        </div>
+        <section>
+          <mat-checkbox color="primary" *ngFor="let item of originInfoOne" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+        <section class="section-two" *ngIf="viewMoreOrigin">
+          <mat-checkbox color="primary" *ngFor="let item of originInfoTwo" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+        <div class="view" (click)="viewOrigin()" *ngIf="viewMoreOrigin">View Less</div>
+        <div class="view" (click)="viewOrigin()" *ngIf="!viewMoreOrigin">View More</div>
+      </div>
+      <div class="checkbox-section two">
+        <div class="orderInfo">
+          <p>{{destinationInfo[0].headingSubCategory}}</p>
+        </div>
+        <section>
+          <mat-checkbox color="primary" *ngFor="let item of destinationInfoOne" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+        <section class="section-two" *ngIf="viewMoreDestination">
+          <mat-checkbox color="primary" *ngFor="let item of destinationInfoTwo" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+        <div class="view" (click)="viewDestination()" *ngIf="viewMoreDestination">View Less</div>
+        <div class="view" (click)="viewDestination()" *ngIf="!viewMoreDestination">View More</div>
+      </div>
+    </div>
+    <div class="check-box">
+      <div class="checkbox-section one">
+        <div class="orderInfo">
+          <p>{{transitInfo[0].headingSubCategory}}</p>
+        </div>
+        <section>
+          <mat-checkbox color="primary" *ngFor="let item of transitInfoOne" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+        <section class="section-two" *ngIf="viewMoreTransit">
+          <mat-checkbox color="primary" *ngFor="let item of transitInfoTwo" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+        <section class="section-two" *ngIf="viewMoreTransit">
+          <mat-checkbox color="primary" *ngFor="let item of transitInfoThree" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+        <div class="sectiontwo-view" (click)="viewTransit()" *ngIf="viewMoreTransit">View Less</div>
+        <div class="sectiontwo-view" (click)="viewTransit()" *ngIf="!viewMoreTransit">View More</div>
+      </div>
+      <div class="checkbox-section two">
+        <div class="orderInfo">
+          <p>{{financialItems[0].headingSubCategory}}</p>
+        </div>
+        <section>
+          <mat-checkbox color="primary" *ngFor="let item of financialItems" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+      </div>
+      <div class="checkbox-section two">
+        <div class="orderInfo">
+          <p>{{otherInfo[0].headingSubCategory}}</p>
+        </div>
+        <section>
+          <mat-checkbox color="primary" *ngFor="let item of otherInfo" [checked]="item.isDefault"
+          (change)="checkedValue(item.headingDBColumn, $event)">{{item.headingDisplayText}}</mat-checkbox>
+        </section>
+      </div>
+    </div>
+  </div>
+    <div class="button">
+      <button mat-button (click)="cancel()">Cancel</button>
+      <button mat-button (click)="apply()">Apply</button>
+    </div>
+  </div>

@@ -1,0 +1,12 @@
+<div mat-dialog-container class="dialog-container">
+    <div mat-dialog-title class="dialog-header">
+        <div class="title">{{notification.notificationname}}</div>
+        <div class="date-time">{{notification.displaydate}}</div>
+    </div>
+    <div mat-dialog-content class="dialog-content">
+        {{notification.notificationdescription}}
+    </div>
+    <div mat-dialog-actions class="dialog-actions">
+        <button mat-flat-button (click)="onClose()" >Close</button>
+    </div>
+</div>

@@ -1,0 +1,358 @@
+@import "./theme.scss";
+@import "src/crowley-themes.scss";
+#okta-signin-container {
+    align-content: center;
+    padding: 20px;
+    background-color: #1b1e22;
+    min-height: 100vh;
+    #okta-sign-in.auth-container .button-primary {
+        background: $primary !important;
+    }
+    #okta-sign-in .registration-container .content-container {
+        padding: 20px 42px;
+        margin-top: 0px;
+    }
+    #okta-sign-in.no-beacon .auth-content {
+        padding-top: 10px;
+    }
+    #okta-sign-in .registration-container {
+        margin-top: 15px;
+    }
+
+    #okta-sign-in .registration .subschema p{
+        padding: 10px 20px;
+    }
+}
+.mat-input-element{
+    caret-color: black !important;
+}
+.errorMessage {
+    font-size: 11px;
+    color: $primary;
+    padding: 5px 0 0px 2px;
+}
+
+// .cdk-overlay-connected-position-bounding-box {
+//     top: 41px !important;
+//     .mat-menu-item .mat-icon {
+//         margin: 4px 16px 0px 0px;
+//         vertical-align: middle;
+//         font-size: 18px;
+//         color: black;
+        
+//     }
+// }
+
+app-securetrackorder {
+    width: 100%;
+}
+ 
+app-vieworderdetail {
+    width: 100%;
+}
+
+app-orderdetails {
+  width: 100%;
+}
+
+p.mat-menu-item {
+  cursor: default;
+}
+
+.mat-option-text {
+  color: $black;
+}
+
+p.mat-menu-item:hover:not([disabled]),
+.mat-menu-item.cdk-program-focused:not([disabled]),
+.mat-menu-item.cdk-keyboard-focused:not([disabled]),
+.mat-menu-item-highlighted:not([disabled]),
+.mat-menu-item:active {
+  background-color: transparent !important;
+}
+
+p.mat-menu-item {
+  height: 35px;
+}
+
+app-dashboard {
+    width: 100%;
+}
+app-approve-accessorials{
+    width: 100%;
+}
+app-attachments-detail{
+    width: 100%;
+}
+.mat-menu-content {
+    outline: none;
+    border: transparent;
+}
+ 
+button {
+    outline: none !important;
+    border: transparent !important;
+    box-shadow: none !important;
+}
+
+app-accessdocuments {
+    width: 100%;
+}
+ 
+app-searchreport {
+    width: 100%;
+    // white-space: nowrap;
+    // overflow-x: hidden;
+}
+
+app-advance-search-access-document {
+    width: 100%;
+}
+
+app-reportincident {
+    width: 100%;
+}
+
+app-report-incident-advance-search {
+    width: 100%;
+}
+
+app-report-incident-display-record {
+    width: 100%;
+}
+
+app-approve-accessorials-details {
+    width: 100%;
+}
+
+app-track-criteria-bulk-search {
+    width: 100%;
+}
+
+app-origindestinationlocation{
+    width: 100%;
+}
+app-submit-order-grid{
+    width: 100%;
+}
+app-report-incident-grid{
+    width: 100%;
+}
+app-submitorderdetails{
+    width: 100%;
+}
+app-orderlineitems{
+    width: 100%;
+}
+app-additionalinformation{
+    width: 100%;
+}
+
+app-submitordermaincomponent {
+    width: 100%;
+}
+
+app-user-preference {
+    width: 100%;
+}
+
+
+// // Custom Theming for Angular Material
+// // For more information: https://material.angular.io/guide/theming
+// @import '~@angular/material/theming';
+// // Plus imports for other components in your app.
+
+// // Include the common styles for Angular Material. We include this here so that you only
+// // have to load a single css file for Angular Material in your app.
+// // Be sure that you only ever include this mixin once!
+// @include mat-core();
+
+// // Define the palettes for your theme using the Material Design palettes available in palette.scss
+// // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// // hue. Available color palettes: https://material.io/design/color/
+// $logx-customer-ui-primary: mat-palette($mat-indigo);
+// $logx-customer-ui-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// // The warn palette is optional (defaults to red).
+// $logx-customer-ui-warn: mat-palette($mat-red);
+
+// // Create the theme object (a Sass map containing all of the palettes).
+// $logx-customer-ui-theme: mat-light-theme($logx-customer-ui-primary, $logx-customer-ui-accent, $logx-customer-ui-warn);
+
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// @include angular-material-theme($logx-customer-ui-theme);
+
+
+// // Custom Theming for Angular Material
+// // For more information: https://material.angular.io/guide/theming
+// @import '~@angular/material/theming';
+// // Plus imports for other components in your app.
+
+// // Include the common styles for Angular Material. We include this here so that you only
+// // have to load a single css file for Angular Material in your app.
+// // Be sure that you only ever include this mixin once!
+// @include mat-core();
+
+// // Define the palettes for your theme using the Material Design palettes available in palette.scss
+// // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// // hue. Available color palettes: https://material.io/design/color/
+// $logx-customer-ui-primary: mat-palette($mat-indigo);
+// $logx-customer-ui-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// // The warn palette is optional (defaults to red).
+// $logx-customer-ui-warn: mat-palette($mat-red);
+
+// // Create the theme object (a Sass map containing all of the palettes).
+// $logx-customer-ui-theme: mat-light-theme($logx-customer-ui-primary, $logx-customer-ui-accent, $logx-customer-ui-warn);
+
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// @include angular-material-theme($logx-customer-ui-theme);
+
+// /* You can add global styles to this file, and also import other style files */
+
+// /* Define standard variables and values for website */
+// $bgcolor: #01202B;
+// $textcolor: #FFFFFF;
+// $secondary-color: #B90E22;
+// $fontsize: 18px;
+// $h2size: 100px;
+
+
+// @import url('https://fonts.googleapis.com/css?family=Montserrat|Open+Sans: 300,400,600,700,800&display=swap');
+// $montserrat: 'Montserrat', sans-serif;
+// $open-sans: 'Open Sans', sans-serif;
+
+// *
+// {
+// 	margin: 0;
+// 	padding: 0;
+// 	box-sizing: border-box;
+// 	font-family: 'Open Sans', sans-serif;
+// }
+
+// section {
+// 	position: absolute;
+// 	top: 25%;
+//   	left: 25%;
+//   	transform: translate(-25%, -25%);
+// }
+// body {
+//   background-color: $bgcolor;
+//   color: $textcolor;
+//   font-size: 12pt;
+// }
+
+// h2 {
+// 	font-family: 'Open Sans', sans-serif;
+// 	font-size: $h2size;
+
+// }
+
+// .light-text {
+// 	opacity: 0.5;
+// 	font-family: $montserrat;
+// 	font-weight: 300;
+// }
+// .primary {
+// 	background-color: $bgcolor;
+// 	color: $textcolor;
+// }
+// .dot {
+//   height: 10px;
+//   width: 10px;
+//   background-color: $textcolor;
+//   border-radius: 50%;
+//   flex-grow:0;
+// }
+
+//  .upper-container {
+//     margin-bottom: 10px;
+//  }
+
+// .flex-box {
+//     display:flex;
+//   	flex-direction:row;
+//     align-items: center;
+// }
+
+// hr {
+//     border: none;
+//     border-top: 2px dotted white;
+//     flex-grow:1;
+
+// }
+// .toolbar-spacer {
+//   flex: 1 1 auto;
+// }
+
+// .rectangle{
+//     width:30px;
+//     height:30px;
+//     top:10;
+//     left: 0;
+//     background: $secondary-color;
+//     position: fixed;
+// }
+
+// .text-left {
+// 	left: 40px;
+// 	position: absolute;
+// }
+
+
+// .footer {
+//    position: fixed;
+//    left: 0;
+//    bottom: 0;
+//    width: 100%;
+//    height: 5%;
+//    background-color: $secondary-color;
+//    text-align: center;
+// }
+
+// .footer-text {
+// 	font-color: #FFFFFF;
+// 	font-size: 12px;
+// }
+
+// a {
+//   color: #FFFFFF;
+//   text-decoration: none;
+//   font-size: 14px;
+// }
+
+// .icon {
+// 	position: relative;
+//   right: 5px;
+// 	top: 7px;
+// }
+
+// .example-card {
+//   max-width: 400px;
+// }
+// .example-header-image {
+//   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+//   background-size: cover;
+// }
+
+
+
+// .basic-container {
+//   padding: 30px;
+// }
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: $black !important;
+}
+
+.mat-focused .mat-form-field-underline .mat-form-field-ripple {
+    background-color: $black !important;
+}
+

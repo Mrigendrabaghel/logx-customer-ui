@@ -1,0 +1,280 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../Styles/mixins.scss";
+
+.main-container {
+  padding: 0% 30px 0px 0px;
+  display: flex;
+  .right-section {
+    width: 100%;
+    margin: 0 0 0 20px;
+
+    form {
+      width: 100%;
+      .details-table {
+        margin: 16px 0px;
+        box-shadow: none;
+        width: 100%;
+          th {
+            color: $accent;
+            padding: 10px 3px 10px 16px;
+            min-width: 120px;
+            // width: 17%;
+          }
+          tr:hover {
+            cursor: pointer;
+            background-color: $crowley_gray;
+          }
+          td {
+            padding: 10px 6px 10px 16px;
+            word-break: break-all;
+          }
+      }
+    }
+  }
+
+  mat-card {
+    background: $white;
+    border-radius: initial;
+    box-shadow: 0px 0 10px 1px rgba(0.24, 0.24, 0.24, 0.24);
+    padding: 30px 16px;
+
+    p:nth-child(1) {
+      font-size: 46px;
+      color: $crowley_font;
+      margin: 0px 0px 14px 0px;
+    }
+
+    p:nth-child(2) {
+      color: $font_gray;
+      font-size: 12px;
+    }
+
+    .input-section {
+      height: 100%;
+      display: flex;
+
+      div {
+        width: 100%;
+        padding-right: 20px;
+
+        fieldset {
+          border: solid 2px $crowley_border_gray;
+          border-radius: 6px;
+
+          legend {
+            background-color: transparent;
+            color: $crowley_font;
+            padding: 0px 10px;
+            margin: 10px;
+            width: fit-content;
+            font-size: 13px;
+          }
+ 
+          input {
+            padding: 6px;
+            background-color: $white;
+            width: 98%;
+            height: 20px;
+            outline: none;
+            border: none;
+            margin: 0px 10px 10px;
+          }
+        }
+      }
+
+      button,
+      button:focus {
+        width: 35%;
+        height: 52px;
+        border-radius: 6px;
+        outline: none;
+        margin: 9px 0 0 0;
+        @include filled-buttons;
+        font-size: 14px !important;
+      }
+    }
+    .mobile_view{
+      display: none;
+    }
+    .bulk_Search {
+      text-align: end;
+      padding: 2px;
+      margin-top: 10px;
+
+      a {
+        color: $accent;
+        text-decoration: underline;
+        cursor: pointer;
+        padding-right: 8%;
+      }
+    }
+    .multiRecord-container{
+      display: none;
+    }
+  }
+}
+
+
+.multiRecord-container {
+  display: none;
+}
+
+@media only screen and (max-width:812px) {
+  .paginatorhidemb{
+    display: none;
+  }
+.main-container{
+  padding: 0 15px;
+  margin-top: 75px;
+  margin-bottom: 90px;
+  display: block;
+  .right-section{
+    margin: 0px 0px 0px 0px;
+    form{      
+      mat-card{
+        margin: 0px;
+        padding: 20px 16px;
+
+        p:nth-child(1){
+          font-size: 30px;
+        }
+        
+    .input-section {
+
+      display: block;
+
+      div {
+        padding-right: 0px;
+
+        fieldset { 
+          input {
+            width: 93%;
+            font-size: 11px;
+            padding:0 !important;
+            height: auto;
+
+          }
+        }
+      }  
+      
+    }
+    
+    .bulk_Search{
+      display: none;
+    }
+    .trackShipment{
+      display: none;
+    }
+    .mobile_view{
+      display: flex;
+      justify-content: space-between;
+
+      .bulkSearch{       
+        margin-top: 23px;        
+
+      a {
+        color: $accent;
+        text-decoration: underline;
+        cursor: pointer;
+        padding-right: 0 !important;
+        font-size: 14px !important;
+      }
+    }
+          button{
+            float: right;
+  
+    height: 45px;
+    padding: 5px 15px;
+    margin: 21px 0 0 0;
+    font-size: 11px !important;
+    background-color: #0957a3;
+    color: #ffffff;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 14px !important;
+      
+          }
+        }
+    
+       
+  
+      }
+      .details-table{
+        display: none;
+      }
+    }
+    .bulkSearch {
+      text-align: end;
+      padding: 2px;
+      margin-top: 10px;
+
+      a {
+        color: $accent;
+        text-decoration: underline;
+        cursor: pointer;
+        padding-right: 8%;
+      }
+    }
+  }
+}
+.multiRecord-container {
+  display: block;
+  padding: 14px 22px 1px 22px;
+  margin: 30px 0px;
+  background: #ffffff;
+  border-radius: initial;
+  box-shadow: 0px 0 10px 1px rgba(0, 0, 0, 0.24); 
+  
+    .mat-list-base{
+      padding-top: 0px;
+      .mat-list-item, .mat-list-option{
+        border-bottom: 1px solid $crowley_warmGrey;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        height: auto !important;
+        position: relative;			
+        &:last-child{ border-bottom: none;}
+        .two-col-item{
+          display: flex;
+          justify-content: space-between;
+          .item{
+            width: 55%;
+            &:last-child{
+              width: 40%;
+            }
+          }
+        }
+        .item{
+          label{
+            color: $crowley_background;
+            font-size: 16px;
+            font-weight: 500;
+            margin-right: 10px;
+          }
+          p{
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 16px;  
+            margin-bottom: 0;        
+          }					
+        }
+        .icon{
+          mat-icon {
+            position: absolute;
+            right: -22px;
+            top: 15px;
+          }
+          }
+      }
+    }
+    ::ng-deep .mat-list-base .mat-list-item ::ng-deep .mat-list-item-content, ::ng-deep .mat-list-base .mat-list-option ::ng-deep .mat-list-item-content{
+      display: block !important;
+      padding: 0 !important;
+      width: 95%;
+    }			
+  }
+  ::ng-deep .mat-paginator-container{
+    margin-bottom: 40px;
+  }
+
+ 
+}

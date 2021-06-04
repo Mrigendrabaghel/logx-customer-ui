@@ -1,0 +1,122 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../Styles/mixins.scss";
+
+.header {
+  padding: 20px 0px;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  border-bottom: 1px solid #d8d8d8;
+  .logo {
+    max-width: 100%;
+  }
+}
+.crw-title {
+  font-size: 40px;
+  color: $crowley_red;
+  margin: 25px 0 30px 0;
+}
+.crw-sub-title {
+  border-bottom: solid 0.5px $crowley_border_red;
+  color: $crowley_red;
+  font-weight: 500;
+}
+.crw-button {
+  margin-bottom: 30px;
+  &-cancel {
+    color: $crowley_red;
+    background-color: #ffffff;
+  }
+  &-submit {
+    color: $white;
+    background-color: $crowley_red;
+  }
+
+  button {
+    border: solid 1px $crowley_border_red !important;
+    letter-spacing: 1px;
+    font-size: 12px;
+    margin-bottom: 15px;
+    width: 100%;
+    font-size: 11px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+
+  // button:first-of-type {
+  //   @include buttons;
+  // }
+
+  // button {
+  //   @include filled-buttons;
+  //   width: 100%;
+  // }
+}
+.radio-button {
+  .mat-radio-button {
+    margin: 0px 20px 10px 0px;
+    ::ng-deep .mat-radio-label {
+      white-space: normal !important;
+    }
+    ::ng-deep .mat-primary.mat-radio-checked .mat-radio-outer-circle {
+      border-color: $crowley_border_red !important;
+    }
+
+    ::ng-deep .mat-radio-button.mat-primary .mat-radio-inner-circle {
+      color: $crowley_red !important;
+      background-color: $crowley_red !important;
+    }
+
+    ::ng-deep .mat-primary .mat-radio-ripple .mat-ripple-element {
+      background-color: $crowley_red !important;
+    }
+  }
+}
+.crw-registration {
+  .mat-select {
+    width: 100%;
+    padding: 0px 0px 5px 0px;
+    border-bottom: solid 0.5px $crowley_border_gray;
+    .mat-select-trigger {
+      .mat-select-value {
+        padding-left: 5px !important;
+      }
+    }
+  }
+  mat-form-field {
+    input {
+      outline: none;
+      border: transparent;
+    }
+  }
+  input {
+    //m
+    width: 100%;
+    padding: 0px 20px 5px 0px;
+    outline: none;
+    border: transparent;
+    border-bottom: solid 0.5px $crowley_border_gray;
+  }
+}
+.main-userdtls {
+  padding-bottom: 2em;
+}
+.req-asterisk {
+  color: $crowley_red;
+}
+
+::ng-deep .mat-radio-label {
+  white-space: normal !important;
+}
+
+.mat-input-element {
+  width: 100% !important;
+}
+
+/* checkbox */
+::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+  white-space: normal !important;
+}
+::ng-deep .mat-checkbox-layout .mat-checkbox-inner-container {
+  margin-top: 5px !important;
+}

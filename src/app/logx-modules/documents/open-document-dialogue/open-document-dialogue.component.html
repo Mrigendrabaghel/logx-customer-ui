@@ -1,0 +1,69 @@
+<div class="main">
+  <div class="first-section">
+    <title mat-dialog-title> {{documentName}} </title>
+
+    <ng-container
+      *ngIf="(documentType !=DocumentsConst.AccessDocuments.docx && documentType != DocumentsConst.AccessDocuments.doc && documentType !=DocumentsConst.AccessDocuments.xlsx && documentType !=DocumentsConst.AccessDocuments.xls && documentType !=DocumentsConst.AccessDocuments.msg); then defaultFullScreenBtn ; else downloadPreviewScreenBtn">
+    </ng-container>
+
+    <ng-template #defaultFullScreenBtn>
+      <div>
+        <mat-icon class="fullscreen" title="{{DocumentsConst.AccessDocuments.fullScreenTitle}}" (click)="openFullscreen()">{{CommonConst.MatIcons.fullscreen}}</mat-icon>
+      </div>
+    </ng-template>
+
+    <ng-template #downloadPreviewScreenBtn>
+      <div *ngIf="(documentType ===DocumentsConst.AccessDocuments.docx)">
+        <mat-icon style="cursor: pointer;" title="{{CommonConst.download}}" (click)="openFullscreen()">{{CommonConst.MatIcons.arrow_circle_down}}</mat-icon>
+      </div>
+    </ng-template>
+    <mat-icon class="clear" (click)="closePopup()" title="{{CommonConst.close}}">{{CommonConst.MatIcons.clear}}</mat-icon>
+
+  </div>
+  <div class="second-section" mat-dialog-content>
+
+
+    <ng-container
+      *ngIf="(documentType !=DocumentsConst.AccessDocuments.xls && documentType !=DocumentsConst.AccessDocuments.doc && documentType !=DocumentsConst.AccessDocuments.xlsx && documentType !=DocumentsConst.AccessDocuments.msg); then defaultFullScreen ; else downloadPreviewScreen">
+    </ng-container>
+
+    <ng-template #defaultFullScreen>
+      <ng-container *ngIf="(documentType !=DocumentsConst.AccessDocuments.docx);else previewDocViewer">
+        <div>
+          <ng-container *ngIf="(documentType ==DocumentsConst.AccessDocuments.pdf);else otherFileViwer">
+          <ngx-extended-pdf-viewer 
+          [src]="PreviewData"
+          [zoom]="'auto'"
+          [showDownloadButton]="true"
+          [useBrowserLocale]="true"
+  
+        >
+      </ngx-extended-pdf-viewer>
+      </ng-container>
+      <ng-template #otherFileViwer>
+
+        <div>
+          <iframe width="560" height="325" [src]="PreviewData | safe"></iframe>
+        </div>
+      </ng-template>
+      
+        </div>
+      </ng-container>
+      <ng-template #previewDocViewer>
+        <div>
+          <ngx-doc-viewer [url]="PreviewData" viewer="mammoth"> </ngx-doc-viewer>
+        </div>
+      </ng-template>
+    </ng-template>
+
+    <ng-template #downloadPreviewScreen>
+      <div>
+        <mat-card class="download">{{DocumentsConst.AccessDocuments.previewNote}} <mat-icon title="{{CommonConst.download}}"
+            (click)="openFullscreen()">{{CommonConst.MatIcons.arrow_circle_down}}</mat-icon>
+        </mat-card>
+
+      </div>
+    </ng-template>
+
+  </div>
+</div>

@@ -1,0 +1,67 @@
+image: gitlab.logxplus.com:5050/crowley-solutions/devops-team/angularsdk
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
+
+build:
+  stage: build
+  script: ng build
+
+unit_tests:
+  stage: test
+  script:
+    - ls 
+    - pwd
+    - ng test --code-coverage
+  artifacts:
+    when: always
+    paths:
+      - ./**/TEST*.xml
+      - ./**/coverage.cobertura.xml
+    reports:
+      junit:
+        - ./**/TEST*.xml
+        - ./**/coverage.cobertura.xml
+
+package_dist:
+  stage: package
+  script: ng build --configuration=$CI_COMMIT_BRANCH
+  environment:
+    name: dev
+  artifacts:
+    name: "project-$CI_COMMIT_REF_NAME"
+    paths:
+      - dist/
+  only:
+    - stage
+    - dev
+    - prod
+
+deploy_dist_s3:
+  image: python:latest
+  stage: deploy
+  dependencies:
+    - package_dist
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 sync dist/${CI_PROJECT_NAME}/ s3://${S3_BUCKET}/ --delete
+    - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DIST} --paths "/*"
+  environment:
+    name: $CI_COMMIT_BRANCH
+    url: $URL
+  only:
+    - dev
+    - stage
+    - prod

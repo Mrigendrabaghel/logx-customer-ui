@@ -1,0 +1,706 @@
+<div class="mainContainer" *ngIf="!isShowOrderAdvanceSearch"  [hidden]="isShowDocumentAdvanceSearch">
+    <mat-card>
+        <p class="headerText">{{formName}}</p>
+        <div class="main-section">
+            <form #addClientForm="ngForm" (ngSubmit)="getSearchOrderDetails(AdvanceSearchAccessDoc.search)" novalidate>
+                <div class="left">
+
+                    <p *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName" class="section-header">
+                        {{AdvanceSearchAccessDoc.inputLabels.deliveryDate}}</p>
+                    <p *ngIf="formName==AdvanceSearchAccessDoc.accessDocText.formName" class="section-header">
+                        {{AdvanceSearchAccessDoc.inputLabels.docCreatedDate}}</p>
+                    <div class="section-one" [ngClass]="{ 'section-oneChange' : (selectedOption == 'relative')}">
+                        <div class="fixedSection">
+                            <div>
+                                <mat-select [(ngModel)]="deliveryDateField.DateQualifier" name="DateQualifier"
+                                    (selectionChange)="onDateQuiliferSelect(deliveryDateField.DateQualifier)"
+                                    class="chooseType">
+                                    <mat-option *ngFor="let option of dateQuilifer" [value]="option.lookupText">
+                                        {{option.lookupText}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <div *ngIf="isShowDateQuilifer">
+                                <mat-select class="chooseValue" [(ngModel)]="deliveryDateField.SearchConditionValue"
+                                    name="SearchCondtion">
+                                    <mat-option *ngFor="let da of dateQuilifierValue" [value]="da.lookupText">
+                                        {{da.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div *ngIf="this.deliveryDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.relative && deliveryDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.blank"
+                                class="enterDate">
+                                <div>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" (keypress)="keyPressNumbers($event)"
+                                            maxlength="10" [(ngModel)]="deliveryDateField.FromDateValue"
+                                            name="FromDateValue" [max]="deliveryDateField.ToDateValue"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="!isShowDateQuilifer">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" [min]="deliveryDateField.FromDateValue"
+                                            [(ngModel)]="deliveryDateField.ToDateValue" name="ToDateValue"
+                                            (keypress)="keyPressNumbers($event)" maxlength="10"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div *ngIf="this.deliveryDateField.DateQualifier ==AdvanceSearchAccessDoc.dateQualifier.blank"
+                                class="enterDate">
+                                <div>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" name="FromDateValue"
+                                            (keypress)="keyPressNumbers($event)" maxlength="10"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}
+                                            disabled="true">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="!isShowDateQuilifer">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" name="ToDateValue"
+                                            (keypress)="keyPressNumbers($event)" maxlength="10"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}
+                                            disabled="true">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="this.deliveryDateField.DateQualifier==AdvanceSearchAccessDoc.dateQualifier.relative"
+                            class="relativeSection">
+
+                            <mat-form-field *ngIf="daysOrHours == AdvanceSearchAccessDoc.daysFromToday">
+                                <input matInput [(ngModel)]="deliveryDateField.TotalDays" (change)="onChangeDisable()"
+                                    [disabled]="currentlyDisabledDel === AdvanceSearchAccessDoc.accessDocText.todalDays"
+                                    name="TotalDays" placeholder="">
+
+                            </mat-form-field>
+                            <mat-form-field *ngIf="daysOrHours == AdvanceSearchAccessDoc.hoursFromToday">
+                                <input matInput [(ngModel)]="deliveryDateField.TotalHours" (change)="onChangeDisable()"
+                                    [disabled]="currentlyDisabledDel === AdvanceSearchAccessDoc.accessDocText.totalHours"
+                                    name="TotalHours" placeholder="">
+
+                            </mat-form-field>
+                            <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                [(ngModel)]="dayOrHourValueDelivery" name="daysHoursVal"
+                                (selectionChange)="onChangeValue(dayOrHourValueDelivery)">
+                                <mat-option *ngFor="let val of daysHours" [value]="val.lookupDisplayText">
+                                    {{val.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div *ngIf="formName==AdvanceSearchAccessDoc.accessDocText.formName">
+                        <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.docType}}</p>
+                        <div class="section-three">
+                            <div>
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.selectDocType}}
+                                    [(ngModel)]="docTypeValue" name="docTypeValue">
+                                    <mat-option *ngFor="let option of docQuilifer" [value]="option.lookupText">
+                                        {{option.lookupText}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-checkbox *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName" class="example-margin"
+                        [(ngModel)]="Priority" name="Priority">Priority</mat-checkbox>
+                    <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderCreatedDate}}</p>
+                    <div class="section-two section-one"
+                        [ngClass]="{ 'section-oneChange' : (selectedOptionCreatedDate == AdvanceSearchAccessDoc.dateQualifier.relative)}">
+                        <div class="fixedSection">
+                            <div>
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                    [(ngModel)]="orderDateField.DateQualifier" name="DateQualifier"
+                                    (selectionChange)="onOrderCreatedQuiliferSelect(orderDateField.DateQualifier)"
+                                    class="chooseType">
+                                    <mat-option *ngFor="let option of dateQuilifer" [value]="option.lookupText">
+                                        {{option.lookupText}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div *ngIf="isShowOrderDateQuilifer">
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                    [(ngModel)]="orderDateField.SearchConditionValue" name="SearchCondtion"
+                                    class="chooseValue">
+                                    <mat-option *ngFor="let da of dateQuilifierValue" [value]="da.lookupText">
+                                        {{da.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div *ngIf="this.orderDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.relative && orderDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.blank"
+                                class="enterDate">
+                                <div>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker2"
+                                            [(ngModel)]="orderDateField.FromDateValue"
+                                            [max]="orderDateField.ToDateValue" name="FromODateValue"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}
+                                            (keypress)="keyPressNumbers($event)" maxlength="10">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2 color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="!isShowOrderDateQuilifer">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker"
+                                            [(ngModel)]="orderDateField.ToDateValue"
+                                            [min]="orderDateField.FromDateValue" name="ToODateValue"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}
+                                            (keypress)="keyPressNumbers($event)" maxlength="10">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div *ngIf="orderDateField.DateQualifier == AdvanceSearchAccessDoc.dateQualifier.blank"
+                                class="enterDate">
+                                <div>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker2" (keypress)="keyPressNumbers($event)"
+                                            maxlength="10" name="FromODateValue"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}
+                                            disabled="true">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2 color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="!isShowOrderDateQuilifer">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" (keypress)="keyPressNumbers($event)"
+                                            maxlength="10" name="ToODateValue"
+                                            placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}
+                                            disabled="true">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker color="accent"></mat-datepicker>
+                                        <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="this.orderDateField.DateQualifier==AdvanceSearchAccessDoc.dateQualifier.relative"
+                            class="relativeSection">
+                            <mat-form-field *ngIf="daysHoursCreatedDate == AdvanceSearchAccessDoc.daysFromToday">
+                                <input matInput [(ngModel)]="orderDateField.TotalDays" (change)="onOChangeDisable()"
+                                    [disabled]="currentlyDisabledOrd === AdvanceSearchAccessDoc.orderText.totalOrderDays"
+                                    name="TotalODays">
+
+                            </mat-form-field>
+                            <mat-form-field *ngIf="daysHoursCreatedDate == AdvanceSearchAccessDoc.hoursFromToday">
+                                <input matInput [(ngModel)]="orderDateField.TotalHours" (change)="onOChangeDisable()"
+                                    [disabled]="currentlyDisabledOrd === AdvanceSearchAccessDoc.orderText.totalOrderHours"
+                                    name="TotalOHours">
+
+                            </mat-form-field>
+                            <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                class="chooseValue" [(ngModel)]="dayOrHourValue" name="daysHoursValCreatedDate"
+                                (selectionChange)="onChangeValueCreatedDate(dayOrHourValue)">
+                                <mat-option *ngFor="let val of daysHours" [value]="val.lookupDisplayText">
+                                    {{val.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                    <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderStatus}}</p>
+                    <div class="section-three">
+                        <div>
+                            <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOrderStatus}}
+                                [(ngModel)]="orderStatusValue" name="orderStatusValue">
+                                <mat-option *ngFor="let option of orderStatus" [value]="option.lookupText">
+                                    {{option.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                    <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderNumber}}</p>
+                    <div class="section-four" *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName">
+                        <div>
+                            <mat-select placeholder="{{orderNumberField.SearchConditionValue}}"
+                                [(ngModel)]="orderNumField" name="orderNumber">
+                                <mat-option *ngFor="let option of textQuilifer"
+                                    [value]="[option.lookupDataId, option.lookupText]">
+                                    {{option.lookupDisplayText}}</mat-option>
+                            </mat-select>
+
+                        </div>
+                        <div>
+                            <mat-form-field appearance="standard">
+                                <input matInput [(ngModel)]="orderNumberField.Value" name="orderNumberInput"
+                                    placeholder={{AdvanceSearchAccessDoc.placeHolder.enterOrderNumber}}>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="section-four five" *ngIf="formName==AdvanceSearchAccessDoc.accessDocText.formName">
+                        <div>
+                            <mat-form-field appearance="standard" class="orderInput">
+                                <input matInput [(ngModel)]="orderNumberField.Value" name="orderNumberInput"
+                                    placeholder={{AdvanceSearchAccessDoc.placeHolder.enterOrderNumber}}>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+
+
+                    <p class="section-header-right">{{AdvanceSearchAccessDoc.inputLabels.GBOL}}</p>
+                    <div class="section-five">
+                        <div>
+                            <mat-select placeholder="{{gbolNumberField.SearchConditionValue}}"
+                                [(ngModel)]="gbolNumField" name="gbol">
+                                <mat-option *ngFor="let option of textQuilifer"
+                                    [value]="[option.lookupDataId, option.lookupText]">
+                                    {{option.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+
+                        <div>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="gbolNumberField.Value" name="gbolInput">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <p class="section-header-right">{{AdvanceSearchAccessDoc.inputLabels.TCN}}</p>
+                    <div class="section-five">
+                        <div>
+                            <mat-select placeholder="{{tcnNumberField.SearchConditionValue}}" [(ngModel)]="tcnNumField"
+                                name="tcn">
+                                <mat-option *ngFor="let option of textQuilifer"
+                                    [value]="[option.lookupDataId, option.lookupText]">
+                                    {{option.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="tcnNumberField.Value" name="tcnInput">
+
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <p *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName" class="section-header-right">
+                        {{AdvanceSearchAccessDoc.inputLabels.PONumber}}</p>
+                    <div *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName" class="section-five">
+                        <div>
+                            <mat-select placeholder="{{orderNumberField.SearchConditionValue}}" [(ngModel)]="poNumField"
+                                name="poNumber">
+                                <mat-option *ngFor="let option of textQuilifer"
+                                    [value]="[option.lookupDataId, option.lookupText]">
+                                    {{option.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="poNumberField.Value" name="poNumberInput">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <p class="section-header-right">{{AdvanceSearchAccessDoc.inputLabels.orderOriginNumber}}</p>
+                    <div class="section-five">
+                        <div>
+                            <mat-select placeholder="{{originNumberField.SearchConditionValue}}"
+                                [(ngModel)]="originNumField" name="origin">
+                                <mat-option *ngFor="let option of textQuilifer"
+                                    [value]="[option.lookupDataId, option.lookupText]">
+                                    {{option.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="originNumberField.Value" name="originNumber">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <p class="section-header-right">{{AdvanceSearchAccessDoc.inputLabels.orderDestinationNumber}}</p>
+                    <div class="section-five">
+                        <div>
+                            <mat-select placeholder="{{destinationNumberField.SearchConditionValue}}"
+                                [(ngModel)]="destinationNumField" name="Destination">
+                                <mat-option *ngFor="let option of textQuilifer"
+                                    [value]="[option.lookupDataId, option.lookupText]">
+                                    {{option.lookupDisplayText}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="destinationNumberField.Value" name="DestinationNumber">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="buttons">
+            <button mat-button class="save cancel"
+                (click)="getSearchOrderDetails(AdvanceSearchAccessDoc.cancel)">{{AdvanceSearchAccessDoc.buttons.cancel}}</button>
+            <!-- <button mat-button class="add" *ngIf="formName=='Order Lookup & Reporting'">ADD / REMOVE FIELDS</button>
+            <button mat-button class="save">SAVE SEARCH</button> -->
+            <button mat-button (click)="getSearchOrderDetails(AdvanceSearchAccessDoc.search)"
+                class="search">{{AdvanceSearchAccessDoc.buttons.search}}</button>
+        </div>
+    </mat-card>
+</div>
+<div class="section-container"  [hidden]="!isShowDocumentAdvanceSearch">
+    <app-accessdocuments [clickSubjectDoc]='clickSubjectDoc' (isShowDocumentSearch)="isShowDocumentAdvSearch($event)"></app-accessdocuments >
+</div> 
+<div class="section-container" [hidden]="!isShowOrderAdvanceSearch">
+    <app-searchreport [clickSubjectOrder]='clickSubjectOrder' (isShowOrderSearch)="isShowOrderAdvSearch($event)"
+    [model]="model"></app-searchreport>
+</div> 
+<div class="mainContainer1">
+    <mat-card>
+        <p class="headerText">{{formName}}</p>
+        <div class="main-section">
+            <form #addClientForm="ngForm" (ngSubmit)="getSearchOrderDetails(AdvanceSearchAccessDoc.search)" novalidate>
+                <div class="advance-search-access-mobile">
+                    <div class="advance-search-access-mobile__type1">
+                        <div class="w-75">
+                            <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderStatus}}</p>
+                            <div class="section-three">
+                                <div>
+                                    <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOrderStatus}}
+                                        [(ngModel)]="orderStatusValue" name="orderStatusValue">
+                                        <mat-option *ngFor="let option of orderStatus" [value]="option.lookupText">
+                                            {{option.lookupDisplayText}}</mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-checkbox *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName"
+                            class="example-margin w-25" [(ngModel)]="Priority" name="Priority">Priority</mat-checkbox>
+                    </div>
+                    <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderCreatedDate}}</p>
+                    <!-- <div class="section-two section-one" [ngClass]="{ 'section-oneChange' : (selectedOptionCreatedDate == AdvanceSearchAccessDoc.dateQualifier.relative)}"> -->
+                    <div class="access-search">
+                        <div class="access-search__type1">
+                            <div class="access-search__type1--item1">
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                    [(ngModel)]="orderDateField.DateQualifier" name="DateQualifier"
+                                    (selectionChange)="onOrderCreatedQuiliferSelect(orderDateField.DateQualifier)"
+                                    class="chooseType">
+                                    <mat-option *ngFor="let option of dateQuilifer" [value]="option.lookupText">
+                                        {{option.lookupText}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="access-search__type1--item2" *ngIf="isShowOrderDateQuilifer">
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                    [(ngModel)]="orderDateField.SearchConditionValue" name="SearchCondtion"
+                                    class="chooseValue">
+                                    <mat-option *ngFor="let da of dateQuilifierValue" [value]="da.lookupText">
+                                        {{da.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div *ngIf="this.orderDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.relative && orderDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.blank"
+                            class="access-search__type2">
+                            <div class="access-search__type2--item1"
+                                [ngClass]="{ 'single-row' : (this.orderDateField.DateQualifier==AdvanceSearchAccessDoc.dateQualifier.fixed)}">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker2" [(ngModel)]="orderDateField.FromDateValue"
+                                        [max]="orderDateField.ToDateValue" name="FromODateValue"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}
+                                        (keypress)="keyPressNumbers($event)" maxlength="10">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2 color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="access-search__type2--item2" *ngIf="!isShowOrderDateQuilifer">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" [(ngModel)]="orderDateField.ToDateValue"
+                                        [min]="orderDateField.FromDateValue" name="ToODateValue"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}
+                                        (keypress)="keyPressNumbers($event)" maxlength="10">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="orderDateField.DateQualifier == AdvanceSearchAccessDoc.dateQualifier.blank"
+                            class="access-search__type2">
+                            <div class="access-search__type2--item1">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker2" (keypress)="keyPressNumbers($event)"
+                                        maxlength="10" name="FromODateValue"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}
+                                        disabled="true">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2 color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="access-search__type2--item2" *ngIf="!isShowOrderDateQuilifer">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" (keypress)="keyPressNumbers($event)"
+                                        maxlength="10" name="ToODateValue"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}
+                                        disabled="true">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div *ngIf="this.orderDateField.DateQualifier==AdvanceSearchAccessDoc.dateQualifier.relative"
+                            class="access-search__type1">
+                            <div class="access-search__type1--item1">
+                                <mat-form-field *ngIf="daysHoursCreatedDate == AdvanceSearchAccessDoc.daysFromToday">
+                                    <input matInput [(ngModel)]="orderDateField.TotalDays" (change)="onOChangeDisable()"
+                                        [disabled]="currentlyDisabledOrd === AdvanceSearchAccessDoc.orderText.totalOrderDays"
+                                        name="TotalODays">
+
+                                </mat-form-field>
+                                <mat-form-field *ngIf="daysHoursCreatedDate == AdvanceSearchAccessDoc.hoursFromToday">
+                                    <input matInput [(ngModel)]="orderDateField.TotalHours"
+                                        (change)="onOChangeDisable()"
+                                        [disabled]="currentlyDisabledOrd === AdvanceSearchAccessDoc.orderText.totalOrderHours"
+                                        name="TotalOHours">
+
+                                </mat-form-field>
+                            </div>
+                            <div class="access-search__type1--item2">
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                    [(ngModel)]="dayOrHourValue" name="daysHoursValCreatedDate"
+                                    (selectionChange)="onChangeValueCreatedDate(dayOrHourValue)" class="chooseValue">
+                                    <mat-option *ngFor="let val of daysHours" [value]="val.lookupDisplayText">
+                                        {{val.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                    <p *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName" class="section-header">
+                        {{AdvanceSearchAccessDoc.inputLabels.deliveryDate}}</p>
+                    <p *ngIf="formName==AdvanceSearchAccessDoc.accessDocText.formName" class="section-header">
+                        {{AdvanceSearchAccessDoc.inputLabels.docCreatedDate}}</p>
+                    <!-- <div class="section-one" [ngClass]="{ 'section-oneChange' : (selectedOption == 'relative')}"> -->
+                    <div class="access-search">
+                        <div class="access-search__type1">
+                            <div class="access-search__type1--item1">
+                                <mat-select [(ngModel)]="deliveryDateField.DateQualifier" name="DateQualifier"
+                                    (selectionChange)="onDateQuiliferSelect(deliveryDateField.DateQualifier)"
+                                    class="chooseType">
+                                    <mat-option *ngFor="let option of dateQuilifer" [value]="option.lookupText">
+                                        {{option.lookupText}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="access-search__type1--item2" *ngIf="isShowDateQuilifer">
+                                <mat-select class="chooseValue" [(ngModel)]="deliveryDateField.SearchConditionValue"
+                                    name="SearchCondtion">
+                                    <mat-option *ngFor="let da of dateQuilifierValue" [value]="da.lookupText">
+                                        {{da.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div *ngIf="this.deliveryDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.relative && deliveryDateField.DateQualifier!==AdvanceSearchAccessDoc.dateQualifier.blank"
+                            class="access-search__type2">
+                            <div class="access-search__type2--item1"
+                                [ngClass]="{ 'single-row' : (this.deliveryDateField.DateQualifier==AdvanceSearchAccessDoc.dateQualifier.fixed)}">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" (keypress)="keyPressNumbers($event)"
+                                        maxlength="10" [(ngModel)]="deliveryDateField.FromDateValue"
+                                        name="FromDateValue" [max]="deliveryDateField.ToDateValue"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="access-search__type2--item2" *ngIf="!isShowDateQuilifer">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" [min]="deliveryDateField.FromDateValue"
+                                        [(ngModel)]="deliveryDateField.ToDateValue" name="ToDateValue"
+                                        (keypress)="keyPressNumbers($event)" maxlength="10"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="this.deliveryDateField.DateQualifier ==AdvanceSearchAccessDoc.dateQualifier.blank"
+                            class="access-search__type2">
+                            <div class="access-search__type2--item1">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" name="FromDateValue"
+                                        (keypress)="keyPressNumbers($event)" maxlength="10"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseStartDate}}
+                                        disabled="true">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="access-search__type2--item2" *ngIf="!isShowDateQuilifer">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" name="ToDateValue"
+                                        (keypress)="keyPressNumbers($event)" maxlength="10"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseEndDate}}
+                                        disabled="true">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="accent"></mat-datepicker>
+                                    <mat-error *ngIf="dateValidate">Invalid date format</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="this.deliveryDateField.DateQualifier==AdvanceSearchAccessDoc.dateQualifier.relative"
+                            class="access-search__type1">
+                            <div class="access-search__type1--item1">
+                                <mat-form-field *ngIf="daysOrHours == AdvanceSearchAccessDoc.daysFromToday">
+                                    <input matInput [(ngModel)]="deliveryDateField.TotalDays"
+                                        (change)="onChangeDisable()"
+                                        [disabled]="currentlyDisabledDel === AdvanceSearchAccessDoc.accessDocText.todalDays"
+                                        name="TotalDays" placeholder="">
+
+                                </mat-form-field>
+                                <mat-form-field *ngIf="daysOrHours == AdvanceSearchAccessDoc.hoursFromToday">
+                                    <input matInput [(ngModel)]="deliveryDateField.TotalHours"
+                                        (change)="onChangeDisable()"
+                                        [disabled]="currentlyDisabledDel === AdvanceSearchAccessDoc.accessDocText.totalHours"
+                                        name="TotalHours" placeholder="">
+
+                                </mat-form-field>
+                            </div>
+                            <div class="access-search__type1--item2">
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.chooseOption}}
+                                    [(ngModel)]="dayOrHourValueDelivery" name="daysHoursVal"
+                                    (selectionChange)="onChangeValue(dayOrHourValueDelivery)" class="chooseValue">
+                                    <mat-option *ngFor="let val of daysHours" [value]="val.lookupDisplayText">
+                                        {{val.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="formName==AdvanceSearchAccessDoc.accessDocText.formName">
+                        <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.docType}}</p>
+                        <div class="access-search">
+                            <div class="access-search__type3">
+                                <mat-select placeholder={{AdvanceSearchAccessDoc.placeHolder.selectDocType}}
+                                    [(ngModel)]="docTypeValue" name="docTypeValue" class="chooseValue">
+                                    <mat-option *ngFor="let option of docQuilifer" [value]="option.lookupText">
+                                        {{option.lookupText}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="access-search">
+                        <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderNumber}}</p>
+                        <div class="access-search__type4" *ngIf="formName==AdvanceSearchAccessDoc.orderText.formName">
+                            <div class="access-search__type4--item1">
+                                <mat-select placeholder="{{orderNumberField.SearchConditionValue}}"
+                                    [(ngModel)]="orderNumField" name="orderNumber">
+                                    <mat-option *ngFor="let option of textQuilifer"
+                                        [value]="[option.lookupDataId, option.lookupText]">
+                                        {{option.lookupDisplayText}}</mat-option>
+                                </mat-select>
+
+                            </div>
+                            <div class="access-search__type4--item2">
+                                <mat-form-field appearance="standard">
+                                    <input matInput [(ngModel)]="orderNumberField.Value" name="orderNumberInput"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.enterOrderNumber}}>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="access-search__type4"
+                            *ngIf="formName==AdvanceSearchAccessDoc.accessDocText.formName">
+                            <div class="access-search__type4--item1">
+                                <mat-form-field appearance="standard" class="orderInput">
+                                    <input matInput [(ngModel)]="orderNumberField.Value" name="orderNumberInput"
+                                        placeholder={{AdvanceSearchAccessDoc.placeHolder.enterOrderNumber}}>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.GBOL}}</p>
+                        <div class="access-search__type4">
+                            <div class="access-search__type4--item1">
+                                <mat-select placeholder="{{gbolNumberField.SearchConditionValue}}"
+                                    [(ngModel)]="gbolNumField" name="gbol">
+                                    <mat-option *ngFor="let option of textQuilifer"
+                                        [value]="[option.lookupDataId, option.lookupText]">
+                                        {{option.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+
+                            <div class="access-search__type4--item2">
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="gbolNumberField.Value" name="gbolInput">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.TCN}}</p>
+                        <div class="access-search__type4">
+                            <div class="access-search__type4--item1">
+                                <mat-select placeholder="{{tcnNumberField.SearchConditionValue}}"
+                                    [(ngModel)]="tcnNumField" name="tcn">
+                                    <mat-option *ngFor="let option of textQuilifer"
+                                        [value]="[option.lookupDataId, option.lookupText]">
+                                        {{option.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="access-search__type4--item2">
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="tcnNumberField.Value" name="tcnInput">
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderOriginNumber}}</p>
+                        <div class="access-search__type4">
+                            <div class="access-search__type4--item1">
+                                <mat-select placeholder="{{originNumberField.SearchConditionValue}}"
+                                    [(ngModel)]="originNumField" name="origin">
+                                    <mat-option *ngFor="let option of textQuilifer"
+                                        [value]="[option.lookupDataId, option.lookupText]">
+                                        {{option.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="access-search__type4--item2">
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="originNumberField.Value" name="originNumber">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <p class="section-header">{{AdvanceSearchAccessDoc.inputLabels.orderDestinationNumber}}</p>
+                        <div class="access-search__type4">
+                            <div class="access-search__type4--item1">
+                                <mat-select placeholder="{{destinationNumberField.SearchConditionValue}}"
+                                    [(ngModel)]="destinationNumField" name="Destination">
+                                    <mat-option *ngFor="let option of textQuilifer"
+                                        [value]="[option.lookupDataId, option.lookupText]">
+                                        {{option.lookupDisplayText}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="access-search__type4--item2">
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="destinationNumberField.Value" name="DestinationNumber">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </mat-card>
+    <div class="buttons footer-button">
+        <button mat-button class="save cancel"
+            (click)="getSearchOrderDetails(AdvanceSearchAccessDoc.cancel)">{{AdvanceSearchAccessDoc.buttons.cancel}}</button>
+        <!-- <button mat-button class="add" *ngIf="formName=='Order Lookup & Reporting'">ADD / REMOVE FIELDS</button>
+        <button mat-button class="save">SAVE SEARCH</button> -->
+        <button mat-button (click)="getSearchOrderDetails(AdvanceSearchAccessDoc.search)"
+            class="search">{{AdvanceSearchAccessDoc.buttons.search}}</button>
+    </div>
+</div>

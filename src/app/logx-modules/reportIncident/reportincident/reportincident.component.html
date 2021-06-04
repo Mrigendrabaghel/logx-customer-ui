@@ -1,0 +1,496 @@
+<div class="main-container">
+  <div class="main-section">
+    <mat-card>
+      <div class="first-section">
+        <p>{{ IncidentConst.reportIncidentTitle }}</p>
+        <button (click)="goToAdvanceSearch()">
+          {{ IncidentConst.reportIncidentadvsearch }}
+        </button>
+      </div>
+      <form #userForm="ngForm">
+        <div class="left-section">
+          <div class="one">
+            <div>
+              <p>{{ IncidentConst.incidentNumber }}</p>
+              <span class="incidentNumber">{{ incidentNumber }}</span>
+            </div>
+            <div>
+              <p>{{ IncidentConst.client }}</p>
+              <span>{{ clientName }}</span>
+            </div>
+          </div>
+          <div class="one">
+            <div>
+              <p>{{ IncidentConst.incidentDate }}</p>
+              <mat-form-field class="date" floatLabel="never">
+                <input matInput [matDatepicker]="picker" required #incidentDate="ngModel"
+                  maxlength="{{ commonNumbers.ten }}" (keypress)="keyPressNumbers($event)"
+                  placeholder="{{ IncidentConst.placeHolder.date }}" [(ngModel)]="incidentDateValue"
+                  name="incidentDateValue" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker color="accent"></mat-datepicker>
+                <mat-error *ngIf="dateValidate">{{
+                  CommonConst.invalidDate
+                  }}</mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <p>{{ IncidentConst.incidentType }}</p>
+              <mat-select placeholder="{{ IncidentConst.placeHolder.option }}" required #incType="ngModel"
+                name="incidentType" [(ngModel)]="incidentTypeValue" name="incidentTypeValue">
+                <mat-option *ngFor="let incType of incidentType" [value]="incType.lookupText"    (click)="onSelect(incType)"> 
+                  {{ incType.lookupDisplayText }}</mat-option>
+              </mat-select>
+              <div>
+                <span *ngIf="incType.invalid && incType.touched" class="errorMessage">{{ incidentTypeErrMessage
+                  }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="two">
+            <div>
+              <p>{{ IncidentConst.orderNum }}</p>
+              <input matInput placeholder="{{ IncidentConst.placeHolder.orderNumber }}" required #ordNum="ngModel"
+                [(ngModel)]="orderNum" name="orderNum" (focusout)="focusOutOrderDetails()" />
+              <div>
+                <span *ngIf="!boolOrderNum" class="errorMessage">{{ invalidOrder }}
+                </span>
+                <span *ngIf="ordNum.invalid && ordNum.touched && boolOrderNum" class="errorMessage">{{ orderNoErrMessage
+                  }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="three">
+            <div>
+              <p>{{ IncidentConst.repLocation }}</p>
+              <app-location-search [updatedDestinationLocationDetails]="updatedDestinationLocationDetails"
+                [formName]="'incRepLocation'" [isReset]="resetForm"
+                (incidentLocationField)="getRepLocationDetails($event)">
+              </app-location-search>
+            </div>
+
+            <div>
+              <p [class.incidentLoc]="locationMandatory">{{ IncidentConst.incLocation }}</p>
+              <app-location-search  #locationForm  [updatedOriginLocationDetails]="updatedOriginLocationDetails" [formName]="'Origin'"
+                [isReset]="resetForm" (incidentLocationField)="getIncLocationDetails($event)">
+              </app-location-search>
+            </div>
+          </div>
+        </div>
+        <div class="right-section">
+          <div>
+            <p>{{ IncidentConst.priority }}</p>
+            <mat-radio-group [(ngModel)]="priorityValue" [ngModelOptions]="{standalone: true}" >
+              <mat-radio-button *ngFor="let priority of incidentPriority" [value]="priority.lookupText"
+                [checked]="priority.isDefault">
+                {{ priority.lookupDisplayText }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div>
+            <p>{{ IncidentConst.reportedBy }}</p>
+            <input matInput type="text" [readonly]="true" />{{ userName }}
+          </div>
+
+          <div>
+            <p>{{ IncidentConst.reportedDate }}</p>
+            <mat-form-field class="reportDate"  floatLabel="never">
+              <input matInput [matDatepicker]="picker1" required placeholder="{{ IncidentConst.placeHolder.date }}"
+                name="currentdate" [(ngModel)]="date" maxlength="{{ commonNumbers.ten }}"
+                (keypress)="keyPressNumbers($event)" />
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1 color="accent"></mat-datepicker>
+              <mat-error *ngIf="dateValidate">{{
+                CommonConst.invalidDate
+                }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <p>{{ IncidentConst.orderContactName }}</p>
+            <input matInput [readonly]="true" />{{
+            ordercontactDetails.OrderContactPersonName
+            }}
+          </div>
+          <div>
+            <p>{{ IncidentConst.orderContactNumber }}</p>
+            <input matInput [readonly]="true" />{{
+            ordercontactDetails.OrderContactPersonNumber
+            }}
+          </div>
+          <div>
+            <p>{{ IncidentConst.carrier }}</p>
+            <input type="text" #txtVal [(ngModel)]="this.ordercontactDetails.Carrier" name="carriername"
+              (keypress)="applyFilter($event)" [matAutocomplete]="auto" matInput
+              placeholder="{{ IncidentConst.placeHolder.carrier }}" />
+            <mat-autocomplete matInput #auto="matAutocomplete">
+              <div *ngIf="showlist">
+                <mat-option *ngFor="let option of CarrierdataList" [value]="option.carrierName">
+                  {{ option.carrierName }}
+                </mat-option>
+              </div>
+            </mat-autocomplete>
+            <mat-icon (click)="ClearInput()" matSuffix *ngIf="showicon && ordercontactDetails.Carrier">
+              remove_circle_outline</mat-icon>
+            <mat-icon *ngIf="!showicon || !ordercontactDetails.Carrier" matSuffix
+              matTooltip="{{ IncidentConst.matCarrierTooltip }}"
+              matTooltipHideDelay="{{ IncidentConst.matTooltipHideDelay }}">
+              info</mat-icon>
+          </div>
+        </div>
+      </form>
+      <div class="bottom">
+        <div class="comment-section">
+          <p>{{ IncidentConst.comments }}</p>
+          <table>
+            <tbody>
+              <tr *ngFor="let row of enterComments; let i = index">
+                <td>
+                  <textarea matInput placeholder="{{ IncidentConst.placeHolder.comments }}" [(ngModel)]="row.COMMENTS"
+                    (change)="updateText(row.COMMENTS,i)" name="COMMENTS"></textarea>
+                  <mat-icon *ngIf="row.COMMENTS" (click)="removeComment(i)">{{ CommonConst.MatIcons.cancel }}
+                  </mat-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bottom-section">
+          <div class="addComments">
+            <button mat-button (click)="addNew()">
+              {{ IncidentConst.addMoreComments }}
+            </button>
+          </div>
+        </div>
+        <div class="bottom-section">
+          <p class="sub-heading">Attachments</p>
+          <p class="noteText">{{IncidentConst.validationMessage.filesUploadSize}}</p>
+          <div class="table" *ngIf="isAttachments">
+            <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+              (cdkDropListDropped)="attachmentTableDrop($event)" [dataSource]="incidentAttachmentdataSource">
+
+              <ng-container *ngFor="let column of incidentAttachmentColumns; let i = index"
+                [matColumnDef]="column.field">
+
+                <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                  {{ column.header }} </mat-header-cell>
+                <mat-cell *matCellDef="let element; let x = index">
+                  <ng-container>
+                    {{ element[column.field] }}
+                  </ng-container>
+                  <ng-container *ngIf="column.field == 'action'">
+                    <mat-icon class="close-icon" (click)="deleteSavedAttachment(element,$event)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                  </ng-container>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="incidentDisplayedColumns" #tableHeaderRow></mat-header-row>
+              <mat-row class="attachments" *matRowDef="let row; columns: incidentDisplayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator
+              *ngIf="pageSize && pageSize>commonNumbers.zero && incidentAttachmentdataSource.data.length > commonNumbers.five"
+              [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+          </div>
+         
+          <div class="details-section1 product-details" *ngIf="isOpenUploadFiles">
+            <div class="table">
+              <app-uploadfiles [filesSelected]="filesSelected" [uploadFrom]="'incidentreports'"
+                (uploadFile)="UploadFiles($event);" (closeUploadFile)="closeUploadSection($event)">
+              </app-uploadfiles>
+            </div>
+          </div>
+
+          <div class="button-section" *ngIf="!isOpenUploadFiles">
+            <button mat-button (click)="fileInput.click()">{{CommonConst.uploadFiles}}
+              <input #fileInput accept="{{UploadConst.fileExtensionsSupport}}" type='file' class="hide"
+                (change)="AddFile($event)" multiple>
+            </button>
+          </div>
+        </div>
+        <div class="button">
+          <button mat-button class="button3" (click)="saveIncident(userForm)">
+            {{CommonConst.btnSaveForLater}}
+          </button>
+          <button mat-button class="btn info" type="reset" (click)="resetUserForm(userForm)">
+            {{ CommonConst.btnClear }}
+            </button>
+           <button mat-button class="button2" *ngIf="locationMandatory"  (click)="submitIncident(userForm)" [class.disable]="userForm.invalid"  
+            [disabled]="userForm.invalid
+            || locationForm.locPostalDetails.PostalCode=='' || locationForm.locPostalDetails.PostalCode==null  
+            || locationForm.incLocValue.LocationName == ''|| locationForm.incLocValue.LocationName == null
+            || locationForm.locPostalDetails.StateCode == '' || locationForm.locPostalDetails.StateCode == null
+            || locationForm.locPostalDetails.CityName  == '' || locationForm.locPostalDetails.CityName == null"
+              [class.disable]="userForm.invalid
+             || locationForm.locPostalDetails.PostalCode=='' || locationForm.locPostalDetails.PostalCode==null  
+            || locationForm.incLocValue.LocationName == ''|| locationForm.incLocValue.LocationName == null
+            || locationForm.locPostalDetails.StateCode == '' || locationForm.locPostalDetails.StateCode == null
+            || locationForm.locPostalDetails.CityName  == '' || locationForm.locPostalDetails.CityName == null">
+            {{ CommonConst.btnSubmit }}
+          </button> 
+          <button mat-button class="button2"  *ngIf="!locationMandatory" (click)="submitIncident(userForm)" [class.disable]="userForm.invalid"
+          [disabled]="userForm.invalid">
+          {{ CommonConst.btnSubmit }}
+        </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+<div class="main-container1">
+  <div class="main-section">
+    <mat-card>
+      <div class="first-section">
+        <p>{{ IncidentConst.reportIncidentTitle }}</p>
+        <button (click)="goToAdvanceSearch()">
+          {{ IncidentConst.reportIncidentadvsearch }}
+        </button>
+      </div>
+      <form #userForm="ngForm">
+        <div class="left-section">
+          <div class="one">
+            <div class="w-50">
+              <p>{{ IncidentConst.incidentNumber }}</p>
+              <span class="incidentNumber">{{ incidentNumber }}</span>
+            </div>
+            <div class="w-50">
+              <p>{{ IncidentConst.client }}</p>
+              <span class="clientName">{{ clientName }}</span>
+            </div>
+          </div>
+          <div class="priority">
+            <p>{{ IncidentConst.priority }}</p>
+            <mat-radio-group [(ngModel)]="priorityValue" [ngModelOptions]="{standalone: true}" >
+              <mat-radio-button *ngFor="let priority of incidentPriority" [value]="priority.lookupText"
+                [checked]="priority.isDefault">
+                {{ priority.lookupDisplayText }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ IncidentConst.orderInformation }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="two">
+                <div>
+                  <p>{{ IncidentConst.orderNum }}</p>
+                  <input matInput placeholder="{{ IncidentConst.placeHolder.orderNumber }}" required #ordNum="ngModel"
+                    [(ngModel)]="orderNum" name="orderNum" (focusout)="focusOutOrderDetails()" />
+                  <div>
+                    <span *ngIf="!boolOrderNum" class="errorMessage">{{ invalidOrder }}
+                    </span>
+                    <span *ngIf="ordNum.invalid && ordNum.touched && boolOrderNum" class="errorMessage">{{
+                      orderNoErrMessage }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="two">
+                <p>{{ IncidentConst.orderContactName }}</p>
+                <input matInput [readonly]="true" />{{
+                ordercontactDetails.OrderContactPersonName
+                }}
+              </div>
+              <div class="two">
+                <p>{{ IncidentConst.orderContactNumber }}</p>
+                <input matInput [readonly]="true" />{{
+                ordercontactDetails.OrderContactPersonNumber
+                }}
+              </div>
+              <div class="order-Carrier">
+                <p>{{ IncidentConst.carrier }}</p>
+                <input type="text" #txtVal [(ngModel)]="this.ordercontactDetails.Carrier" name="carriername"
+                  (keypress)="applyFilter($event)" [matAutocomplete]="auto" matInput
+                  placeholder="{{ IncidentConst.placeHolder.carrier }}" />
+                <mat-autocomplete matInput #auto="matAutocomplete">
+                  <div *ngIf="showlist">
+                    <mat-option *ngFor="let option of CarrierdataList" [value]="option.carrierName">
+                      {{ option.carrierName }}
+                    </mat-option>
+                  </div>
+                </mat-autocomplete>
+                <mat-icon (click)="ClearInput()" matSuffix *ngIf="showicon && ordercontactDetails.Carrier">
+                  remove_circle_outline</mat-icon>
+                <mat-icon *ngIf="!showicon || !ordercontactDetails.Carrier" matSuffix
+                  matTooltip="{{ IncidentConst.matCarrierTooltip }}"
+                  matTooltipHideDelay="{{ IncidentConst.matTooltipHideDelay }}">
+                  info</mat-icon>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ IncidentConst.incidentInformation }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div>
+                <div class="two">
+                  <p>{{ IncidentConst.incidentDate }}</p>
+                  <mat-form-field class="date"  floatLabel="never">
+                    <input matInput [matDatepicker]="picker2" required #incidentDate="ngModel"
+                      maxlength="{{ commonNumbers.ten }}" (keypress)="keyPressNumbers($event)"
+                      placeholder="{{ IncidentConst.placeHolder.date }}" [(ngModel)]="incidentDateValue"
+                      name="incidentDateValue" />
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 color="accent"></mat-datepicker>
+                    <mat-error *ngIf="dateValidate">{{
+                      CommonConst.invalidDate
+                      }}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="two">
+                  <p>{{ IncidentConst.incidentType }}</p>
+                  <mat-select placeholder="{{ IncidentConst.placeHolder.option }}" required #incType="ngModel"
+                    name="incidentType" [(ngModel)]="incidentTypeValue" name="incidentTypeValue">
+                    <mat-option *ngFor="let incType of incidentType" [value]="incType.lookupText">
+                      {{ incType.lookupDisplayText }}</mat-option>
+                  </mat-select>
+                  <div>
+                    <span *ngIf="incType.invalid && incType.touched" class="errorMessage">{{ incidentTypeErrMessage
+                      }}</span>
+                  </div>
+                </div>
+                <div class="two">
+                  <p>{{ IncidentConst.reportedBy }}</p>
+                  <input matInput type="text" [readonly]="true" />{{ userName }}
+                </div>
+
+                <div class="two">
+                  <p>{{ IncidentConst.reportedDate }}</p>
+                  <mat-form-field class="reportDate"  floatLabel="never">
+                    <input matInput [matDatepicker]="picker3" required
+                      placeholder="{{ IncidentConst.placeHolder.date }}" name="currentdate" [(ngModel)]="date"
+                      maxlength="{{ commonNumbers.ten }}" (keypress)="keyPressNumbers($event)" />
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3 color="accent"></mat-datepicker>
+                    <mat-error *ngIf="dateValidate">{{
+                      CommonConst.invalidDate
+                      }}</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ IncidentConst.location }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="three">
+                <div>
+                  <p>{{ IncidentConst.repLocation }}</p>
+                  <app-location-search [updatedDestinationLocationDetails]="updatedDestinationLocationDetails"
+                    [formName]="'incRepLocation'" [isReset]="resetForm"
+                    (incidentLocationField)="getRepLocationDetails($event)">
+                  </app-location-search>
+                </div>
+
+                <div>
+                  <p>{{ IncidentConst.incLocation }}</p>
+                  <app-location-search [updatedOriginLocationDetails]="updatedOriginLocationDetails"
+                    [formName]="'Origin'" [isReset]="resetForm" (incidentLocationField)="getIncLocationDetails($event)">
+                  </app-location-search>
+                </div>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ IncidentConst.comments }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="comment-section">
+                <table>
+                  <tbody>
+                    <tr *ngFor="let row of enterComments;index as i">
+                      <td>
+                        <textarea matInput placeholder="{{ IncidentConst.placeHolder.comments }}"
+                          [(ngModel)]="row.COMMENTS"   [ngModelOptions]="{standalone: true}" (change)="updateText(row.COMMENTS,i)"></textarea>
+                        <mat-icon *ngIf="row.COMMENTS" (click)="removeComment(i)">{{ CommonConst.MatIcons.cancel }}
+                        </mat-icon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="addComments">
+                  <button mat-button (click)="addNew()">
+                    {{ IncidentConst.addMoreComments }}
+                  </button>
+                </div>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ IncidentConst.attachments }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p class="noteText">{{IncidentConst.validationMessage.filesUploadSize}}</p>
+              <div class="attachment-section">
+              <div class="table" *ngIf="isAttachments">
+                <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+                  (cdkDropListDropped)="attachmentTableDrop($event)" [dataSource]="incidentAttachmentdataSource">
+
+                  <ng-container *ngFor="let column of incidentAttachmentColumns; let i = index"
+                    [matColumnDef]="column.field">
+
+                    <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                      {{ column.header }} </mat-header-cell>
+                    <mat-cell *matCellDef="let element; let x = index">
+                      <ng-container>
+                        {{ element[column.field] }}
+                      </ng-container>
+                      <ng-container *ngIf="column.field == 'action'">
+                        <mat-icon (click)="deleteSavedAttachment(element,$event)">{{CommonConst.MatIcons.cancel}}
+                        </mat-icon>
+                      </ng-container>
+                    </mat-cell>
+
+                  </ng-container>
+
+                  <mat-header-row *matHeaderRowDef="incidentDisplayedColumns" #tableHeaderRow></mat-header-row>
+                  <mat-row class="attachments" *matRowDef="let row; columns: incidentDisplayedColumns;"></mat-row>
+
+                </mat-table>
+                <mat-paginator
+                  *ngIf="pageSize && pageSize>commonNumbers.zero && incidentAttachmentdataSource.data.length > commonNumbers.five"
+                  [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+              </div>
+              
+              <div class="details-section1 product-details" *ngIf="isOpenUploadFiles">
+                <div class="table">
+                  <app-uploadfiles [filesSelected]="filesSelected" [uploadFrom]="'incidentreports'"
+                    (uploadFile)="UploadFiles($event);" (closeUploadFile)="closeUploadSection($event)">
+                  </app-uploadfiles>
+                </div>
+              </div>
+
+              <div class="button-section" *ngIf="!isOpenUploadFiles">
+                <button mat-button (click)="fileInput.click()">{{CommonConst.uploadFiles}}
+                  <input #fileInput accept="{{UploadConst.fileExtensionsSupport}}" type='file' class="hide"
+                    (change)="AddFile($event)" multiple>
+                </button>
+              </div>
+            </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+  <div class="button footer-button">
+    <button mat-button class="btn info cta-clear" type="reset" (click)="resetUserForm(userForm)">
+      {{ CommonConst.btnClear }}
+    </button>
+    <button mat-button class="button3 cta-save" (click)="saveIncident(userForm)">
+      {{CommonConst.btnSaveForLater}}
+    </button>
+    <button mat-button class="button2 cta-submit" (click)="submitIncident(userForm)" [class.disable]="userForm.invalid"
+      [disabled]="userForm.invalid">
+      {{ CommonConst.btnSubmit }}
+    </button>
+  </div>
+</div>

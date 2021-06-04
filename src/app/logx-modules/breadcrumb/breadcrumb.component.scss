@@ -1,0 +1,51 @@
+@import "src/crowley-themes.scss";
+.breadcrumb {
+    background: none;
+    font-size: 15px;
+    padding: 73px 0 0 10px;
+       // margin: 55px 0 -72px -8px;
+        color: $accent;
+    
+    li{
+      
+        list-style: none;
+        float: left;
+        margin: 5px;
+        cursor: pointer; 
+    }
+    li :first-child
+    {
+        
+        cursor: pointer;
+    }
+    li:first-child{
+        span:first-child{
+            text-decoration: underline;
+            outline: none;
+
+        }
+    }
+ 
+    li:nth-child(2)
+    {
+        color:$black !important;
+        text-decoration: none !important;
+    }
+       
+    li:last-child {
+        margin-right: 20px;
+    
+    }
+    li::after {
+        content: ' >';
+        color: $accent;
+        padding: 0 0 0 6px;
+      
+    }
+    li:last-child::after {
+        content: '';
+        color: $black;
+     
+        
+    }
+}

@@ -1,0 +1,138 @@
+@import "src/crowley-themes.scss";
+@import "../../../../../Styles/mixins.scss";
+
+.export-main-container {
+    p:first-of-type {
+      font-size: 16px;
+      color: $black;
+      font-weight: 500;
+    }
+  
+   
+  
+    p:nth-child(2) {
+      font-size: 14px;
+      font-weight: normal;
+      margin: 20px 0px 0px 0px;
+    }
+  
+   
+  
+    .radio-button {
+  
+   
+  
+      p {
+        margin: 10px 0px 10px 0px;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: 0.6px;
+        color: $crowley_border_gray;
+      }
+  
+   
+  
+      .radio {
+        ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+          background-color: #005691!important;
+        }
+        mat-radio-button {
+          padding: 10px 30px 10px 0px;
+          font-size: 12px;
+        }
+      }
+    }
+  
+   
+  
+    .check-box {
+      .orderInfo {
+        display: flex;
+        justify-content: space-between;
+        p:first-of-type {
+          margin: 10px 0px 10px 0px;
+          font-size: 12px;
+          font-weight: normal;
+          letter-spacing: 0.6px;
+          color: $crowley_border_gray;
+        }
+        p:nth-child(2) {
+          margin: 10px 0px 10px 0px;
+          font-size: 12px;
+          font-weight: normal;
+          color: $accent;
+          letter-spacing: 1px;
+          cursor: pointer;
+        }
+      }
+      .checkbox-section {
+        display: flex;
+        section:first-of-type {
+          display: grid;
+          padding: 10px 30px 10px 0px;
+          
+          mat-checkbox {
+            span {
+              font-size: 12px;
+              font-weight: normal;
+            }
+          }
+        }
+  
+   
+  
+        section:nth-child(2) {
+          display: grid;
+          padding: 10px 30px 10px 0px;
+          .spacer {
+            height: 5vh;
+          }
+        }
+      }
+    }
+  
+   
+  
+    .button {
+      text-align: end;
+      button {
+        width: 30%;
+        letter-spacing: 1px;
+        font-size: 12px;
+        margin-right: 10px;
+      }
+      button:first-of-type {
+        @include buttons;
+      }
+  
+      button {
+        @include filled-buttons;
+      }
+    }
+    ::ng-deep.mat-checkbox-checked.mat-primary .mat-checkbox-background {
+      background-color: $accent !important;
+    }
+    ::ng-deep.mat-radio-button.mat-primary .mat-radio-inner-circle {
+      background-color: $accent !important;
+    }
+    ::ng-deep.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+      border-color: $accent !important;
+    }
+  }
+
+  .errorMessage {
+    font-size: 11px;
+    color: $primary;
+    padding: 5px 0 0px 2px;
+}
+@media only screen and (max-width:812px) {
+  .export-main-container .check-box .checkbox-section {
+    display: block;   
+      & section{
+        padding: 0px !important;       
+      }
+}
+.export-main-container .button button{
+  width: 40% !important;
+}
+}

@@ -1,0 +1,259 @@
+@import "src/crowley-themes.scss";
+@import "../../../../Styles/mixins.scss";
+
+.main-container {
+  padding: 0% 30px 30px 0px;
+  display: flex;
+
+  .right-section {
+    width: 100%;
+    margin: 0 0 0 20px;
+
+    form {
+      width: 100%;
+    }
+  }
+
+  mat-card {
+    background: $white;
+    border-radius: initial;
+    box-shadow: 0px 0 10px 1px rgba(0.24, 0.24, 0.24, 0.24);
+    padding: 30px 16px;
+    //margin
+
+    p:nth-child(1) {
+      font-size: 46px;
+      color: $crowley_font;
+      margin: 0px 0px 10px 0px;
+    }
+
+    p:nth-child(2) {
+      color: $crowley_border_gray;
+      font-size: 12px;
+    }
+
+
+    .input-section {
+      height: 100%;
+      display: flex;
+
+      div {
+        width: 100%;
+
+        fieldset {
+          border: solid 2px $crowley_border_gray;
+          border-radius: 6px;
+          margin-right: 20px;
+
+          legend {
+            background-color: transparent;
+            color: $crowley_font;
+            padding: 0px 10px;
+            margin: 10px;
+            width: fit-content;
+            font-size: 13px;
+          }
+
+          input {
+            padding: 6px;
+            background-color: $white;
+            width: 98%;
+            height: 20px;
+            outline: none;
+            border: none;
+            margin: 0px 10px 10px;
+          }
+        }
+      }
+
+      button,
+      button:focus {
+        width: 35%;
+        height: 52px;
+        border-radius: 6px;
+        outline: none;
+        margin: 9px 0 0 0;
+        @include filled-buttons;
+        font-size: 14px !important;
+      }
+
+
+    }
+
+    .advanced {
+      padding-top: 10px;
+      text-align: right;
+      width: 92.3%;
+
+      a {
+        color: $accent;
+        text-decoration: underline;
+        cursor: pointer;
+
+      }
+    }
+
+
+
+    .errorMessage {
+      padding: 5px 0 0px 2px;
+    }
+
+
+    .details {
+      display: flex;
+      justify-content: flex-end;
+
+      // div {
+      //   ul {
+      //     list-style-type: none;
+      //     font-size: 10px;
+      //     font-weight: bold;
+      //     margin: 10px 10px;
+      //   }
+      // }
+
+      div {
+        button {
+          //ackground-color: #d7dbd7;
+          border: none;
+          color: #747171;
+          padding: 1em 4.25em;
+          text-align: center;
+          text-decoration: none;
+          display: flex;
+          font-size: 12px;
+          margin-top: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    table .mat-table {
+      margin-top: 20px;
+      margin-left: 2px;
+    }
+  }
+
+  .nodata {
+    text-align: center;
+    font-size: 28px;
+    font-style: italic;
+    color: $black;
+  }
+}
+
+.section-container {
+  padding: 0px 30px 30px 0px;
+}
+.mobile-view{
+  display: none;
+}
+.table-mobile{
+  display: none;
+}
+@media only screen and (max-width:812px) {
+  .table-desktop{
+    display: none;
+  }
+  .table-mobile{
+    display: block;
+    margin-top: 20px;
+  }
+
+  .main-container{
+    padding: 0;
+    display: block;
+    .right-section{
+      margin: 75px 0 75px 0;
+      padding: 0 15px;
+      form{        
+        mat-card{
+          margin: 0;
+          padding: 20px 15px;
+        }
+        .input-section {
+        button{
+          display: none;
+        }
+          display: block;
+    
+          div {
+      
+    
+            fieldset {
+              margin-right: 0px;
+     
+              input {
+                width: 93%;
+                font-size: 11px;
+                padding:0 !important;
+                height: auto;
+    
+              }
+            }
+          }
+      
+          
+        }
+        p:nth-child(1){
+          font-size: 30px;
+        }
+          mat-card.advanced{
+            text-align: left;
+        }
+
+        .advanced{
+          display: none;
+        }
+
+        .accessdocument{
+          display: none;
+
+        }
+        .mobile-view{
+          display: flex;
+          justify-content: space-between;
+
+          .advanced{
+            display: flex;
+            margin-top: 23px;
+            a {
+            
+              color: $accent;
+              text-decoration: underline;
+              cursor: pointer;
+         
+              font-size: 12px !important;
+            }
+          }
+
+          button{
+            float: right;
+    width: 85%;
+    height: 45px;
+    padding: 5px;
+    margin: 20px 0px 0 0px;
+    font-size: 11px !important;
+    background-color:#0957a3;
+    color: #ffffff;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 11px !important;
+      
+          }
+        }
+      }
+    }
+    .nodata {
+  padding: 20px;
+  line-height: normal;
+    }
+
+
+  }
+  .section-container {
+    padding: 0px 0px 0px 0px;
+  }
+  
+}

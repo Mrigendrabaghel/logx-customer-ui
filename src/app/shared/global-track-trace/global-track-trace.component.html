@@ -1,0 +1,59 @@
+<div class="main-container">
+    <form [formGroup]="trackTraceForm">
+        <div *ngIf="!result">
+            <div class="inputSection">
+                <div class="inputField">
+                    <input type="text" #input placeholder={{DashboardConst.placeHolder.trackShipment}}
+                        formControlName="trackNumberField" (paste)="PasteSearchCreteria($event,trackTraceForm,'trackNumberField')"
+                        (focusout)="focusOutFunction('trackNumberField',f.trackNumberField.value,trackTraceForm,'trackSubmitted')"
+                        [ngClass]="{ 'inValid': trackSubmitted && f.trackNumberField.errors }">
+                    <mat-icon *ngIf="trackTraceForm.value.trackNumberField" (click)="clear()">clear</mat-icon>
+                </div>
+                <div class="displayText" *ngIf="!(trackSubmitted && f.trackNumberField.errors)">
+                    <p>{{homeComponentConst.inputHeaderText.trackInputText}}</p>
+                </div>
+                <div *ngIf="trackSubmitted && f.trackNumberField.errors" class="errorMessage">
+                    <div *ngIf="f.trackNumberField.errors.required">
+                        <p>{{homeComponentConst.errorMessage.numberRequired}}</p>
+                    </div>
+                    <div *ngIf="f.trackNumberField.errors.minLength">
+                        <p>{{homeComponentConst.errorMessage.minLength}}</p>
+                    </div>
+                    <div *ngIf="isInvalidTrackSearchValue">
+                        <p>{{DashboardConst.errorMessage.characterLimit}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="notFoundText" *ngIf="showError">{{CommonConst.globalTrackErrorMessage}}</div>
+            <div class="notFoundText" *ngIf="multipleRecords">{{CommonConst.multipleRecords}}</div>
+            <button class="trackButton" *ngIf="!showError && !multipleRecords" type="submit"
+                (click)="getTrackRecords()">{{homeComponentConst.inputHeaderText.trackShipment}}</button>
+        </div>
+        <div class="displayResult" *ngIf="result">
+            <div class="sectionOne">
+                <div>
+                    <p>{{globalTrackTrace.Status}}</p>
+                    <p>{{status}}</p>
+                </div>
+                <div>
+                    <p>{{globalTrackTrace.orderNum}}</p>
+                    <p>{{orderNum}}</p>
+                </div>
+            </div>
+            <div class="sectionTwo">
+                <div>
+                    <p>{{globalTrackTrace.pickUpDate}}</p>
+                    <p>{{pickUpDate}}</p>
+                </div>
+                <div>
+                    <p>{{globalTrackTrace.deliveryDate}}</p>
+                    <p>{{deliveryDate}}</p>
+                </div>
+            </div>
+            <div class="resultButtons">
+                <button (click)="viewTrackingDetails()">{{CommonConst.viewTrackingDetails}}</button>
+                <button (click)="trackAnotherShipment()">{{CommonConst.trackAnotherShipment}}</button>
+            </div>
+        </div>
+    </form>
+</div>

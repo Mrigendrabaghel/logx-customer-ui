@@ -1,0 +1,322 @@
+<div class="main-container">
+  <div class="details-section">
+    <mat-card class="card">
+      <p>Additional Information</p>
+      <div class="top-section">
+        <p class="sub-heading">Upload Attachment</p>
+        <p class="noteText">{{IncidentConst.validationMessage.filesUploadSize}}</p>
+
+        <div class="table" *ngIf="isAttachments">
+          <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="attachmentTableDrop($event)" [dataSource]="orderAttachmentdataSource">
+
+            <ng-container *ngFor="let column of orderAttachmentColumns; let i = index" [matColumnDef]="column.field">
+
+              <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                {{ column.header }} </mat-header-cell>
+              <mat-cell *matCellDef="let element; let x = index">
+                <ng-container>
+                  {{ element[column.field] }}
+                </ng-container>
+                <ng-container *ngIf="column.field == 'action'">
+                  <mat-icon (click)="deleteSavedAttachment(element,$event)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                </ng-container>
+              </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="attachmentDisplayedColumns" #tableHeaderRow></mat-header-row>
+            <mat-row class="attachments" *matRowDef="let row; columns: attachmentDisplayedColumns;"
+              (click)="OpenDocument(row)"></mat-row>
+
+          </mat-table>
+          <mat-paginator #paginator
+            *ngIf="pageSize && pageSize>commonNumbers.zero && orderAttachmentdataSource.data.length > commonNumbers.five"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+        </div>
+
+        <div class="details-section1 product-details" *ngIf="isOpenUploadFiles">
+          <div class="table">
+            <app-uploadfiles [filesSelected]="filesSelected" [uploadFrom]="'orderAdditionalInfo'"
+              (uploadFile)="UploadFiles($event);" (closeUploadFile)="closeUploadSection($event)">
+            </app-uploadfiles>
+          </div>
+        </div>
+
+        <div class="button-section" *ngIf="!isOpenUploadFiles">
+          <button mat-button (click)="fileInput.click()">{{CommonConst.uploadFiles}}
+            <input #fileInput accept="{{UploadConst.fileExtensionsSupport}}" type='file' class="hide"
+              (change)="AddFile($event)" multiple>
+          </button>
+        </div>
+      </div>
+      <div class="comment-section">
+        <p class="sub-heading">Add Comments</p>
+
+        <div class="table" *ngIf="isComments">
+          <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="commentTableDrop($event)" [dataSource]="orderCommentdataSource">
+
+            <ng-container *ngFor="let column of orderCommentColumns; let i = index" [matColumnDef]="column.field">
+
+              <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                {{ column.header }} </mat-header-cell>
+              <!-- <mat-cell *matCellDef="let element"> {{ element[column.field]}}</mat-cell> -->
+              <mat-cell *matCellDef="let element; let x = index">
+                <ng-container>
+                  {{ element[column.field] }}
+                </ng-container>
+                <ng-container *ngIf="column.field == 'action'">
+                  <mat-icon (click)="deleteSavedComment(element,$event)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                </ng-container>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="commentDisplayedColumns" #tableHeaderRow></mat-header-row>
+            <mat-row class="attachments" *matRowDef="let row; columns: commentDisplayedColumns;"></mat-row>
+
+          </mat-table>
+          <mat-paginator #paginator
+            *ngIf="pageSize && pageSize>commonNumbers.zero && orderCommentdataSource.data.length > commonNumbers.five"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+        </div>
+
+        <div class="add">
+          <div class="add-row">
+            <div *ngFor="let row of commentsList; let i = index">
+              <div>
+                <div>
+                  <p>Type</p>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-select [(ngModel)]="row.commenttype">
+                      <mat-option *ngFor="let option of type" [value]="option.preferenceText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <p>Description</p>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input [(ngModel)]="row.comments" matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <p>Stop</p>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-select [(ngModel)]="row.stops">
+                      <mat-option *ngFor="let option of stop" [value]="option.preferenceText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-icon style="cursor: pointer;" (click)="deleteComment(row)">{{CommonConst.MatIcons.cancel}}
+                  </mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="add-comment" (click)="addNew()">{{ commentsList && commentsList.length > 0 ? IncidentConst.addMoreComments :
+              IncidentConst.comments }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-section">
+        <button mat-button class="outline-button" (click)="deleteOrder()">{{CommonConst.btnCancel}}</button>
+        <div class="right-align-section">
+          <button mat-button (click)="save('saveForLater',$event)">{{CommonConst.btnSaveForLater}}</button>
+          <button mat-button class="outline-button" (click)="save('saveAndCreateLink',$event)">{{CommonConst.btnSaveCreateLink}}</button>
+          <button mat-button
+            (click)="save('Complete',$event)">{{shipWith!=="" && shipWith!== orderNumber?OrderDetailConst.btnSaveandSubmitALL:OrderDetailConst.btnSaveandSubmit}}</button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+<div class="main-container1">
+  <div class="details-section">
+    <mat-card class="card">      
+      <div class="top-section">
+        <p class="sub-heading">Upload Attachment</p>
+        <p class="noteText">{{IncidentConst.validationMessage.filesUploadSize}}</p>
+
+        <div class="table" *ngIf="isAttachments">          
+          <mat-card class="crowley-adv-listview">
+            <mat-list>
+               <mat-list-item *ngFor="let element of orderAttachmentdataSource.data">      
+                <div class="two-col-item">
+                  <div class="item">
+                     <h4>{{OrderDetailConst.date}}</h4>
+                     <p>{{element.createddate}}</p> 
+                  </div>        
+                  <div class="item">
+                     <h4>{{OrderDetailConst.types}}</h4>
+                     <p>{{element.doctype}}</p>
+                  </div> 
+               </div>
+                  <div class="item">
+                    <h4>{{OrderDetailConst.description}}</h4>
+                    <p> {{element.docdescription}}</p>
+                 </div>
+                 
+                  <div class="icon">
+                    <mat-icon (click)="deleteSavedAttachment(element,$event)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                  </div>
+               </mat-list-item>
+             </mat-list>     
+            </mat-card> 
+          <mat-paginator #paginator
+            *ngIf="pageSize && pageSize>commonNumbers.zero && orderAttachmentdataSource.data.length > commonNumbers.five"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+        </div>
+
+        <div class="details-section1 product-details" *ngIf="isOpenUploadFiles">
+          <div class="table">
+            <app-uploadfiles [filesSelected]="filesSelected" [uploadFrom]="'orderAdditionalInfo'"
+              (uploadFile)="UploadFiles($event);" (closeUploadFile)="closeUploadSection($event)">
+            </app-uploadfiles>
+          </div>
+        </div>
+
+        <div class="button-section" *ngIf="!isOpenUploadFiles">
+          <button mat-button (click)="fileInput.click()">{{CommonConst.uploadFiles}}
+            <input #fileInput accept="{{UploadConst.fileExtensionsSupport}}" type='file' class="hide"
+              (change)="AddFile($event)" multiple>
+          </button>
+        </div>
+      </div>
+      <div class="comment-section">
+        <p class="sub-heading">Add Comments</p>
+
+        <div class="table" *ngIf="isComments">
+          <!-- <mat-table table class="details-table" cdkDropList cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="commentTableDrop($event)" [dataSource]="orderCommentdataSource">
+
+            <ng-container *ngFor="let column of orderCommentColumns; let i = index" [matColumnDef]="column.field">
+
+              <mat-header-cell *matHeaderCellDef cdkDrag cdkDragLockAxis="x" cdkDragBoundary="mat-header-row">
+                {{ column.header }} </mat-header-cell>             
+              <mat-cell *matCellDef="let element; let x = index">
+                <ng-container>
+                  {{ element[column.field] }}
+                </ng-container>
+                <ng-container *ngIf="column.field == 'action'">
+                  <mat-icon (click)="deleteSavedComment(element,$event)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                </ng-container>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="commentDisplayedColumns" #tableHeaderRow></mat-header-row>
+            <mat-row class="attachments" *matRowDef="let row; columns: commentDisplayedColumns;"></mat-row>
+
+          </mat-table> -->
+          <mat-card class="crowley-adv-listview">
+            <mat-list>
+               <mat-list-item *ngFor="let element of orderCommentdataSource.data">      
+                <div class="two-col-item">
+                  <div class="item">
+                     <h4>{{OrderDetailConst.commentType}}</h4>
+                     <p>{{element.commenttype}}</p> 
+                  </div>        
+                  <div class="item">
+                     <h4>{{OrderDetailConst.stops}}</h4>
+                     <p>{{element.stops}}</p>
+                  </div> 
+               </div>
+                  <div class="item">
+                    <h4>{{OrderDetailConst.comment}}</h4>
+                    <p> {{element.comments}}</p>
+                 </div>
+                 
+                  <div class="icon">
+                    <mat-icon (click)="deleteSavedAttachment(element,$event)">{{CommonConst.MatIcons.cancel}}</mat-icon>
+                  </div>
+               </mat-list-item>
+             </mat-list>     
+            </mat-card> 
+          <mat-paginator #paginator
+            *ngIf="pageSize && pageSize>commonNumbers.zero && orderCommentdataSource.data.length > commonNumbers.five"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+        </div>
+
+        <div class="add">
+          <div class="add-row">
+            <div *ngFor="let row of commentsList; let i = index">
+              <div class="two-col">
+              <div class="two-col-one">
+                <div>
+                  <p>Comment Type</p>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-select [(ngModel)]="row.commenttype">
+                      <mat-option *ngFor="let option of type" [value]="option.preferenceDisplayText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="two-col-two">
+                <div>
+                  <p>Stop</p>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-select [(ngModel)]="row.stops">
+                      <mat-option *ngFor="let option of stop" [value]="option.preferenceText">
+                        {{option.preferenceDisplayText}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>                  
+                </div>
+              </div>
+              <mat-icon class="cross-icone" (click)="deleteComment(row)">{{CommonConst.MatIcons.cancel}}
+              </mat-icon>
+            </div>
+              <div>
+                <div>
+                  <p>Description</p>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input [(ngModel)]="row.comments" matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+           
+            </div>
+          </div>
+          <div>
+            <p class="add-comment" (click)="addNew()">{{ commentsList && commentsList.length > 0 ? IncidentConst.addMoreComments :
+              IncidentConst.comments }}</p>
+          </div>
+        </div>
+      </div>   
+    </mat-card>    
+  </div> 
+  <div class="bottom-section footer-button">
+    <button mat-button class="cancel" (click)="deleteOrder()">{{CommonConst.btnCancel}}</button>
+    <button mat-button class="savelateer" (click)="save('saveForLater',$event)">{{CommonConst.btnSaveForLater}}</button>
+    <button mat-button class="saveButton"
+      (click)="save('Complete',$event)">{{shipWith!=="" && shipWith!== orderNumber?OrderDetailConst.btnSaveandSubmitALL:OrderDetailConst.btnSaveandSubmit}}</button>
+    <button [matMenuTriggerFor]="menu" mat-icon-button="" class="mat-focus-indicator mat-icon-button mat-button-base">
+        <span class="mat-button-wrapper"><mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font">more_vert</mat-icon></span>
+        <span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span><span class="mat-button-focus-overlay"></span>
+    </button>
+    <mat-menu #menu="matMenu">
+    <button mat-button class="save-create-link" (click)="save('saveAndCreateLink',$event)">{{CommonConst.btnSaveCreateLink}}</button>
+    </mat-menu>
+  </div>
+</div>

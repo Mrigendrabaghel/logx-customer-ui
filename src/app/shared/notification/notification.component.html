@@ -1,0 +1,35 @@
+<div mat-dialog-content class="notifications">
+	<div *ngFor="let notification of topNotifications" class="notification" [ngClass]="className(notification)">
+		<ng-container *ngTemplateOutlet="notificationTpl;context:{notification:notification}"></ng-container>
+	</div>
+</div>
+<div mat-dialog-actions class="viewall">
+	<button mat-flat-button 
+		(click)="viewAllNotifications()"
+		matTooltip="View all notifications"
+		matTooltipPosition="below">
+		View All Notifications
+	</button>
+</div>
+
+<ng-template #notificationTpl let-notification="notification">
+	<div class="d-flex flex-row">
+		<div class="d-flex flex-column" (click)="readNotification(notification)">
+			<div class="title" fxLayout="row" fxLayoutAlign="space-between center">
+				{{notification.notificationname}}
+			</div>
+			<div class="message">{{notification.notificationdescription | slice:0:commonConst.notifications.msgLength}}
+				<span *ngIf="notification.notificationdescription.length > commonConst.notifications.msgLength" class="read-more"> Read more</span>
+			</div>
+			<div class="message-date">{{notification.displaydate}}</div>
+		</div>
+		<div class="delete-notification">
+			<button mat-icon-button 
+			(click)="close(notification)"
+			matTooltip="Delete the notification"
+			matTooltipPosition="before">
+			<mat-icon>{{commonConst.MatIcons.delete}}</mat-icon>
+			</button>
+		</div>
+	</div>
+</ng-template>

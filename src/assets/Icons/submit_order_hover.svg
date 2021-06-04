@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="19px" viewBox="0 0 16 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>📍 Icon</title>
+    <g id="Dashboard---Track-Trace" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="tt_default" transform="translate(-20.000000, -430.000000)">
+            <g id="Nav-Drawer/1.-Group/A.-Side/_Light-Copy" transform="translate(0.000000, 87.000000)">
+                <g id="Line-items" transform="translate(0.000000, 13.000000)">
+                    <g id="SubmitDoc" transform="translate(16.000000, 327.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                        <path d="M4,7.2 L20,7.2 L20,9.2 L4,9.2 L4,7.2 Z M20,13 L13.2,13 L13.2,11 L20,11 L20,13 Z M13.2,17.2 L20,17.2 L20,15.2 L13.2,15.2 L13.2,17.2 Z M4,21.2 L20,21.2 L20,19.2 L4,19.2 L4,21.2 Z M10.3214286,11.2 L12.85,14.2 L10.3214286,17.2 L10.3214286,14.95 L4,14.95 L4,13.45 L10.3214286,13.45 L10.3214286,11.2 Z M20,3.2 L20,5.2 L4,5.2 L4,3.2 L20,3.2 Z" id="Shape" fill="#0957a3" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,15 @@
+
+<h1 mat-dialog-title>{{UserPreferenceConst.confirmDeletion}}</h1>
+<div mat-dialog-content class="locationText">
+{{message}}
+<br>
+<br>  
+</div>
+<div class="warning"><b>{{UserPreferenceConst.deletewarningNote}}</b>{{UserPreferenceConst.deletewarning}}</div>
+<div mat-dialog-actions>
+  <div class="buttons">
+    <button mat-button class="cancel"  mat-dialog-close tabindex="-1" *ngIf="cancelButtonText != ''">{{CommonConst.NO}}</button>
+    <button mat-button class="search" (click)="onConfirmClick()">{{ CommonConst.YES }}</button>
+</div>
+
+</div>

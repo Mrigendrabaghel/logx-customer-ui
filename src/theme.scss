@@ -1,0 +1,21 @@
+@import "~@angular/material/theming";
+@import "./crowley-themes.scss";
+
+@include mat-core();
+
+//Default theme
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+//Alternative/Darker theme
+$app-dark-theme: mat-light-theme($app-dark-primary, $app-dark-accent, $app-dark-warn);
+
+
+@include angular-material-theme($app-theme);
+
+.dark-theme {
+    @include angular-material-theme($app-dark-theme);
+}
+
+.light-theme {
+    @include angular-material-theme($app-theme);
+}

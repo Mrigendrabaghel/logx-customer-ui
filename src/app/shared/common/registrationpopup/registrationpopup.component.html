@@ -1,0 +1,9 @@
+
+<mat-dialog-content>
+    <h4 *ngIf="isHeader" mat-dialog-title>{{header}}</h4>
+<img *ngIf="isHeader"  src="../assets/Icons/success_tickmark.png"/>
+    <p>{{message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+<button mat-raised-button color="warn" mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>

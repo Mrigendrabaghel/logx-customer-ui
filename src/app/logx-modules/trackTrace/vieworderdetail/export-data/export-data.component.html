@@ -1,0 +1,41 @@
+<form [formGroup]="exportDataForm">
+<div class="export-main-container">
+    <p>{{ExportDataConst.exportOrderDetailTitle}}</p>
+    <p>{{ExportDataConst.selectoptions}}</p>
+    <div class="radio-button">
+      <p>{{ExportDataConst.fileFormat}}</p>      
+        <mat-radio-group formControlName="documentType"  (change)="onExportTypeChange($event)"  class="radio">
+           <mat-radio-button  [value]="ExportDataConst.exportPdf" color="primary">{{ExportDataConst.exportPdf}}</mat-radio-button>
+           <mat-radio-button  [value]="ExportDataConst.exportCSV" color="primary">{{ExportDataConst.exportCSV}}</mat-radio-button>
+       </mat-radio-group>      
+    </div>
+    <div class="check-box">
+      <div class="orderInfo">
+      </div>
+      <div class="checkbox-section">
+        <section>
+          <mat-checkbox [disabled]="!exportData.orderDetails"  formControlName="orderDetails" color="primary">{{ExportDataConst.orderDetails}}</mat-checkbox>
+          <mat-checkbox [disabled]="!exportData.comments" formControlName="comments" color="primary">{{ExportDataConst.comments}}</mat-checkbox>
+          <mat-checkbox [disabled]="!exportData.attachmentSummary" formControlName="attachmentSummary" color="primary">{{ExportDataConst.attachmentSummary}}</mat-checkbox>
+          <!--ToDo:Comes in future sprint <mat-checkbox [disabled]="!exportData.inTransitMap" *ngIf="isPdf" formControlName="inTransitMap" color="primary">In Transit Map</mat-checkbox> -->
+        </section>
+        <section>
+          <mat-checkbox [disabled]="!exportData.items" formControlName="items" color="primary">{{ExportDataConst.items}}</mat-checkbox>
+          <mat-checkbox [disabled]="!exportData.linesofRouting" formControlName="linesofRouting" color="primary">{{ExportDataConst.lineItems}}</mat-checkbox>
+          <!---ToDo:Comes in future sprint <mat-checkbox [disabled]="!exportData.IncludeAttachPdf" *ngIf="isPdf" formControlName="IncludeAttachPdf" color="primary">Include attachments as pdf</mat-checkbox>
+          <mat-checkbox [disabled]="!exportData.ServiceException" *ngIf="isPdf" formControlName="ServiceException" color="primary">Service Exception</mat-checkbox> -->
+          <div class="spacer"></div>
+        </section>
+      </div>
+    </div>
+    <div *ngIf="error.length>0" class="errorMessage" [ngSwitch]="error">
+      <span *ngSwitchCase="'DocType'">{{ExportDataConst.selectFileFormat}}  </span>
+      <span *ngSwitchCase="'ItemSel'">{{ExportDataConst.selOptionMsg}}</span>
+      <span *ngSwitchCase="'DocTypeAndItemSel'"> {{ExportDataConst.selFileFormat}} </span>
+    </div>
+    <div class="button">
+      <button mat-button (click)="closePopup()">{{CommonConst.btnCancel}}</button>
+      <button mat-button (click)="ExportData()" >{{CommonConst.btnExport}}</button>
+    </div>
+  </div>
+</form>
